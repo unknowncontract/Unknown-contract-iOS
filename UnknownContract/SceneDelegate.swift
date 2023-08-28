@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         registerProviderFactories()
         let  root = APPComponent()
-        window?.rootViewController = root.makeRootView()
+        window?.rootViewController = root.makeRootView().wrapNavigationController
         window?.makeKeyAndVisible()
         
         
