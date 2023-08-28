@@ -39,7 +39,6 @@ private extension BaseDataSource {
          return provider.rx.request(api)
              .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
              .catch { error in
-                 print("H3 \(error.localizedDescription)")
                  return Single.error(error)
              }
      }
