@@ -28,3 +28,7 @@
 
 
     ```
+
+## 카메라
+1. info.plist
+    1. Privacy - Camera Usage Description

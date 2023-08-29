@@ -7,7 +7,11 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
+public var isCameraAuthorized: Bool {
+  AVCaptureDevice.authorizationStatus(for: .video) == .authorized
+}
 
 public func APP_WIDTH() -> CGFloat {
     return UIScreen.main.bounds.size.width
