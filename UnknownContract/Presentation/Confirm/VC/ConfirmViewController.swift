@@ -13,6 +13,7 @@ import VisionKit
 import Vision
 import RxCocoa
 import RxSwift
+import PDFKit
 
 public class ConfirmViewController: UIViewController {
     
@@ -91,7 +92,25 @@ extension ConfirmViewController {
                 self.openCamera()
             })
             .disposed(by: disposeBag)
+        
+        
+        uploadButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self else {return}
+                self.openDoucument()
+                
+            })
+            .disposed(by: disposeBag)
     }
+    private func openDoucument(){
+        let supportedTypes: [UTType] = [UTType.pdf]
+        let pickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
+        pickerViewController.delegate = self
+        pickerViewController.allowsMultipleSelection = false
+        pickerViewController.shouldShowFileExtensions = true
+        self.present(pickerViewController, animated: true, completion: nil)
+    }
+    
     
     private func openCamera(){
         
@@ -114,6 +133,38 @@ extension ConfirmViewController {
             self?.present(pickerController, animated: true)
           }
         }
+    }
+    
+    private func pdfToImage(path:String){
+        // Create a URL for the PDF file.
+        let url = URL(fileURLWithPath: path)
+
+        // Instantiate a `CGPDFDocument` from the PDF file's URL.
+        guard let document = PDFDocument(url: url) else { return }
+
+        // Get the first page of the PDF document.
+        guard let page = document.page(at: 0) else { return }
+
+        // Fetch the page rect for the page we want to render.
+        let pageRect = page.bounds(for: .mediaBox)
+
+        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+        let img = renderer.image { ctx in
+            // Set and fill the background color.
+            UIColor.white.set()
+            ctx.fill(CGRect(x: 0, y: 0, width: pageRect.width, height: pageRect.height))
+
+            // Translate the context so that we only draw the `cropRect`.
+            ctx.cgContext.translateBy(x: -pageRect.origin.x, y: pageRect.size.height - pageRect.origin.y)
+
+            // Flip the context vertically because the Core Graphics coordinate system starts from the bottom.
+            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+            // Draw the PDF page.
+            page.draw(with: .mediaBox, to: ctx.cgContext)
+        }
+        
+        reconizeText(image: img)
     }
     
     func showAlertGoToSetting() {
@@ -218,5 +269,18 @@ extension ConfirmViewController: UINavigationControllerDelegate, UIImagePickerCo
         
         
         picker.dismiss(animated: true,completion: nil)
+    }
+}
+
+
+extension ConfirmViewController:UIDocumentPickerDelegate{
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        guard let url = urls.first else {
+            return
+        }
+        DEBUG_LOG(url.standardizedFileURL)
+        pdfToImage(path: url.relativePath)
+        
     }
 }

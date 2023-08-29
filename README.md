@@ -32,3 +32,9 @@
 ## 카메라
 1. info.plist
     1. Privacy - Camera Usage Description
+    
+
+## 파일 피커
+1. info.plist
+    1. Supports opening documents in place 추가
+    Application supports iTunes file sharing 추가
