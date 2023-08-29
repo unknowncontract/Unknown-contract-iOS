@@ -17,8 +17,9 @@ public final class APPComponent: BootstrapComponent {
            }
     }
     
+  
     
-    public func makeRootView() -> RootViewController {
+    public func makeRootView() -> IntroViewController {
         rootComponent.makeView()
       }
     

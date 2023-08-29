@@ -18,15 +18,28 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 #if !NEEDLE_DYNAMIC
 
 private class RootDependency42ce9302f32437bf7962Provider: RootDependency {
+    var permissionComponent: PermissionComponent {
+        return aPPComponent.permissionComponent
+    }
+    private let aPPComponent: APPComponent
+    init(aPPComponent: APPComponent) {
+        self.aPPComponent = aPPComponent
+    }
+}
+/// ^->APPComponent->RootComponent
+private func factory9efd9cab81bfb71851d76684ac6e6465fdd85074(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RootDependency42ce9302f32437bf7962Provider(aPPComponent: parent1(component) as! APPComponent)
+}
+private class PermissionDependency7a254bf5a3212ac9114cProvider: PermissionDependency {
 
 
     init() {
 
     }
 }
-/// ^->APPComponent->RootComponent
-private func factory9efd9cab81bfb71851d7e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return RootDependency42ce9302f32437bf7962Provider()
+/// ^->APPComponent->PermissionComponent
+private func factory746bb6c0e6f49b95a2e0e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return PermissionDependency7a254bf5a3212ac9114cProvider()
 }
 
 #else
@@ -42,6 +55,11 @@ extension APPComponent: Registration {
     }
 }
 extension RootComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\RootDependency.permissionComponent] = "permissionComponent-PermissionComponent"
+    }
+}
+extension PermissionComponent: Registration {
     public func registerItems() {
 
     }
@@ -64,7 +82,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 @inline(never) private func register1() {
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->APPComponent", factoryEmptyDependencyProvider)
-    registerProviderFactory("^->APPComponent->RootComponent", factory9efd9cab81bfb71851d7e3b0c44298fc1c149afb)
+    registerProviderFactory("^->APPComponent->RootComponent", factory9efd9cab81bfb71851d76684ac6e6465fdd85074)
+    registerProviderFactory("^->APPComponent->PermissionComponent", factory746bb6c0e6f49b95a2e0e3b0c44298fc1c149afb)
 }
 #endif
 
