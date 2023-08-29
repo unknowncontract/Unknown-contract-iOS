@@ -15,10 +15,18 @@ import RxCocoa
 import RxSwift
 import PDFKit
 
-public class ConfirmViewController: UIViewController {
+public final class ConfirmViewController: UIViewController {
     
     
     let disposeBag = DisposeBag()
+    
+    
+    private var viewModel:ConfirmViewModel!
+    
+    
+    lazy var input = ConfirmViewModel.Input()
+    
+    lazy var output = viewModel.transform(input: input)
     
     lazy var cameraButton = UIButton().then{
         
@@ -37,7 +45,16 @@ public class ConfirmViewController: UIViewController {
         $0.textColor = .blue
     }
     
+    init(viewModel:ConfirmViewModel){
+        self.viewModel = viewModel
+        
+        
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +64,6 @@ public class ConfirmViewController: UIViewController {
         bind()
     }
     
-
-
 
 }
 
@@ -85,20 +100,29 @@ extension ConfirmViewController {
     
     private func bind(){
         cameraButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                
-                guard let self else {return}
-                
-                self.openCamera()
-            })
+            .bind(to: input.cameraTap)
             .disposed(by: disposeBag)
         
         
         uploadButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self else {return}
-                self.openDoucument()
+            .bind(to: input.uploadTap)
+            .disposed(by: disposeBag)
+        
+        
+        output.imageSource
+            .subscribe(onNext: { [weak self]  imageSource in
                 
+                
+                guard let self else {return}
+                
+                switch imageSource{
+                    
+                case .camera:
+                    self.openCamera()
+                case .upload:
+                    self.openDoucument()
+                }
+ 
             })
             .disposed(by: disposeBag)
     }
@@ -112,11 +136,11 @@ extension ConfirmViewController {
     }
     
     
+    /// 카메라 열기
     private func openCamera(){
         
         AVCaptureDevice.requestAccess(for: .video) { [weak self] isAuthorized in
-       DEBUG_LOG(isAuthorized)
-          guard isAuthorized else {
+          guard isAuthorized else { // 허가되지 않으면 얼럿 호출
             self?.showAlertGoToSetting()
             return
           }
@@ -126,9 +150,7 @@ extension ConfirmViewController {
             pickerController.sourceType = .camera
             pickerController.allowsEditing = false
             pickerController.mediaTypes = ["public.image"]
-            // 만약 비디오가 필요한 경우,
-      //      imagePicker.mediaTypes = ["public.movie"]
-      //      imagePicker.videoQuality = .typeHigh
+
             pickerController.delegate = self
             self?.present(pickerController, animated: true)
           }
@@ -195,6 +217,8 @@ extension ConfirmViewController {
       }
     }
     
+    
+    ///OCR
     func reconizeText(image:UIImage?) {
         guard let cgImage = image?.cgImage else {
             fatalError("could not get image")
@@ -203,6 +227,8 @@ extension ConfirmViewController {
         
         let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         let request = VNRecognizeTextRequest{ [weak self]request, error in
+            
+            guard let self else {return}
             
             guard let observations = request.results as? [VNRecognizedTextObservation],
                   error == nil else{
@@ -213,11 +239,8 @@ extension ConfirmViewController {
                 $0.topCandidates(1).first?.string
             }).joined(separator: "\n")
             
-            DEBUG_LOG(text)
 
-            DispatchQueue.main.async {
-                self?.resultLabel.text = text
-            }
+            self.input.resultText.accept(text) // 최종 OCR 결과 
         }
         
         if #available(iOS 16.0, *) {
@@ -230,7 +253,6 @@ extension ConfirmViewController {
             do {
                 var possibleLanguages: Array<String> = []
                 possibleLanguages = try request.supportedRecognitionLanguages()
-                print(possibleLanguages)
             } catch {
                 print("Error getting the supported languages.")
             }
@@ -243,7 +265,6 @@ extension ConfirmViewController {
         do{
             try handler.perform([request])
         } catch {
-            resultLabel.text = "\(error)"
             DEBUG_LOG(error)
         }
         
@@ -257,6 +278,7 @@ extension ConfirmViewController {
 }
 
 
+/// 카메라를 이용한 OCR
 extension ConfirmViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
@@ -273,13 +295,13 @@ extension ConfirmViewController: UINavigationControllerDelegate, UIImagePickerCo
 }
 
 
+/// 업로드를 이용한 OCR
 extension ConfirmViewController:UIDocumentPickerDelegate{
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         
         guard let url = urls.first else {
             return
         }
-        DEBUG_LOG(url.standardizedFileURL)
         pdfToImage(path: url.relativePath)
         
     }

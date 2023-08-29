@@ -14,7 +14,7 @@ public protocol ConfirmDependency: Dependency {
 
 public final class ConfirmComponent: Component<ConfirmDependency> {
     public func makeView() -> ConfirmViewController {
-        return ConfirmViewController()
+        return ConfirmViewController(viewModel: ConfirmViewModel())
         
     }
 }
