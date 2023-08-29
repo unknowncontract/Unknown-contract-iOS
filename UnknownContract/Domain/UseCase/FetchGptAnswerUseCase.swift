@@ -8,8 +8,8 @@
 import Foundation
 import RxSwift
 
-protocol FetchGptAnswer {
+protocol FetchGptAnswerUseCase {
     
-    func execute(question:String) -> Single<[BaseMessage]>
+    func execute(question:String) -> Single<BaseMessage>
     
 }

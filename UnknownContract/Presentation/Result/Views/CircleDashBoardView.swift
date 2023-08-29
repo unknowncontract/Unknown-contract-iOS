@@ -22,6 +22,17 @@ public class CircleDashBoardView: UIView {
 //    private lazy var trackLayer = CAShapeLayer()
 
     
+    private lazy var strokeView = UIView().then{
+        
+        
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.blue.cgColor
+     //   $0.backgroundColor = .red
+        $0.layer.cornerRadius = 100
+        
+    
+    }
+    
     
     private lazy var edgeLayer = CAShapeLayer().then{
         $0.path = circlePath.cgPath
@@ -47,9 +58,10 @@ public class CircleDashBoardView: UIView {
         
     }
     
-    public override func layoutSubviews() {
+    public override func layoutSubviews() { // Draw Cycle 관련
         super.layoutSubviews()
         //stroke.frame = bounds
+        
     }
     
 
@@ -58,15 +70,19 @@ public class CircleDashBoardView: UIView {
 public extension CircleDashBoardView {
     
     private func setUp(){
-
         
-
-        
+        strokeView.snp.makeConstraints{
+            
+            $0.center.equalToSuperview()
+            $0.width.equalTo(200)
+            $0.height.equalTo(200)
+            
+        }
         
     }
     
     private func addSubViews(){
-
+        addSubview(strokeView)
 
     }
     

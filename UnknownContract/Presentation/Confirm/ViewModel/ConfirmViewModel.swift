@@ -19,6 +19,19 @@ final class ConfirmViewModel {
     let disposeBag = DisposeBag()
     
     
+    let fetchGptAnswerUseCase:FetchGptAnswerUseCase!
+    
+    init(fetchGptAnswerUseCase: FetchGptAnswerUseCase!) {
+        self.fetchGptAnswerUseCase = fetchGptAnswerUseCase
+        
+        
+        self.fetchGptAnswerUseCase
+            .execute(question: "안녕")
+            .asObservable()
+            .subscribe()
+            .disposed(by: disposeBag)
+    }
+    
     struct Input{
         
         let cameraTap:PublishSubject<Void> = .init()

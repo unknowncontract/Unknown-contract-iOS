@@ -10,5 +10,5 @@ import RxSwift
 
 protocol GptRepository {
     
-    func fetchGptAnsewr(message:String) -> Single<BaseMessage>
+    func fetchGptAnswer(message:String) -> Single<BaseMessage>
 }

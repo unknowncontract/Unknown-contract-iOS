@@ -12,7 +12,7 @@ import Then
 
 public class RootViewController: UIViewController {
     
-    var circleDashBoardView = CircleDashBoardView(frame: CGRect(x: .zero, y: .zero, width: 200, height: 200))
+    var circleDashBoardView = CircleDashBoardView()
     
 
 
@@ -21,7 +21,6 @@ public class RootViewController: UIViewController {
         self.view.backgroundColor = .white
         self.addSubViews()
         self.configureUI()
-
 
         
     }

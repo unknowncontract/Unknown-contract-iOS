@@ -18,6 +18,7 @@ public class BaseDataSource<API:BaseAPI> {
     
     public func request(_ api: API) -> Single<Response> {
     
+        DEBUG_LOG("\(api.baseURL)\(api.domain)\(api.urlPath)")
             return Single<Response>.create { single in
                 var disposabels = [Disposable]()
                 disposabels.append(
@@ -37,7 +38,6 @@ private extension BaseDataSource {
     func defaultRequest(_ api: API) -> Single<Response> {
        
          return provider.rx.request(api)
-             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
              .catch { error in
                  return Single.error(error)
              }

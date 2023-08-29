@@ -13,8 +13,30 @@ public protocol ConfirmDependency: Dependency {
 }
 
 public final class ConfirmComponent: Component<ConfirmDependency> {
+    
+    var gptDataSource: GptDataSourceImpl {
+          shared {
+              GptDataSourceImpl()
+          }
+      }
+      
+      var gptRepository: any GptRepository {
+          shared {
+              GptRepositoryImpl(gptDataSource: gptDataSource)
+          }
+      }
+      
+      var fetchGptAnswerUseCase: any FetchGptAnswerUseCase {
+          shared {
+              FetchGptAnswerUseCaseImpl(repository: gptRepository)
+          }
+      }
+    
+    
     public func makeView() -> ConfirmViewController {
-        return ConfirmViewController(viewModel: ConfirmViewModel())
+        return ConfirmViewController(viewModel: ConfirmViewModel(
+        fetchGptAnswerUseCase: fetchGptAnswerUseCase
+        ))
         
     }
 }
