@@ -63,7 +63,7 @@ final class ConfirmViewModel {
             .subscribe(onNext: { [weak self] text,imageSource in
                 
                 guard let self else {return}
-                
+                //TODO: 서버 연결하기 
                 DEBUG_LOG(text)
                 DEBUG_LOG(imageSource)
                 

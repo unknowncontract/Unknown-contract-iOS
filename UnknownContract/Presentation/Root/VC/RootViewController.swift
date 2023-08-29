@@ -12,16 +12,16 @@ import Then
 
 public class RootViewController: UIViewController {
     
-    lazy var circleDashBoardView = CircleDashBoardView()
+    var circleDashBoardView = CircleDashBoardView(frame: CGRect(x: .zero, y: .zero, width: 200, height: 200))
     
 
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .white
-        addSubViews()
-        configureUI()
+        self.addSubViews()
+        self.configureUI()
+
 
         
     }
@@ -39,7 +39,7 @@ extension RootViewController {
         circleDashBoardView.snp.makeConstraints{
             $0.center.equalToSuperview()
         }
-        
+
 
     }
 }

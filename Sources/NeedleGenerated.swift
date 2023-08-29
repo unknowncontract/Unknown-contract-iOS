@@ -17,16 +17,16 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 
 #if !NEEDLE_DYNAMIC
 
-private class ConfirmDependency59f22d4c63227594ea1dProvider: ConfirmDependency {
+private class RootDependency42ce9302f32437bf7962Provider: RootDependency {
 
 
     init() {
 
     }
 }
-/// ^->APPComponent->ConfirmComponent
-private func factory2098926d2a8f9bf54d53e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return ConfirmDependency59f22d4c63227594ea1dProvider()
+/// ^->APPComponent->RootComponent
+private func factory9efd9cab81bfb71851d7e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RootDependency42ce9302f32437bf7962Provider()
 }
 
 #else
@@ -41,7 +41,7 @@ extension APPComponent: Registration {
 
     }
 }
-extension ConfirmComponent: Registration {
+extension RootComponent: Registration {
     public func registerItems() {
 
     }
@@ -64,7 +64,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 @inline(never) private func register1() {
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->APPComponent", factoryEmptyDependencyProvider)
-    registerProviderFactory("^->APPComponent->ConfirmComponent", factory2098926d2a8f9bf54d53e3b0c44298fc1c149afb)
+    registerProviderFactory("^->APPComponent->RootComponent", factory9efd9cab81bfb71851d7e3b0c44298fc1c149afb)
 }
 #endif
 

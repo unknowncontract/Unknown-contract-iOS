@@ -20,16 +20,8 @@ public class CircleDashBoardView: UIView {
     let circlePath = UIBezierPath(arcCenter: .zero, radius: 50, startAngle: -.pi, endAngle: 2 * CGFloat.pi, clockwise: true)
     // startAngle: 라인 시작
 //    private lazy var trackLayer = CAShapeLayer()
+
     
-    
-    
-    private lazy var stroke = UIView().then{
-        
-        $0.tintColor = .systemPink
-        $0.layer.backgroundColor = UIColor.red.cgColor
-        $0.layer.cornerRadius = 100
-        $0.layer.borderColor = UIColor.blue.cgColor
-    }
     
     private lazy var edgeLayer = CAShapeLayer().then{
         $0.path = circlePath.cgPath
@@ -38,28 +30,26 @@ public class CircleDashBoardView: UIView {
         $0.fillColor = UIColor.black.cgColor
     }
     
-    private lazy var label = UILabel().then{
-        $0.text = "HELLo"
-    }
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         addSubViews()
         setUp()
+    
         DEBUG_LOG("INIT")
         print(center)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        addSubViews()
-        setUp()
+//        addSubViews()
+//        setUp()
         
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        
+        //stroke.frame = bounds
     }
     
 
@@ -68,22 +58,16 @@ public class CircleDashBoardView: UIView {
 public extension CircleDashBoardView {
     
     private func setUp(){
-        stroke.snp.makeConstraints{
-            $0.center.equalToSuperview()
-        }
+
         
-        label.snp.makeConstraints{
-            $0.center.equalToSuperview()
-        }
+
         
         
     }
     
     private func addSubViews(){
-        // self.layer.addSublayer(edgeLayer)
-        
-        self.addSubview(stroke)
-        self.addSubview(label)
+
+
     }
     
     func update(){

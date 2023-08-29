@@ -240,7 +240,7 @@ extension ConfirmViewController {
             }).joined(separator: "\n")
             
 
-            self.input.resultText.accept(text) // 최종 OCR 결과 
+            self.input.resultText.accept(text) // 최종 OCR 결과
         }
         
         if #available(iOS 16.0, *) {

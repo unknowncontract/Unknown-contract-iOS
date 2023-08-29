@@ -8,5 +8,5 @@
 import Foundation
 
 public func BASE_URL() -> String {
-    return  "https://api.themoviedb.org"
+    return  "https://api.eatcocoa.dev"
 }

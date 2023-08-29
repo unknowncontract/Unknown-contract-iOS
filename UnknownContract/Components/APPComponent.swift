@@ -11,14 +11,14 @@ import NeedleFoundation
 
 public final class APPComponent: BootstrapComponent {
     
-    var rootComponent: ConfirmComponent {
+    var rootComponent: RootComponent {
            shared {
-               ConfirmComponent(parent: self)
+               RootComponent(parent: self)
            }
     }
     
     
-    public func makeRootView() -> ConfirmViewController {
+    public func makeRootView() -> RootViewController {
         rootComponent.makeView()
       }
     
