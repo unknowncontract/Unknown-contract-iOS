@@ -99,14 +99,22 @@ fileprivate let letterSpacing:CGFloat = -0.4
 
 public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = 44
+    
+    let lineHeight:CGFloat = 44
+    let font =  DesignSystemAsset.Pretendard.title1!
+    
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.minimumLineHeight = lineHeight
+    
+    // 행간  paragraphStyle.lineSpacing = 44
     
     let attrText =  NSMutableAttributedString(
                 string: text,
-                attributes: [.font: DesignSystemAsset.Pretendard.title1!,
+                attributes: [.font:font,
                              .foregroundColor: color,
                              .kern: letterSpacing,
-                             .paragraphStyle: paragraphStyle
+                             .paragraphStyle: paragraphStyle,
+                             .baselineOffset: (lineHeight - font.lineHeight) / 4
                 
                 ]
             )
@@ -116,14 +124,22 @@ public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAt
 
 public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = 32
+    
+    let lineHeight:CGFloat = 32
+    let font =  DesignSystemAsset.Pretendard.title2!
+    
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.minimumLineHeight = lineHeight
+    
+    // 행간  paragraphStyle.lineSpacing = 32
     
     let attrText =  NSMutableAttributedString(
                 string: text,
-                attributes: [.font: DesignSystemAsset.Pretendard.title2!,
+                attributes: [.font: font,
                              .foregroundColor: color,
                              .kern: letterSpacing,
-                             .paragraphStyle: paragraphStyle
+                             .paragraphStyle: paragraphStyle,
+                             .baselineOffset: (lineHeight - font.lineHeight) / 4
                 
                 ]
             )
@@ -133,14 +149,22 @@ public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAt
 
 public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = 22
+   
+    
+    let lineHeight:CGFloat = 22
+    let font =  DesignSystemAsset.Pretendard.body1!
+    
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.minimumLineHeight = lineHeight
+    // 행간 paragraphStyle.lineSpacing = 22
     
     let attrText =  NSMutableAttributedString(
                 string: text,
-                attributes: [.font: DesignSystemAsset.Pretendard.body1!,
+                attributes: [.font: font,
                              .foregroundColor: color,
                              .kern: letterSpacing,
-                             .paragraphStyle: paragraphStyle
+                             .paragraphStyle: paragraphStyle,
+                             .baselineOffset: (lineHeight - font.lineHeight) / 4
                 
                 ]
             )
@@ -150,14 +174,23 @@ public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
 
 public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = 20
+    
+    
+    let lineHeight:CGFloat = 20
+    let font =  DesignSystemAsset.Pretendard.body2!
+    
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.minimumLineHeight = lineHeight
+    
+    // 행간 paragraphStyle.lineSpacing = 20
     
     let attrText =  NSMutableAttributedString(
                 string: text,
-                attributes: [.font: DesignSystemAsset.Pretendard.body2!,
+                attributes: [.font: font,
                              .foregroundColor: color,
                              .kern: letterSpacing,
-                             .paragraphStyle: paragraphStyle
+                             .paragraphStyle: paragraphStyle,
+                             .baselineOffset: (lineHeight - font.lineHeight) / 4
                 
                 ]
             )
@@ -167,14 +200,23 @@ public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
 
 public func setBody3Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = 17
+    
+    
+    let lineHeight:CGFloat = 17
+    let font =  DesignSystemAsset.Pretendard.body3!
+    
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.minimumLineHeight = lineHeight
+    
+    // 행간 paragraphStyle.lineSpacing = 17
     
     let attrText =  NSMutableAttributedString(
                 string: text,
-                attributes: [.font: DesignSystemAsset.Pretendard.body3!,
+                attributes: [.font: font,
                              .foregroundColor: color,
                              .kern: letterSpacing,
-                             .paragraphStyle: paragraphStyle
+                             .paragraphStyle: paragraphStyle,
+                             .baselineOffset: (lineHeight - font.lineHeight) / 4
                 
                 ]
             )

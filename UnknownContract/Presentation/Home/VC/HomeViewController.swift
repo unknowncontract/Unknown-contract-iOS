@@ -16,7 +16,9 @@ public class HomeViewController: BaseViewController {
     
     
     lazy var label = UILabel().then{
+        $
         $0.attributedText = setTitle1Style("HI", textColor: .red)
+        
     }
     
     
