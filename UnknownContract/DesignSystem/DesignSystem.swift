@@ -24,14 +24,16 @@ public enum DesignSystemAsset {
     }
     
     public enum Icon {
-        public static let arrowRight = UIImage(named: "ArrowRihgt")!
+        public static let arrowRight = UIImage(named: "ArrowRight")!
         public static let arrowUp = UIImage(named: "ArrowUp")!
         public static let arrowDown = UIImage(named: "ArrowDown")!
         public static let arrowLeft = UIImage(named: "ArrowLeft")!
         public static let close = UIImage(named: "Close")!
         public static let whiteClose = UIImage(named: "WhiteClose")!
         public static let info = UIImage(named: "Info")!
-        public static let shutter = UIImage(named: "Shutter")
+        public static let shutter = UIImage(named: "Shutter")!
+        public static let gov = UIImage(named: "Gov")!
+        public static let court = UIImage(named: "Court")!
     }
     
     public enum Pretendard {

@@ -69,6 +69,18 @@ public class HomeViewController: BaseViewController {
         
     }
     
+    lazy var courtView = GovernmentButtonView(gov: .court).then{
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .white
+        $0.delegate = self
+    }
+    
+    lazy var govView = GovernmentButtonView(gov: .gov).then{
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .white
+        $0.delegate = self
+    }
+    
     
     init(customCameraComponent:CustomCameraComponent){
         super.init(nibName: nil, bundle: nil)
@@ -101,13 +113,16 @@ extension HomeViewController {
         
     
         self.view.addSubview(remindLabel)
-        
         self.view.addSubview(stackContainer)
+        self.view.addSubview(courtView)
+        self.view.addSubview(govView)
         
         self.stackContainer.addSubview(documentStack)
         self.documentStack.addArrangedSubview(documentButton1)
         self.documentStack.addArrangedSubview(documentButton2)
         self.documentStack.addArrangedSubview(documentButton3)
+        
+    
         
         
     }
@@ -144,7 +159,7 @@ extension HomeViewController {
             
             $0.top.equalTo(remindLabel.snp.bottom).offset(32)
             $0.left.right.equalToSuperview().inset(20)
-            $0.height.equalTo(200) //TODO:  수정예쩡
+            $0.height.equalTo(140) //TODO:  수정예쩡
             
         }
         
@@ -153,6 +168,17 @@ extension HomeViewController {
             $0.left.right.equalToSuperview().inset(20)
             
             $0.bottom.top.equalToSuperview()    
+        }
+        
+        
+        courtView.snp.makeConstraints{
+            $0.left.right.equalToSuperview().inset(20)
+            $0.bottom.equalTo(govView.snp.top).offset(-10)
+        }
+        
+        govView.snp.makeConstraints{
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
+            $0.left.right.equalToSuperview().inset(20)
         }
         
 
@@ -172,5 +198,13 @@ extension HomeViewController:DocumentButtonViewDelegate{
         self.present(vc, animated: true)
 
     }
+    
+}
+
+extension HomeViewController:GovernmentButtonViewDelegate{
+    public func action(gov: Government) {
+        DEBUG_LOG(gov)
+    }
+    
     
 }
