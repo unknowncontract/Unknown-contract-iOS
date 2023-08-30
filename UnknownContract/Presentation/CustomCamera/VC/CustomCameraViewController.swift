@@ -62,7 +62,7 @@ public class CustomCameraViewController: BaseViewController {
         bind()
         
     }
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle { //DARK MODE
         return  .lightContent
     }
 }

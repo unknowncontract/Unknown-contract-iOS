@@ -17,7 +17,24 @@ public class HomeViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-
+    lazy var gradientView = UIView().then{
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        let color1 = UIColor.red
+        let color2 = UIColor.blue
+        gradient.frame = CGRect(x: 0, y: 0, width: 370, height: 200)
+          gradient.colors = [color1.cgColor,color2.cgColor]
+          gradient.locations = [0.0 , 1.0]
+          gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+          gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+          
+        DEBUG_LOG($0.bounds)
+        
+        
+          $0.layer.addSublayer(gradient)
+        
+    }
+    
     lazy var remindLabel1 = UILabel().then{
         
         $0.attributedText = setTitle2Style("계약 전", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100.withAlphaComponent(0.4),alignment: .center)
@@ -92,6 +109,17 @@ public class HomeViewController: BaseViewController {
 
     }
     
+    public override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
+        DEBUG_LOG(gradientView.bounds)
+        DEBUG_LOG(gradientView.frame)
+    }
+    
+    public override var preferredStatusBarStyle: UIStatusBarStyle { //DARK MODE
+        return  .lightContent
+    }
+    
 
 
 }
@@ -101,7 +129,7 @@ extension HomeViewController {
     func addSubViews(){
 
         
-        
+        self.view.addSubview(gradientView)
         self.view.addSubview(remindLabel1)
         self.view.addSubview(remindLabel2)
         self.view.addSubview(commentLabel)
@@ -121,6 +149,12 @@ extension HomeViewController {
     
     func configureUI(){
         
+        
+        gradientView.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(documentStack.snp.bottom).inset(56)
+        }
         
         remindLabel1.snp.makeConstraints{
             $0.top.equalToSuperview().inset(60)
@@ -167,7 +201,7 @@ extension HomeViewController {
             $0.left.right.equalToSuperview().inset(20)
         }
         
-
+        
         
         
     }
