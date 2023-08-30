@@ -34,6 +34,12 @@ public enum DesignSystemAsset {
         public static let shutter = UIImage(named: "Shutter")!
         public static let gov = UIImage(named: "Gov")!
         public static let court = UIImage(named: "Court")!
+        public static let home = UIImage(named: "Home")!
+        public static let camera = UIImage(named: "Camera")!
+        public static let attached = UIImage(named: "Attached")!
+        public static let techtonics = UIImage(named: "Techtonics")!
+        public static let gallery = UIImage(named: "Gallery")!
+        
     }
     
     public enum Pretendard {
