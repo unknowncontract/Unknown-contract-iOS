@@ -21,6 +21,10 @@ public func APP_HEIGHT() -> CGFloat {
     return UIScreen.main.bounds.size.height
 }
 
+public func MARGIN() -> CGFloat {
+    return 20.0
+}
+
 
 public func STATUS_BAR_HEGHIT() -> CGFloat {
     
@@ -87,3 +91,5 @@ public func DEBUG_LOG(_ msg: Any, file: String = #file, function: String = #func
         print("[\(fileName)] \(funcName)(\(line)): \(msg)")
     #endif
 }
+
+
