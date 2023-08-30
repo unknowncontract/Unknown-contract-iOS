@@ -37,6 +37,17 @@ public class CustomCameraViewController: BaseViewController {
         $0.backgroundColor = bgColor
     }
     
+    lazy var warningLabel = UILabel().then{
+        $0.attributedText = setBody2Style("어두운 배경에서 빛이 반사되지 않도록 촬영해주세요.\n훼손 시 확인이 어려울 수 있습니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100)
+        
+        $0.numberOfLines = 0 
+        $0.textAlignment = .center
+    }
+    
+    lazy var shutterButton = UIButton().then{
+        $0.setImage(DesignSystemAsset.Icon.shutter, for: .normal)
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +69,9 @@ extension CustomCameraViewController{
         
         self.titleView.addSubview(titleLabel)
         self.titleView.addSubview(closeButton)
+        
+        self.bottomView.addSubview(warningLabel)
+        self.bottomView.addSubview(shutterButton)
     }
     
     
@@ -88,6 +102,17 @@ extension CustomCameraViewController{
             $0.left.right.bottom.equalToSuperview()
             
             $0.height.equalTo(200)
+        }
+        
+        warningLabel.snp.makeConstraints{
+            $0.top.equalToSuperview().inset(24)
+            $0.centerX.equalToSuperview()
+        }
+        
+        shutterButton.snp.makeConstraints{
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(64)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

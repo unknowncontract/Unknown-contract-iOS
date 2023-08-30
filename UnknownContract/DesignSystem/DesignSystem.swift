@@ -31,6 +31,7 @@ public enum DesignSystemAsset {
         public static let close = UIImage(named: "Close")!
         public static let whiteClose = UIImage(named: "WhiteClose")!
         public static let info = UIImage(named: "Info")!
+        public static let shutter = UIImage(named: "Shutter")
     }
     
     public enum Pretendard {
