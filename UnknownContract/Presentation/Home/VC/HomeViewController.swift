@@ -80,7 +80,7 @@ public class HomeViewController: BaseViewController {
         
         addSubViews()
         configureUI()
-        bindNoti()
+
     }
     
 
@@ -145,40 +145,15 @@ extension HomeViewController {
         
     }
     
-    private func bindNoti(){
-        NotificationCenter.default.rx
-                    .notification(.statusBarEnterDarkBackground)
-                    .subscribe(onNext: { [weak self] _ in
-                        self?.statusBarEnterDarkBackground()
-                    }).disposed(by: disposeBag)
-                
-        NotificationCenter.default.rx
-            .notification(.statusBarEnterLightBackground)
-            .subscribe(onNext: { [weak self] _ in
-                self?.statusBarEnterLightBackground()
-            }).disposed(by: disposeBag)
 
-    }
-    private func statusBarEnterLightBackground() {
 
-        UIView.animate(withDuration: 0.15) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-
-    private func statusBarEnterDarkBackground() {
-
-        UIView.animate(withDuration: 0.15) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
 }
 
 extension HomeViewController:DocumentButtonViewDelegate{
     public func action(document: Document) {
 
         let vc = self.customCameraComponent.makeView()
-        vc.modalPresentationStyle = .overFullScreen
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
 
     }

@@ -78,7 +78,7 @@ extension IntroViewController {
                     let show: Bool = !(permission ?? false)
                     guard show else { return }
                     let permission = self.permissionComponent.makeView()
-                    permission.modalPresentationStyle = .overFullScreen
+                permission.modalPresentationStyle =  .fullScreen
                     self.present(permission, animated: true)
             })
             .filter { return ($0 ?? false) == true }
@@ -88,7 +88,7 @@ extension IntroViewController {
         
         
         output.endIntro
-            .delay(.seconds(2), scheduler: MainScheduler.instance)
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self]  in
                 guard let self else {return}
 

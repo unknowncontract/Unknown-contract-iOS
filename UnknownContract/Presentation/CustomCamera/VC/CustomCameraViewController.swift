@@ -9,10 +9,14 @@ import UIKit
 import SnapKit
 import Then
 import AVFoundation
+import RxSwift
+import RxCocoa
 
 public class CustomCameraViewController: BaseViewController {
     
     let bgColor = UIColor.black.withAlphaComponent(0.6)
+    
+    let disposeBag = DisposeBag()
     
     lazy var statusEmptyView = UIView().then{
         $0.backgroundColor = bgColor
@@ -50,12 +54,16 @@ public class CustomCameraViewController: BaseViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.post(name: .statusBarEnterDarkBackground, object: nil)
+
         
         addSubViews()
         configureUI()
         
+        bind()
+        
+    }
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return  .lightContent
     }
 }
 
@@ -114,5 +122,18 @@ extension CustomCameraViewController{
             $0.width.height.equalTo(64)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func bind(){
+        
+        closeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                
+                guard let self else {return}
+                
+                self.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
