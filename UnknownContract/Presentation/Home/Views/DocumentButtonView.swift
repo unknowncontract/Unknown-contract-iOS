@@ -86,7 +86,7 @@ public extension DocumentButtonView {
         }
         
         imageView.image = image
-        label.attributedText = setBody1Style(text, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue900)
+        label.attributedText = setBody1Style(text, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue900,alignment: .center)
         
         
         button.snp.makeConstraints{

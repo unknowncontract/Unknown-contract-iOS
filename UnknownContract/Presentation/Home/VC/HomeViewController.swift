@@ -52,15 +52,19 @@ public class HomeViewController: BaseViewController {
         $0.delegate = self
     }
     
-    lazy var documentStack = UIStackView().then{
-        $0.axis = .horizontal
-        $0.alignment = .center
+    lazy var stackContainer = UIView().then{
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .white
+    }
+    
+    lazy var documentStack = UIStackView().then{
+        $0.alignment = .center
+        $0.axis = .horizontal
+      
         
-       // $0.layoutMargins = UIEdgeInsets(top: MARGIN(), left: MARGIN(), bottom: MARGIN(), right: MARGIN())
-        $0.distribution = .equalSpacing
-        //$0.spacing = 8
+        //$0.layoutMargins = UIEdgeInsets(top: MARGIN(), left: MARGIN(), bottom: MARGIN(), right: MARGIN())
+        $0.distribution = .fillEqually
+        $0.spacing = 8
         
         
     }
@@ -98,7 +102,9 @@ extension HomeViewController {
     
         self.view.addSubview(remindLabel)
         
-        self.view.addSubview(documentStack)
+        self.view.addSubview(stackContainer)
+        
+        self.stackContainer.addSubview(documentStack)
         self.documentStack.addArrangedSubview(documentButton1)
         self.documentStack.addArrangedSubview(documentButton2)
         self.documentStack.addArrangedSubview(documentButton3)
@@ -127,17 +133,26 @@ extension HomeViewController {
         
         remindLabel.snp.makeConstraints{
             
-            $0.top.equalTo(titleView.snp.bottom).offset(79)
+            $0.top.equalTo(titleView.snp.bottom).offset(32)
             $0.left.equalToSuperview().offset(MARGIN())
             $0.right.equalToSuperview()
+            
+        }
+        
+        
+        stackContainer.snp.makeConstraints{
+            
+            $0.top.equalTo(remindLabel.snp.bottom).offset(32)
+            $0.left.right.equalToSuperview().inset(20)
+            $0.height.equalTo(200) //TODO:  수정예쩡
             
         }
         
         documentStack.snp.makeConstraints{
             
             $0.left.right.equalToSuperview().inset(20)
-            $0.top.equalTo(remindLabel.snp.bottom).offset(24)
-            $0.bottom.equalToSuperview().inset(407)
+            
+            $0.bottom.top.equalToSuperview()    
         }
         
 

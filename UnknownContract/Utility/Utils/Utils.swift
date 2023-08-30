@@ -97,7 +97,7 @@ public func DEBUG_LOG(_ msg: Any, file: String = #file, function: String = #func
 fileprivate let letterSpacing:CGFloat = -0.4
 
 
-public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+public func setTitle1Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     
     let lineHeight:CGFloat = 44
@@ -105,6 +105,7 @@ public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAt
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
     
     // 행간  paragraphStyle.lineSpacing = 44
     
@@ -122,7 +123,7 @@ public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAt
     return attrText
 }
 
-public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+public func setTitle2Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     
     let lineHeight:CGFloat = 32
@@ -130,6 +131,7 @@ public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAt
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
     
     // 행간  paragraphStyle.lineSpacing = 32
     
@@ -147,7 +149,7 @@ public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAt
     return attrText
 }
 
-public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+public func setBody1Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
    
     
@@ -156,6 +158,7 @@ public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
     // 행간 paragraphStyle.lineSpacing = 22
     
     let attrText =  NSMutableAttributedString(
@@ -165,6 +168,7 @@ public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
                              .kern: letterSpacing,
                              .paragraphStyle: paragraphStyle,
                              .baselineOffset: (lineHeight - font.lineHeight) / 4
+
                 
                 ]
             )
@@ -172,7 +176,7 @@ public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     return attrText
 }
 
-public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+public func setBody2Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     
     
@@ -181,6 +185,7 @@ public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
     
     // 행간 paragraphStyle.lineSpacing = 20
     
@@ -198,7 +203,7 @@ public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     return attrText
 }
 
-public func setBody3Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+public func setBody3Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     
     
@@ -207,6 +212,7 @@ public func setBody3Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
     
     // 행간 paragraphStyle.lineSpacing = 17
     
