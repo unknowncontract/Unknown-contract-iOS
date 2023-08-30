@@ -31,4 +31,12 @@ public enum DesignSystemAsset {
         public static let clode = UIImage(named: "Close")
         public static let info = UIImage(named: "Info")
     }
+    
+    public enum Pretendard {
+        public static let title1 = UIFont(name: "Pretendard-Bold", size: 32)
+        public static let title2 = UIFont(name: "Pretendard-Medium", size: 24)
+        public static let body1 = UIFont(name: "Pretendard-Medium", size: 16)
+        public static let body2 = UIFont(name: "Pretendard-Regular", size: 14)
+        public static let body3 = UIFont(name: "Pretendard-Regular", size: 12)
+    }
 }

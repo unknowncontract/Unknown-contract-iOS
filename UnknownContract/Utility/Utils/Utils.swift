@@ -93,3 +93,93 @@ public func DEBUG_LOG(_ msg: Any, file: String = #file, function: String = #func
 }
 
 
+// Attribute
+fileprivate let letterSpacing:CGFloat = -0.4
+
+
+public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 44
+    
+    let attrText =  NSMutableAttributedString(
+                string: text,
+                attributes: [.font: DesignSystemAsset.Pretendard.title1!,
+                             .foregroundColor: color,
+                             .kern: letterSpacing,
+                             .paragraphStyle: paragraphStyle
+                
+                ]
+            )
+    
+    return attrText
+}
+
+public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 32
+    
+    let attrText =  NSMutableAttributedString(
+                string: text,
+                attributes: [.font: DesignSystemAsset.Pretendard.title2!,
+                             .foregroundColor: color,
+                             .kern: letterSpacing,
+                             .paragraphStyle: paragraphStyle
+                
+                ]
+            )
+    
+    return attrText
+}
+
+public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 22
+    
+    let attrText =  NSMutableAttributedString(
+                string: text,
+                attributes: [.font: DesignSystemAsset.Pretendard.body1!,
+                             .foregroundColor: color,
+                             .kern: letterSpacing,
+                             .paragraphStyle: paragraphStyle
+                
+                ]
+            )
+    
+    return attrText
+}
+
+public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 20
+    
+    let attrText =  NSMutableAttributedString(
+                string: text,
+                attributes: [.font: DesignSystemAsset.Pretendard.body2!,
+                             .foregroundColor: color,
+                             .kern: letterSpacing,
+                             .paragraphStyle: paragraphStyle
+                
+                ]
+            )
+    
+    return attrText
+}
+
+public func setBody3Style(_ text:String,textColor color:UIColor) -> NSMutableAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 17
+    
+    let attrText =  NSMutableAttributedString(
+                string: text,
+                attributes: [.font: DesignSystemAsset.Pretendard.body3!,
+                             .foregroundColor: color,
+                             .kern: letterSpacing,
+                             .paragraphStyle: paragraphStyle
+                
+                ]
+            )
+    
+    return attrText
+}
+
+
