@@ -29,16 +29,17 @@ public class DocumentButtonView: UIView {
     let disposeBag = DisposeBag()
     lazy var button = UIButton()
     lazy var label = UILabel()
+    lazy var imageView = UIImageView().then{
+        $0.contentMode = .scaleToFill
+    }
     
 
     init(document: Document){
         super.init(frame: .zero)
         self.document = document
-        DEBUG_LOG(document)
         self.addSubViews()
         self.setUp()
         self.event()
-       
     }
     
 
@@ -83,19 +84,24 @@ public extension DocumentButtonView {
             
         }
         
-        button.setImage(image, for: .normal)
+        imageView.image = image
         label.attributedText = setBody1Style(text, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue900)
         
         
         button.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        
+        imageView.snp.makeConstraints{
             $0.left.right.top.equalToSuperview()
             $0.width.equalTo(44)
             $0.height.equalTo(44)
         }
         
         label.snp.makeConstraints{
-            $0.top.equalTo(button.snp.bottom).offset(8)
-            $0.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(imageView.snp.bottom).offset(8)
+            $0.centerX.equalTo(imageView.snp.centerX)
+            $0.bottom.equalToSuperview()
         }
         
         
@@ -104,6 +110,7 @@ public extension DocumentButtonView {
     private func addSubViews(){
         self.addSubview(button)
         self.addSubview(label)
+        self.addSubview(imageView)
 
     }
     
