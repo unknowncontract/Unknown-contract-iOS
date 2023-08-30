@@ -22,4 +22,11 @@ public enum DesignSystemAsset {
         public static let antarcticBlue900 = UIColor(named: "AntarcticBlue900")
         public static let antarcticBlue1000 = UIColor(named: "AntarcticBlue1000")
     }
+    
+    public enum Icon {
+        public static let arrowRight = UIImage(named: "ArrowRihgt")
+        public static let arrowUp = UIImage(named: "ArrowUp")
+        public static let arrowDown = UIImage(named: "ArrowDown")
+        public static let info = UIImage(named: "Info")
+    }
 }
