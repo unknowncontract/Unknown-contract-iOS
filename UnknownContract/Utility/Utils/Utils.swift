@@ -101,7 +101,7 @@ public func setTitle1Style(_ text:String,textColor color:UIColor) -> NSMutableAt
     let paragraphStyle = NSMutableParagraphStyle()
     
     let lineHeight:CGFloat = 44
-    let font =  DesignSystemAsset.Pretendard.title1!
+    let font =  DesignSystemAsset.Pretendard.title1
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
@@ -126,7 +126,7 @@ public func setTitle2Style(_ text:String,textColor color:UIColor) -> NSMutableAt
     let paragraphStyle = NSMutableParagraphStyle()
     
     let lineHeight:CGFloat = 32
-    let font =  DesignSystemAsset.Pretendard.title2!
+    let font =  DesignSystemAsset.Pretendard.title2
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
@@ -152,7 +152,7 @@ public func setBody1Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
    
     
     let lineHeight:CGFloat = 22
-    let font =  DesignSystemAsset.Pretendard.body1!
+    let font =  DesignSystemAsset.Pretendard.body1
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
@@ -177,7 +177,7 @@ public func setBody2Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     
     
     let lineHeight:CGFloat = 20
-    let font =  DesignSystemAsset.Pretendard.body2!
+    let font =  DesignSystemAsset.Pretendard.body2
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
@@ -203,7 +203,7 @@ public func setBody3Style(_ text:String,textColor color:UIColor) -> NSMutableAtt
     
     
     let lineHeight:CGFloat = 17
-    let font =  DesignSystemAsset.Pretendard.body3!
+    let font =  DesignSystemAsset.Pretendard.body3
     
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
