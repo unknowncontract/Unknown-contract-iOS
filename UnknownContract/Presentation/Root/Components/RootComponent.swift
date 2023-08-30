@@ -11,7 +11,7 @@ public final class RootComponent: Component<RootDependency> {
     
     
     public func makeView() -> IntroViewController {
-        return IntroViewController(permissionComponent: dependency.permissionComponent)
+        return IntroViewController(permissionComponent: dependency.permissionComponent,viewModel: IntroViewModel())
         
     }
 }

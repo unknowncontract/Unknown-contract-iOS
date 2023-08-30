@@ -17,7 +17,7 @@ public final class PreferenceManager {
         case appPermission // 앱 사용
     }
     
-    @UserDefaultWrapper(key: Constants.appPermission.rawValue, defaultValue: false)
+    @UserDefaultWrapper(key: Constants.appPermission.rawValue, defaultValue: nil)
     public static var appPermission: Bool?
     
 }
