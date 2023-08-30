@@ -13,6 +13,9 @@ import RxSwift
 
 public class HomeViewController: BaseViewController {
     
+    var customCameraComponent:CustomCameraComponent!
+    
+    let disposeBag = DisposeBag()
     
     lazy var titleView = UIView().then{
         $0.backgroundColor = .clear
@@ -41,16 +44,43 @@ public class HomeViewController: BaseViewController {
         $0.delegate = self
     }
     
-   
+    lazy var documentButton2 = DocumentButtonView(document: .d2).then{
+        $0.delegate = self
+    }
     
-
+    lazy var documentButton3 = DocumentButtonView(document: .d3).then{
+        $0.delegate = self
+    }
     
+    lazy var documentStack = UIStackView().then{
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .white
+        
+       // $0.layoutMargins = UIEdgeInsets(top: MARGIN(), left: MARGIN(), bottom: MARGIN(), right: MARGIN())
+        $0.distribution = .equalSpacing
+        //$0.spacing = 8
+        
+        
+    }
+    
+    
+    init(customCameraComponent:CustomCameraComponent){
+        super.init(nibName: nil, bundle: nil)
+        self.customCameraComponent = customCameraComponent
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         addSubViews()
         configureUI()
+        bindNoti()
     }
     
 
@@ -61,12 +91,19 @@ extension HomeViewController {
     
     func addSubViews(){
         self.view.addSubview(titleView)
-        self.view.addSubview(remindLabel)
-        
         self.titleView.addSubview(baseLine)
         self.titleView.addSubview(titleLabel)
         
-        self.view.addSubview(documentButton1)
+        
+    
+        self.view.addSubview(remindLabel)
+        
+        self.view.addSubview(documentStack)
+        self.documentStack.addArrangedSubview(documentButton1)
+        self.documentStack.addArrangedSubview(documentButton2)
+        self.documentStack.addArrangedSubview(documentButton3)
+        
+        
     }
     
     func configureUI(){
@@ -96,17 +133,54 @@ extension HomeViewController {
             
         }
         
-        documentButton1.snp.makeConstraints{
-            $0.center.equalToSuperview()
+        documentStack.snp.makeConstraints{
+            
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalTo(remindLabel.snp.bottom).offset(24)
+            $0.bottom.equalToSuperview().inset(407)
         }
         
+
         
+        
+    }
+    
+    private func bindNoti(){
+        NotificationCenter.default.rx
+                    .notification(.statusBarEnterDarkBackground)
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.statusBarEnterDarkBackground()
+                    }).disposed(by: disposeBag)
+                
+        NotificationCenter.default.rx
+            .notification(.statusBarEnterLightBackground)
+            .subscribe(onNext: { [weak self] _ in
+                self?.statusBarEnterLightBackground()
+            }).disposed(by: disposeBag)
+
+    }
+    private func statusBarEnterLightBackground() {
+
+        UIView.animate(withDuration: 0.15) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
+    private func statusBarEnterDarkBackground() {
+
+        UIView.animate(withDuration: 0.15) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 }
 
 extension HomeViewController:DocumentButtonViewDelegate{
     public func action(document: Document) {
-        DEBUG_LOG(document)
+
+        let vc = self.customCameraComponent.makeView()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true)
+
     }
     
 }

@@ -16,7 +16,7 @@ public class IntroViewController: BaseViewController {
     
     var permissionComponent: PermissionComponent!
     var homeComponent: HomeComponent!
-    
+
     let disposeBag = DisposeBag()
     
     private var viewModel:IntroViewModel!
@@ -48,6 +48,7 @@ public class IntroViewController: BaseViewController {
         configureUI()
         outputBind()
         inputBind()
+
     }
     
     
@@ -99,8 +100,11 @@ extension IntroViewController {
             })
             .disposed(by: disposeBag)
         }
+    
+
         
-    }
+}
+
 
 
 

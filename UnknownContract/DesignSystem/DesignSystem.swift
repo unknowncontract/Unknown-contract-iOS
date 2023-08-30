@@ -28,7 +28,8 @@ public enum DesignSystemAsset {
         public static let arrowUp = UIImage(named: "ArrowUp")!
         public static let arrowDown = UIImage(named: "ArrowDown")!
         public static let arrowLeft = UIImage(named: "ArrowLeft")!
-        public static let clode = UIImage(named: "Close")!
+        public static let close = UIImage(named: "Close")!
+        public static let whiteClose = UIImage(named: "WhiteClose")!
         public static let info = UIImage(named: "Info")!
     }
     

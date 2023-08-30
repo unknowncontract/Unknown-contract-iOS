@@ -30,7 +30,7 @@ public class DocumentButtonView: UIView {
     lazy var button = UIButton()
     lazy var label = UILabel()
     lazy var imageView = UIImageView().then{
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFit
     }
     
 
@@ -40,6 +40,7 @@ public class DocumentButtonView: UIView {
         self.addSubViews()
         self.setUp()
         self.event()
+       
     }
     
 
@@ -76,7 +77,7 @@ public extension DocumentButtonView {
             text = "임대차계약서"
             
         case .d2:
-            image = UIImage(systemName: "home")!
+            image = UIImage(systemName: "house")!
             text = "등기부등본"
         case .d3:
             image = UIImage(systemName: "person")!
@@ -93,14 +94,15 @@ public extension DocumentButtonView {
         }
         
         imageView.snp.makeConstraints{
-            $0.left.right.top.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.centerX.equalTo(label.snp.centerX)
             $0.width.equalTo(44)
             $0.height.equalTo(44)
         }
         
         label.snp.makeConstraints{
             $0.top.equalTo(imageView.snp.bottom).offset(8)
-            $0.centerX.equalTo(imageView.snp.centerX)
+            $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
