@@ -17,27 +17,20 @@ public class HomeViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    lazy var titleView = UIView().then{
-        $0.backgroundColor = .clear
+
+    lazy var remindLabel1 = UILabel().then{
+        
+        $0.attributedText = setTitle2Style("계약 전", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100.withAlphaComponent(0.4),alignment: .center)
     }
     
-    lazy var baseLine = UIView().then{
+    lazy var remindLabel2 = UILabel().then{
         
-        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue300
-    }
-    
-    lazy var titleLabel = UILabel().then{
-        
-        $0.attributedText = setBody1Style("모르는계약", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
+        $0.attributedText = setTitle1Style("확인하셨나요?", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
         
     }
     
-    lazy var remindLabel = UILabel().then{
-        
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-        $0.attributedText = setTitle2Style("계약 전\n확인하셨나요?", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
-        
+    lazy var commentLabel = UILabel().then{
+        $0.attributedText = setBody2Style("확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
     }
     
     lazy var documentButton1 = DocumentButtonView(document: .d1).then{
@@ -106,13 +99,12 @@ public class HomeViewController: BaseViewController {
 extension HomeViewController {
     
     func addSubViews(){
-        self.view.addSubview(titleView)
-        self.titleView.addSubview(baseLine)
-        self.titleView.addSubview(titleLabel)
+
         
         
-    
-        self.view.addSubview(remindLabel)
+        self.view.addSubview(remindLabel1)
+        self.view.addSubview(remindLabel2)
+        self.view.addSubview(commentLabel)
         self.view.addSubview(stackContainer)
         self.view.addSubview(courtView)
         self.view.addSubview(govView)
@@ -129,35 +121,29 @@ extension HomeViewController {
     
     func configureUI(){
         
-        titleView.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+        
+        remindLabel1.snp.makeConstraints{
+            $0.top.equalToSuperview().inset(60)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(48)
+            
         }
         
-        baseLine.snp.makeConstraints{
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(1)
+        remindLabel2.snp.makeConstraints{
+            
+            $0.top.equalTo(remindLabel1.snp.bottom).offset(4)
             $0.left.right.equalToSuperview()
+            
         }
         
-        titleLabel.snp.makeConstraints{
-            $0.center.equalToSuperview()
-        }
-
-        
-        remindLabel.snp.makeConstraints{
-            
-            $0.top.equalTo(titleView.snp.bottom).offset(32)
-            $0.left.equalToSuperview().offset(MARGIN())
-            $0.right.equalToSuperview()
-            
+        commentLabel.snp.makeConstraints{
+            $0.top.equalTo(remindLabel2.snp.bottom).offset(24)
+            $0.left.right.equalToSuperview()
         }
         
         
         stackContainer.snp.makeConstraints{
             
-            $0.top.equalTo(remindLabel.snp.bottom).offset(32)
+            $0.top.equalTo(commentLabel.snp.bottom).offset(32)
             $0.left.right.equalToSuperview().inset(20)
             $0.height.equalTo(140) //TODO:  수정예쩡
             
@@ -172,12 +158,12 @@ extension HomeViewController {
         
         
         courtView.snp.makeConstraints{
+            $0.top.equalTo(documentStack.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(20)
-            $0.bottom.equalTo(govView.snp.top).offset(-10)
         }
         
         govView.snp.makeConstraints{
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
+            $0.top.equalTo(courtView.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(20)
         }
         

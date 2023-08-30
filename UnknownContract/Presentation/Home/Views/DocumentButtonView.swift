@@ -73,14 +73,14 @@ public extension DocumentButtonView {
         switch document{
 
         case .d1:
-            image = UIImage(systemName: "heart")!
+            image = DesignSystemAsset.Icon.home
             text = "임대차계약서"
             
         case .d2:
-            image = UIImage(systemName: "house")!
+            image = DesignSystemAsset.Icon.attached
             text = "등기부등본"
         case .d3:
-            image = UIImage(systemName: "person")!
+            image = DesignSystemAsset.Icon.techtonics
             text = "건축물대장"
             
         }

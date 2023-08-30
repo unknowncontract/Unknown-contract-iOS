@@ -108,6 +108,9 @@ extension GovernmentButtonView {
             $0.right.equalToSuperview().inset(24)
         }
         
+        button.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
         
         
         
@@ -118,6 +121,7 @@ extension GovernmentButtonView {
         button.rx.tap
             .withUnretained(self)
             .subscribe(onNext: { (owner,_) in
+                
                 owner.delegate?.action(gov: owner.gov!)
             })
             .disposed(by: disposeBag)
