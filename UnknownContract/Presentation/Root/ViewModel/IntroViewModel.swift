@@ -15,13 +15,13 @@ final class IntroViewModel {
     
     
     public struct Input {
-        var fetchPermissionCheck:PublishSubject<Void> = PublishSubject()
-        
+        var fetchInitPermissionCheck:PublishSubject<Void> = PublishSubject()
+        var fetchFinalPermissionCheck:PublishSubject<Void> = PublishSubject()
     }
     
     public struct Output{
         var permissionResult:PublishSubject<Bool?> = PublishSubject()
-        var endIntro:PublishSubject<Bool?> = PublishSubject()
+        var endIntro:PublishSubject<Void> = PublishSubject()
     }
     
     
@@ -29,13 +29,25 @@ final class IntroViewModel {
         
         let output = Output()
         
-        Observable.combineLatest(input.fetchPermissionCheck, PreferenceManager.$appPermission){ (_,permission) -> Bool? in
+        Observable.combineLatest(input.fetchInitPermissionCheck, PreferenceManager.$appPermission){ (_,permission) -> Bool? in
     
             return permission
         }
         .bind(to: output.permissionResult)
         .disposed(by: disposeBag)
         
+        
+    
+        input.fetchFinalPermissionCheck
+            .filter({
+                // 구구님께 질문
+                guard let permission = PreferenceManager.appPermission else { return false }
+                
+                return permission
+            })
+            .map{ _ in ()}
+            .bind(to: output.endIntro)
+            .disposed(by: disposeBag)
         
         
         

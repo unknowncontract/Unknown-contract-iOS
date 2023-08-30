@@ -46,9 +46,7 @@ public class CircleDashBoardView: UIView {
         super.init(frame: frame)
         addSubViews()
         setUp()
-    
-        DEBUG_LOG("INIT")
-        print(center)
+
     }
     
     required init?(coder: NSCoder) {

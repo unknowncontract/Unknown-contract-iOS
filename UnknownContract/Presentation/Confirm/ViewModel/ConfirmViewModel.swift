@@ -78,7 +78,7 @@ final class ConfirmViewModel {
                 guard let self else {return}
                 //TODO: 서버 연결하기 
                 DEBUG_LOG(text)
-                DEBUG_LOG(imageSource)
+
                 
             })
             .disposed(by: disposeBag)

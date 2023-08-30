@@ -254,7 +254,7 @@ extension ConfirmViewController {
                 var possibleLanguages: Array<String> = []
                 possibleLanguages = try request.supportedRecognitionLanguages()
             } catch {
-                print("Error getting the supported languages.")
+                DEBUG_LOG("Error getting the supported languages.")
             }
         } else {
             // Fallback on earlier versions

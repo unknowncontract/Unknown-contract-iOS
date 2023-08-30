@@ -10,16 +10,19 @@ import SnapKit
 import Then
 import RxSwift
 
-public class PermissionViewController: UIViewController {
+public class PermissionViewController: BaseViewController {
 
     let disposeBag = DisposeBag()
     
     lazy var button = UIButton().then{
+        $0.backgroundColor = .black
         $0.setTitle("허용", for: .normal)
     }
     
     
     public override func viewDidLoad() {
+        
+        DEBUG_LOG("PERM")
         super.viewDidLoad()
         addSubViews()
         configureUI()
@@ -52,7 +55,7 @@ extension PermissionViewController {
                 
                 PreferenceManager.appPermission = true
                 
-                self.dismiss(animated: true)
+                self.dismiss(animated: false)
                 
             })
             .disposed(by:disposeBag )

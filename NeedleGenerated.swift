@@ -17,9 +17,23 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 
 #if !NEEDLE_DYNAMIC
 
+private class HomeDependency6a4768fde0821c25ee2fProvider: HomeDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->APPComponent->HomeComponent
+private func factorya2f9f0db50be357ca85be3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return HomeDependency6a4768fde0821c25ee2fProvider()
+}
 private class RootDependency42ce9302f32437bf7962Provider: RootDependency {
     var permissionComponent: PermissionComponent {
         return aPPComponent.permissionComponent
+    }
+    var homeComponent: HomeComponent {
+        return aPPComponent.homeComponent
     }
     private let aPPComponent: APPComponent
     init(aPPComponent: APPComponent) {
@@ -54,9 +68,15 @@ extension APPComponent: Registration {
 
     }
 }
+extension HomeComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension RootComponent: Registration {
     public func registerItems() {
         keyPathToName[\RootDependency.permissionComponent] = "permissionComponent-PermissionComponent"
+        keyPathToName[\RootDependency.homeComponent] = "homeComponent-HomeComponent"
     }
 }
 extension PermissionComponent: Registration {
@@ -82,6 +102,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 @inline(never) private func register1() {
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->APPComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->APPComponent->HomeComponent", factorya2f9f0db50be357ca85be3b0c44298fc1c149afb)
     registerProviderFactory("^->APPComponent->RootComponent", factory9efd9cab81bfb71851d76684ac6e6465fdd85074)
     registerProviderFactory("^->APPComponent->PermissionComponent", factory746bb6c0e6f49b95a2e0e3b0c44298fc1c149afb)
 }

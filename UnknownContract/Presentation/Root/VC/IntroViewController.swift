@@ -12,9 +12,10 @@ import Then
 import RxSwift
 import RxCocoa
 
-public class IntroViewController: UIViewController {
+public class IntroViewController: BaseViewController {
     
     var permissionComponent: PermissionComponent!
+    var homeComponent: HomeComponent!
     
     let disposeBag = DisposeBag()
     
@@ -29,8 +30,9 @@ public class IntroViewController: UIViewController {
     }
     
     
-    init(permissionComponent: PermissionComponent,viewModel:IntroViewModel) {
+    init(permissionComponent: PermissionComponent,homeComponent:HomeComponent,viewModel:IntroViewModel) {
         self.permissionComponent = permissionComponent
+        self.homeComponent = homeComponent
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
@@ -64,7 +66,7 @@ extension IntroViewController {
     }
     
     private func inputBind() {
-           input.fetchPermissionCheck.onNext(())
+           input.fetchInitPermissionCheck.onNext(())
        }
     
     private func outputBind(){
@@ -73,24 +75,28 @@ extension IntroViewController {
             .do(onNext: { [weak self] (permission) in
                     guard let self = self else { return }
                     let show: Bool = !(permission ?? false)
-                    DEBUG_LOG(show)
                     guard show else { return }
                     let permission = self.permissionComponent.makeView()
-                    permission.modalTransitionStyle = .crossDissolve
                     permission.modalPresentationStyle = .overFullScreen
                     self.present(permission, animated: true)
             })
             .filter { return ($0 ?? false) == true }
-            .bind(to: output.endIntro)
+            .map{ _ in ()}
+            .bind(to: input.fetchFinalPermissionCheck)
             .disposed(by: disposeBag)
         
         
         output.endIntro
             .delay(.seconds(2), scheduler: MainScheduler.instance)
-            .subscribe { [weak self] _  in
+            .subscribe(onNext: { [weak self]  in
+                guard let self else {return}
+
                 
-                self?.navigationController?.pushViewController(UIViewController(), animated: false)
-            }
+                let home = self.homeComponent.makeView()
+                
+                self.navigationController?.pushViewController(home, animated: false)
+                
+            })
             .disposed(by: disposeBag)
         }
         
