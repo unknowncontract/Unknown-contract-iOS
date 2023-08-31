@@ -9,6 +9,6 @@ import Foundation
 
 public extension Notification.Name {
     
-    static let statusBarEnterDarkBackground = Notification.Name("statusBarEnterDarkBackground")
-    static let statusBarEnterLightBackground = Notification.Name("statusBarEnterLightBackground")
+    static let gptAnsewr = Notification.Name("gptAnsewr")
+
 }

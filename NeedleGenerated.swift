@@ -21,6 +21,9 @@ private class HomeDependency6a4768fde0821c25ee2fProvider: HomeDependency {
     var confirmComponent: ConfirmComponent {
         return aPPComponent.confirmComponent
     }
+    var resultComponent: ResultComponent {
+        return aPPComponent.resultComponent
+    }
     private let aPPComponent: APPComponent
     init(aPPComponent: APPComponent) {
         self.aPPComponent = aPPComponent
@@ -29,6 +32,17 @@ private class HomeDependency6a4768fde0821c25ee2fProvider: HomeDependency {
 /// ^->APPComponent->HomeComponent
 private func factorya2f9f0db50be357ca85b6684ac6e6465fdd85074(_ component: NeedleFoundation.Scope) -> AnyObject {
     return HomeDependency6a4768fde0821c25ee2fProvider(aPPComponent: parent1(component) as! APPComponent)
+}
+private class ResultDependenvy4793e3474137db83a995Provider: ResultDependenvy {
+
+
+    init() {
+
+    }
+}
+/// ^->APPComponent->ResultComponent
+private func factory9658e9585f10fd5f8c64e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ResultDependenvy4793e3474137db83a995Provider()
 }
 private class CustomCameraDependencyb005a80e3a9dddafe7cfProvider: CustomCameraDependency {
 
@@ -97,6 +111,12 @@ extension APPComponent: Registration {
 extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.confirmComponent] = "confirmComponent-ConfirmComponent"
+        keyPathToName[\HomeDependency.resultComponent] = "resultComponent-ResultComponent"
+    }
+}
+extension ResultComponent: Registration {
+    public func registerItems() {
+
     }
 }
 extension CustomCameraComponent: Registration {
@@ -139,6 +159,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->APPComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->APPComponent->HomeComponent", factorya2f9f0db50be357ca85b6684ac6e6465fdd85074)
+    registerProviderFactory("^->APPComponent->ResultComponent", factory9658e9585f10fd5f8c64e3b0c44298fc1c149afb)
     registerProviderFactory("^->APPComponent->CustomCameraComponent", factorye700d9ab4cf1759d7c60e3b0c44298fc1c149afb)
     registerProviderFactory("^->APPComponent->ConfirmComponent", factory2098926d2a8f9bf54d536684ac6e6465fdd85074)
     registerProviderFactory("^->APPComponent->RootComponent", factory9efd9cab81bfb71851d76684ac6e6465fdd85074)

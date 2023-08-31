@@ -16,6 +16,8 @@ public class HomeViewController: BaseViewController {
     
     var confirmComponent:ConfirmComponent!
     
+    var resultComponent:ResultComponent!
+    
     let disposeBag = DisposeBag()
     
     lazy var gradientView = UIView()
@@ -78,9 +80,10 @@ public class HomeViewController: BaseViewController {
     }
     
     
-    init(confirmComponent:ConfirmComponent){
+    init(confirmComponent:ConfirmComponent,resultComponent:ResultComponent){
         super.init(nibName: nil, bundle: nil)
         self.confirmComponent = confirmComponent
+        self.resultComponent = resultComponent
     }
     
     required init?(coder: NSCoder) {
@@ -92,6 +95,7 @@ public class HomeViewController: BaseViewController {
         
         addSubViews()
         configureUI()
+        bind()
 
     }
     
@@ -176,7 +180,7 @@ extension HomeViewController {
             
             $0.top.equalTo(commentLabel.snp.bottom).offset(32)
             $0.left.right.equalToSuperview().inset(20)
-            $0.height.equalTo(140) //TODO:  수정예쩡
+            $0.height.equalTo(140) 
             
         }
         
@@ -203,6 +207,25 @@ extension HomeViewController {
         
     }
     
+    func bind(){
+
+        NotificationCenter.default.rx
+            .notification(.gptAnsewr)
+            .subscribe(onNext: {[weak self] notification in
+                
+                guard let result = notification.object as? BaseMessage else { return }
+                
+                guard let self else {return}
+                
+                let vc = self.resultComponent.makeView(message: result.message)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func openSafari(gov:Government){
         
         var appURL:URL?
@@ -224,6 +247,8 @@ extension HomeViewController {
         self.present(safariViewController, animated: true, completion: nil)
         
     }
+    
+    
     
 
 

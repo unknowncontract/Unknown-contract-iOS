@@ -11,13 +11,14 @@ import NeedleFoundation
 public protocol HomeDependency: Dependency {
    
     var confirmComponent: ConfirmComponent {get}
+    var resultComponent: ResultComponent {get}
 }
 
 public final class HomeComponent: Component<HomeDependency> {
     
 
     public func makeView() -> HomeViewController {
-        return HomeViewController(confirmComponent: dependency.confirmComponent)
+        return HomeViewController(confirmComponent: dependency.confirmComponent,resultComponent: dependency.resultComponent)
         
     }
 }

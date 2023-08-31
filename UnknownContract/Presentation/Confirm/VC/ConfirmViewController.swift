@@ -229,7 +229,7 @@ extension ConfirmViewController {
                 
                 guard let self else {return}
                 
-                self.lottieStop()
+                self.stopLottie(result: message)
                 DEBUG_LOG(message)
             }
             .disposed(by: disposeBag)
@@ -239,14 +239,14 @@ extension ConfirmViewController {
                 
                 guard let self else {return}
                 
-                self.lottiePlay()
+                self.playLottie()
                 
                 
             })
             .disposed(by: disposeBag)
     }
     
-    private func lottiePlay(){
+    private func playLottie(){
         lottieView.frame = self.view.frame
         loadingView.isHidden = false
         
@@ -255,10 +255,15 @@ extension ConfirmViewController {
         lottieView.play()
     }
     
-    private func lottieStop(){
+    private func stopLottie(result:BaseMessage){
         
         lottieView.stop()
         loadingView.isHidden = true
+        
+        //TODO: 순서가 좀 잘못 됨..
+        NotificationCenter.default.post(name: .gptAnsewr, object: result) // 결과 보내기 -> 홈으로
+        self.navigationController?.popViewController(animated: false)
+            
     }
     
     // 실질적인 동장
@@ -361,6 +366,7 @@ extension ConfirmViewController {
     
     ///OCR
     func reconizeText(image:UIImage?) {
+        self.output.startLottie.accept(())
         guard let cgImage = image?.cgImage else {
             fatalError("could not get image")
         }
@@ -379,8 +385,7 @@ extension ConfirmViewController {
             let text = observations.compactMap({
                 $0.topCandidates(1).first?.string
             }).joined(separator: "\n")
-            DEBUG_LOG(text)
-            self.output.startLottie.accept(())
+            
             self.input.resultText.accept(text) // 최종 OCR 결과
         }
         
