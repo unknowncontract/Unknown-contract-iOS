@@ -53,6 +53,12 @@ public class ResultViewController: BaseViewController {
         $0.attributedText = setBody2Style("꼼꼼하게 점검해보세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
     }
     
+    lazy var dashBoardContainerView = UIView().then{
+        $0.backgroundColor = .white
+    }
+    
+    lazy var circleDashBoard = CircleDashBoardView()
+    
     lazy var dummyView = UIView().then{
         $0.backgroundColor = .blue
     }
@@ -90,7 +96,7 @@ extension ResultViewController {
     private func addSubViews(){
         self.view.addSubview(navigationBarView)
         self.view.addSubview(scrollView)
-
+        
         
         self.navigationBarView.addSubview(backButton)
         self.navigationBarView.addSubview(navigationTitleLabel)
@@ -102,10 +108,14 @@ extension ResultViewController {
         
         self.scrollView.addSubview(stackView)
         self.stackView.addArrangedSubview(topLabelContainerView)
+        self.stackView.addArrangedSubview(dashBoardContainerView)
         self.stackView.addArrangedSubview(dummyView)
         
         self.topLabelContainerView.addSubview(titleLabel)
         self.topLabelContainerView.addSubview(remindLabel)
+        
+        
+        self.dashBoardContainerView.addSubview(circleDashBoard)
         
         
     }
@@ -156,10 +166,20 @@ extension ResultViewController {
             
         }
         
+        dashBoardContainerView.snp.makeConstraints{
+            $0.height.equalTo(244)
+        }
+        
+        circleDashBoard.snp.makeConstraints{
+            $0.center.equalToSuperview()
+        }
+        
         dummyView.snp.makeConstraints{
             $0.height.equalTo(800)
             $0.left.right.equalToSuperview()
         }
+        
+        
         
     }
     

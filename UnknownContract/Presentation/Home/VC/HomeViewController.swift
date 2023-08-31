@@ -194,14 +194,14 @@ extension HomeViewController {
         stackContainer.snp.makeConstraints{
             
             $0.top.equalTo(commentLabel.snp.bottom).offset(32)
-            $0.left.right.equalToSuperview().inset(20)
+            $0.left.right.equalToSuperview().inset(MARGIN())
             $0.height.equalTo(140) 
             
         }
         
         documentStack.snp.makeConstraints{
             
-            $0.left.right.equalToSuperview().inset(20)
+            $0.left.right.equalToSuperview().inset(MARGIN())
             
             $0.bottom.top.equalToSuperview()    
         }
@@ -220,17 +220,17 @@ extension HomeViewController {
         optionTitleLabel.snp.makeConstraints{
             $0.top.equalTo(stackContainer.snp.bottom).offset(50)
             
-            $0.left.right.equalToSuperview().inset(20)
+            $0.left.right.equalToSuperview().inset(MARGIN())
         }
         
         courtView.snp.makeConstraints{
             $0.top.equalTo(optionTitleLabel.snp.bottom).offset(12)
-            $0.left.right.equalToSuperview().inset(20)
+            $0.left.right.equalToSuperview().inset(MARGIN())
         }
         
         govView.snp.makeConstraints{
             $0.top.equalTo(courtView.snp.bottom).offset(10)
-            $0.left.right.equalToSuperview().inset(20)
+            $0.left.right.equalToSuperview().inset(MARGIN())
         }
         
         
