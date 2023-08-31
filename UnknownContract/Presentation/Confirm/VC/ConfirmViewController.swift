@@ -49,6 +49,8 @@ public final class ConfirmViewController: BaseViewController {
     
     
     
+    
+    
     init(viewModel:ConfirmViewModel){
         self.viewModel = viewModel
         
@@ -67,6 +69,11 @@ public final class ConfirmViewController: BaseViewController {
         configureUI()
         bind()
     }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+           super.viewDidAppear(animated)
+           navigationController?.interactivePopGestureRecognizer?.delegate = nil
+       }
     
 
 }
@@ -111,8 +118,20 @@ extension ConfirmViewController {
     }
     
     private func bind(){
-
+        backButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,_) in
+                
+                owner.navigationController?.popViewController(animated: true)
+                
+            })
+            .disposed(by: disposeBag)
     }
+    
+    
+    // 실질적인 동장
+    
+    
     private func openDoucument(){
         let supportedTypes: [UTType] = [UTType.pdf]
         let pickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
