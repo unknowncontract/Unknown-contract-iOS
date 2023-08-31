@@ -56,6 +56,17 @@ public final class ConfirmViewController: BaseViewController {
         $0.attributedText = setBody2Style("계약서에 명시된 특약사항 중 임차인에게\n불리한 내용이 있는지 검토합니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
     }
     
+    lazy var cameraFunctionButtonView = FunctionView(function: .camera).then{
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .white
+        $0.delegate = self
+    }
+    lazy var uploadFunctionButtonView = FunctionView(function: .upload).then{
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .white
+        $0.delegate = self
+    }
+    
     init(viewModel:ConfirmViewModel){
         self.viewModel = viewModel
         
@@ -93,6 +104,9 @@ extension ConfirmViewController {
     
         self.view.addSubview(titleLabel)
         self.view.addSubview(descriptionLabel)
+        
+        self.view.addSubview(cameraFunctionButtonView)
+        self.view.addSubview(uploadFunctionButtonView)
     }
     
     
@@ -129,7 +143,16 @@ extension ConfirmViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(6)
             $0.left.right.equalToSuperview().inset(20)
         }
-
+        
+        cameraFunctionButtonView.snp.makeConstraints{
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(60)
+            $0.centerX.equalToSuperview()
+        }
+        
+        uploadFunctionButtonView.snp.makeConstraints{
+            $0.top.equalTo(cameraFunctionButtonView.snp.bottom).offset(24)
+            $0.centerX.equalToSuperview()
+        }
         
 
     }
@@ -299,6 +322,22 @@ extension ConfirmViewController {
     }
     
     
+    
+    
+}
+
+
+extension ConfirmViewController:FunctionViewViewDelegate {
+    public func action(function: Function) {
+        
+        switch function{
+            
+        case .camera:
+            DEBUG_LOG("CA")
+        case .upload:
+            DEBUG_LOG("UP")
+        }
+    }
     
     
 }
