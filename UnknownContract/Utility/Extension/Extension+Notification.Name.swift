@@ -9,6 +9,6 @@ import Foundation
 
 public extension Notification.Name {
     
-    static let gptAnsewr = Notification.Name("gptAnsewr")
+    static let gptAnswer = Notification.Name("gptAnswer")
 
 }

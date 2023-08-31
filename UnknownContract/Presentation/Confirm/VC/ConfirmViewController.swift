@@ -261,8 +261,8 @@ extension ConfirmViewController {
         loadingView.isHidden = true
         
         //TODO: 순서가 좀 잘못 됨..
-        NotificationCenter.default.post(name: .gptAnsewr, object: result) // 결과 보내기 -> 홈으로
-        self.navigationController?.popViewController(animated: false)
+        NotificationCenter.default.post(name: .gptAnswer, object: result) // 결과 보내기 -> 홈으로
+        
             
     }
     

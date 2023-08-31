@@ -210,12 +210,14 @@ extension HomeViewController {
     func bind(){
 
         NotificationCenter.default.rx
-            .notification(.gptAnsewr)
+            .notification(.gptAnswer)
             .subscribe(onNext: {[weak self] notification in
                 
                 guard let result = notification.object as? BaseMessage else { return }
                 
                 guard let self else {return}
+                
+                self.navigationController?.popViewController(animated: false)
                 
                 let vc = self.resultComponent.makeView(message: result.message)
                 
