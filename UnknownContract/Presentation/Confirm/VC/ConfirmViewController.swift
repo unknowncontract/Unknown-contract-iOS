@@ -208,8 +208,9 @@ extension ConfirmViewController {
             $0.left.right.equalToSuperview()
             $0.top.equalTo(confirmLabel.snp.bottom).offset(8)
         }
-
-        lottiePlay()    
+        
+        loadingView.isHidden = true
+           
     }
     
     private func bind(){
@@ -221,15 +222,43 @@ extension ConfirmViewController {
                 
             })
             .disposed(by: disposeBag)
+        
+        
+        output.answerText
+            .subscribe { [weak self] message in
+                
+                guard let self else {return}
+                
+                self.lottieStop()
+                DEBUG_LOG(message)
+            }
+            .disposed(by: disposeBag)
+        
+        output.startLottie
+            .subscribe(onNext: { [weak self] in
+                
+                guard let self else {return}
+                
+                self.lottiePlay()
+                
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     private func lottiePlay(){
+        lottieView.frame = self.view.frame
+        loadingView.isHidden = false
         
-      
-        lottieView.frame = self.view.bounds
       
 
         lottieView.play()
+    }
+    
+    private func lottieStop(){
+        
+        lottieView.stop()
+        loadingView.isHidden = true
     }
     
     // 실질적인 동장
@@ -351,7 +380,7 @@ extension ConfirmViewController {
                 $0.topCandidates(1).first?.string
             }).joined(separator: "\n")
             DEBUG_LOG(text)
-            
+            self.output.startLottie.accept(())
             self.input.resultText.accept(text) // 최종 OCR 결과
         }
         

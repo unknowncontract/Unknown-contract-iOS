@@ -39,7 +39,8 @@ final class ConfirmViewModel {
     struct Output{
         
         
-        let indicatorState:PublishRelay<Bool> = .init()
+        let startLottie:PublishRelay<Void> = .init()
+        let answerText:PublishRelay<BaseMessage> = .init()
         
     }
     
@@ -52,14 +53,15 @@ final class ConfirmViewModel {
         
         
         input.resultText
-            .subscribe(onNext: { [weak self] text in
+            .flatMap({[weak self] text -> Observable<BaseMessage> in
                 
-                guard let self else {return}
-                //TODO: 서버 연결하기 
-                DEBUG_LOG(text)
-
+                guard let self else {return Observable.empty()}
                 
+                return self.fetchGptAnswerUseCase
+                    .execute(question: text)
+                    .asObservable()
             })
+            .bind(to: output.answerText)
             .disposed(by: disposeBag)
         
 
