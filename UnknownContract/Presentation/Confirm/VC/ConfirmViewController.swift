@@ -15,7 +15,7 @@ import RxCocoa
 import RxSwift
 import PDFKit
 
-public final class ConfirmViewController: UIViewController {
+public final class ConfirmViewController: BaseViewController {
     
     
     let disposeBag = DisposeBag()
@@ -28,22 +28,7 @@ public final class ConfirmViewController: UIViewController {
     
     lazy var output = viewModel.transform(input: input)
     
-    lazy var cameraButton = UIButton().then{
-        
-        $0.setTitle("Camera", for: .normal)
-        
-    }
-    
-    lazy var uploadButton = UIButton().then{
-        
-        $0.setTitle("Upload", for: .normal)
-    }
-    
-    lazy var resultLabel = UILabel().then{
-        
-        $0.numberOfLines = 0
-        $0.textColor = .blue
-    }
+
     
     init(viewModel:ConfirmViewModel){
         self.viewModel = viewModel
@@ -69,62 +54,18 @@ public final class ConfirmViewController: UIViewController {
 
 extension ConfirmViewController {
     private func addSubViews(){
-        self.view.addSubview(cameraButton)
-        self.view.addSubview(uploadButton)
-        self.view.addSubview(resultLabel)
+
     }
     
     
     private func configureUI(){
         
      
-        cameraButton.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            
-            $0.centerX.equalToSuperview()
-    
-        }
-        
-        uploadButton.snp.makeConstraints{
-            
-            $0.top.equalTo(cameraButton.snp.top)
-            $0.centerX.equalTo(cameraButton.snp.right).offset(100)
-            
-        }
-        
-        resultLabel.snp.makeConstraints{
-            
-            $0.center.equalToSuperview()
-        }
+
     }
     
     private func bind(){
-        cameraButton.rx.tap
-            .bind(to: input.cameraTap)
-            .disposed(by: disposeBag)
-        
-        
-        uploadButton.rx.tap
-            .bind(to: input.uploadTap)
-            .disposed(by: disposeBag)
-        
-        
-        output.imageSource
-            .subscribe(onNext: { [weak self]  imageSource in
-                
-                
-                guard let self else {return}
-                
-                switch imageSource{
-                    
-                case .camera:
-                    self.openCamera()
-                case .upload:
-                    self.openDoucument()
-                }
- 
-            })
-            .disposed(by: disposeBag)
+
     }
     private func openDoucument(){
         let supportedTypes: [UTType] = [UTType.pdf]
@@ -158,6 +99,9 @@ extension ConfirmViewController {
     }
     
     private func pdfToImage(path:String){
+        
+        //TODO: 여러 장 추출 
+        
         // Create a URL for the PDF file.
         let url = URL(fileURLWithPath: path)
 
