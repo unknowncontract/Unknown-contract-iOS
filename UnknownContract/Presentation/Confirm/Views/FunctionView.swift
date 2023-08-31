@@ -98,6 +98,8 @@ public extension FunctionView {
             $0.bottom.equalToSuperview().inset(32)
         }
         
+        self.setShadow1()
+        
         
     }
     

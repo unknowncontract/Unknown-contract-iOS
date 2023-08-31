@@ -49,6 +49,7 @@ public class HomeViewController: BaseViewController {
     lazy var stackContainer = UIView().then{
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .white
+        $0.setShadow2()
     }
     
     lazy var documentStack = UIStackView().then{

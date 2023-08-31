@@ -112,7 +112,7 @@ extension GovernmentButtonView {
             $0.edges.equalToSuperview()
         }
         
-        
+        self.setShadow2()
         
         
     }
