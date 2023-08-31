@@ -34,22 +34,22 @@ public class HomeViewController: BaseViewController {
         $0.attributedText = setBody2Style("확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
     }
     
-    lazy var documentButton1 = DocumentButtonView(document: .d1).then{
+    lazy var documentButton1 = DocumentButtonView(document: .contractDoc).then{
         $0.delegate = self
     }
     
-    lazy var documentButton2 = DocumentButtonView(document: .d2).then{
+    lazy var documentButton2 = DocumentButtonView(document: .ownerDoc).then{
         $0.delegate = self
     }
     
-    lazy var documentButton3 = DocumentButtonView(document: .d3).then{
+    lazy var documentButton3 = DocumentButtonView(document: .buildingDoc).then{
         $0.delegate = self
     }
     
     lazy var stackContainer = UIView().then{
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .white
-        $0.setShadow2()
+        $0.setShadow2() 
     }
     
     lazy var documentStack = UIStackView().then{

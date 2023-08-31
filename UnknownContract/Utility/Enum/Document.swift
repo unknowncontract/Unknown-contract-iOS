@@ -9,21 +9,22 @@ import Foundation
 
 
 public enum Document{
+
     
-    case d1
-    case d2
-    case d3
+    case contractDoc
+    case ownerDoc
+    case buildingDoc
     
     
     var navigationTitle:String  {
         get {
             switch self {
                 
-            case .d1:
+            case .contractDoc:
                 return "임대차계약서 확인하기"
-            case .d2:
+            case .ownerDoc:
                 return "등기부등본 확인하기"
-            case .d3:
+            case .buildingDoc:
                 return "건축물대장 확인하기"
             }
         }

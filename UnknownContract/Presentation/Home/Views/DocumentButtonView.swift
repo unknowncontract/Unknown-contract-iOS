@@ -72,14 +72,14 @@ public extension DocumentButtonView {
         
         switch document{
 
-        case .d1:
+        case .contractDoc:
             image = DesignSystemAsset.Icon.home
             text = "임대차계약서"
             
-        case .d2:
+        case .ownerDoc:
             image = DesignSystemAsset.Icon.attached
             text = "등기부등본"
-        case .d3:
+        case .buildingDoc:
             image = DesignSystemAsset.Icon.techtonics
             text = "건축물대장"
             
