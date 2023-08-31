@@ -9,14 +9,15 @@ import Foundation
 import NeedleFoundation
 
 public protocol HomeDependency: Dependency {
-    var customCameraComponent: CustomCameraComponent { get }
+   
+    var confirmComponent: ConfirmComponent {get}
 }
 
 public final class HomeComponent: Component<HomeDependency> {
     
 
     public func makeView() -> HomeViewController {
-        return HomeViewController(customCameraComponent: dependency.customCameraComponent)
+        return HomeViewController(confirmComponent: dependency.confirmComponent)
         
     }
 }

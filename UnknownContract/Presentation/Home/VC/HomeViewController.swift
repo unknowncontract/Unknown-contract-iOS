@@ -13,7 +13,7 @@ import RxSwift
 
 public class HomeViewController: BaseViewController {
     
-    var customCameraComponent:CustomCameraComponent!
+    var confirmComponent:ConfirmComponent!
     
     let disposeBag = DisposeBag()
     
@@ -76,9 +76,9 @@ public class HomeViewController: BaseViewController {
     }
     
     
-    init(customCameraComponent:CustomCameraComponent){
+    init(confirmComponent:ConfirmComponent){
         super.init(nibName: nil, bundle: nil)
-        self.customCameraComponent = customCameraComponent
+        self.confirmComponent = confirmComponent
     }
     
     required init?(coder: NSCoder) {
@@ -208,9 +208,6 @@ extension HomeViewController {
 extension HomeViewController:DocumentButtonViewDelegate{
     public func action(document: Document) {
 
-        let vc = self.customCameraComponent.makeView()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
 
     }
     
