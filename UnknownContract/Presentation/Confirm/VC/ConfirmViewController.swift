@@ -24,11 +24,30 @@ public final class ConfirmViewController: BaseViewController {
     private var viewModel:ConfirmViewModel!
     
     
+    
     lazy var input = ConfirmViewModel.Input()
     
     lazy var output = viewModel.transform(input: input)
     
-
+    
+    lazy var navigationBarView = UIView().then{
+        $0.backgroundColor = .clear
+    }
+    
+    lazy var backButton = UIButton().then{
+        
+        $0.setImage(DesignSystemAsset.Icon.arrowLeft, for: .normal)
+    }
+    
+    lazy var navigationTitleLabel = UILabel().then{
+        $0.attributedText = setBody1Style(viewModel.document.navigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
+    }
+    
+    lazy var baseLine = UILabel().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue300
+    }
+    
+    
     
     init(viewModel:ConfirmViewModel){
         self.viewModel = viewModel
@@ -54,13 +73,40 @@ public final class ConfirmViewController: BaseViewController {
 
 extension ConfirmViewController {
     private func addSubViews(){
-
+        
+        self.view.addSubview(navigationBarView)
+        self.navigationBarView.addSubview(backButton)
+        self.navigationBarView.addSubview(navigationTitleLabel)
+        self.navigationBarView.addSubview(baseLine)
+    
     }
     
     
     private func configureUI(){
+    
+        navigationBarView.snp.makeConstraints{
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
+            $0.left.right.equalToSuperview()
+        }
         
-     
+        backButton.snp.makeConstraints{
+            $0.width.height.equalTo(32)
+            $0.left.equalToSuperview().inset(MARGIN())
+            $0.centerY.equalToSuperview()
+        }
+        
+        navigationTitleLabel.snp.makeConstraints{
+            $0.center.equalToSuperview()
+        }
+        
+        baseLine.snp.makeConstraints{
+            
+            $0.left.right.bottom.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+
+        
 
     }
     

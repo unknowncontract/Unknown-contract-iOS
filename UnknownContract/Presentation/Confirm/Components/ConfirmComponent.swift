@@ -33,9 +33,9 @@ public final class ConfirmComponent: Component<ConfirmDependency> {
       }
     
     
-    public func makeView() -> ConfirmViewController {
+    public func makeView(document:Document) -> ConfirmViewController {
         return ConfirmViewController(viewModel: ConfirmViewModel(
-        fetchGptAnswerUseCase: fetchGptAnswerUseCase
+        fetchGptAnswerUseCase: fetchGptAnswerUseCase,document: document
         ))
         
     }

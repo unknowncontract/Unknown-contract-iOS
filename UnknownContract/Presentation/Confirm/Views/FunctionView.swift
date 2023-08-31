@@ -68,7 +68,7 @@ public extension FunctionView {
         guard let function = function else {return}
         
         var image = UIImage()
-        var text:String = function.title
+        let text:String = function.title
         
         switch function{
         case .camera:

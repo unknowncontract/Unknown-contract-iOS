@@ -21,8 +21,11 @@ final class ConfirmViewModel {
     
     let fetchGptAnswerUseCase:FetchGptAnswerUseCase!
     
-    init(fetchGptAnswerUseCase: FetchGptAnswerUseCase!) {
+    let document:Document!
+    
+    init(fetchGptAnswerUseCase: FetchGptAnswerUseCase!,document:Document) {
         self.fetchGptAnswerUseCase = fetchGptAnswerUseCase
+        self.document = document
         
         
         self.fetchGptAnswerUseCase

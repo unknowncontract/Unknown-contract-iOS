@@ -207,7 +207,8 @@ extension HomeViewController {
 
 extension HomeViewController:DocumentButtonViewDelegate{
     public func action(document: Document) {
-
+        
+        self.navigationController?.pushViewController(confirmComponent.makeView(document: document), animated: true)
 
     }
     
