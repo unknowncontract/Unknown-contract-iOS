@@ -14,6 +14,7 @@ import Vision
 import RxCocoa
 import RxSwift
 import PDFKit
+import Lottie
 
 public final class ConfirmViewController: BaseViewController {
     
@@ -67,6 +68,24 @@ public final class ConfirmViewController: BaseViewController {
         $0.delegate = self
     }
     
+    lazy var loadingView = UIView().then{
+        $0.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+    }
+    
+    lazy var lottieView = LottieAnimationView(name: "Loading").then{
+        $0.backgroundColor = .clear
+        $0.contentMode = .scaleAspectFill
+        $0.loopMode = .loop
+    }
+    
+    lazy var confirmLabel = UILabel().then{
+        $0.attributedText = setTitle2Style("정보를 확인중입니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
+    }
+    
+    lazy var askWaitingLabel = UILabel().then{
+        $0.attributedText = setBody1Style("잠시만 기다려주세요.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
+    }
+    
     init(customCameraComponent:CustomCameraComponent,viewModel:ConfirmViewModel){
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -109,6 +128,12 @@ extension ConfirmViewController {
         
         self.view.addSubview(cameraFunctionButtonView)
         self.view.addSubview(uploadFunctionButtonView)
+        
+        self.view.addSubview(loadingView)
+        
+        self.loadingView.addSubview(lottieView)
+        self.loadingView.addSubview(confirmLabel)
+        self.loadingView.addSubview(askWaitingLabel)
     }
     
     
@@ -156,7 +181,35 @@ extension ConfirmViewController {
             $0.centerX.equalToSuperview()
         }
         
+        loadingView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        
+        lottieView.snp.makeConstraints{
+            
+           let orgiMargin: CGFloat =  330.0
+           let originHeight: CGFloat = 812.0
+           let rate: CGFloat = orgiMargin / originHeight
 
+           let height: CGFloat = APP_HEIGHT() * rate
+            
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(height)
+            $0.width.equalTo(54)
+            $0.height.equalTo(14)
+        }
+        
+        confirmLabel.snp.makeConstraints{
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(lottieView.snp.bottom).offset(32)
+        }
+        
+        askWaitingLabel.snp.makeConstraints{
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(confirmLabel.snp.bottom).offset(8)
+        }
+
+        lottiePlay()    
     }
     
     private func bind(){
@@ -170,6 +223,14 @@ extension ConfirmViewController {
             .disposed(by: disposeBag)
     }
     
+    private func lottiePlay(){
+        
+      
+        lottieView.frame = self.view.bounds
+      
+
+        lottieView.play()
+    }
     
     // 실질적인 동장
     

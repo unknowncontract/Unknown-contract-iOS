@@ -218,7 +218,7 @@ extension CustomCameraViewController{
         shutterButton.snp.makeConstraints{
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(64)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
     }
     
