@@ -15,6 +15,8 @@ public class ResultViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
+    var viewModel:ResultViewModel!
+    
     lazy var navigationBarView = UIView().then{
         $0.backgroundColor = .clear
     }
@@ -24,19 +26,43 @@ public class ResultViewController: BaseViewController {
         $0.setImage(DesignSystemAsset.Icon.arrowLeft, for: .normal)
     }
     
-    lazy var navigationTitleLabel = UILabel().then{
-        //TODO: 타이틀 이름 유기적으로 변경
-        $0.attributedText = setBody1Style("임대차계약 검사 결과", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
-    }
+    lazy var navigationTitleLabel = UILabel()
     
     lazy var baseLine = UILabel().then{
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue300
     }
+
+    lazy var scrollView = UIScrollView().then{
+        $0.showsHorizontalScrollIndicator = false
+        $0.showsVerticalScrollIndicator = false
+    }
+    
+    lazy var stackView = UIStackView().then{
+        $0.axis = .vertical
+    }
+    
+    lazy var topLabelContainerView = UIView().then{
+        $0.backgroundColor = .clear
+    }
+    
+    lazy var titleLabel = UILabel().then{
+        $0.attributedText = setTitle2Style("나에게 부족한 보장", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000,alignment: .center)
+    }
+    
+    lazy var remindLabel = UILabel().then{
+        $0.attributedText = setBody2Style("꼼꼼하게 점검해보세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
+    }
+    
+    lazy var dummyView = UIView().then{
+        
+    }
     
     
-    init(message:String){
+    init(message:String,viewModel:ResultViewModel){
         super.init(nibName: nil, bundle: nil)
         DEBUG_LOG(message)
+        
+        self.viewModel = viewModel
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +78,10 @@ public class ResultViewController: BaseViewController {
 
 
     }
+    
+    
+    
+    
 
 
 }
@@ -59,9 +89,25 @@ public class ResultViewController: BaseViewController {
 extension ResultViewController {
     private func addSubViews(){
         self.view.addSubview(navigationBarView)
+        self.view.addSubview(scrollView)
+
+        
         self.navigationBarView.addSubview(backButton)
         self.navigationBarView.addSubview(navigationTitleLabel)
         self.navigationBarView.addSubview(baseLine)
+        
+        navigationTitleLabel.attributedText = setBody1Style(viewModel.document.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
+        
+        
+        
+        self.scrollView.addSubview(stackView)
+        self.stackView.addArrangedSubview(topLabelContainerView)
+        self.stackView.addArrangedSubview(dummyView)
+        
+        self.topLabelContainerView.addSubview(titleLabel)
+        self.topLabelContainerView.addSubview(remindLabel)
+        
+        
     }
     
     private func configureUI(){
@@ -86,6 +132,35 @@ extension ResultViewController {
             $0.left.right.bottom.equalToSuperview()
             $0.height.equalTo(1)
         }
+        
+        scrollView.snp.makeConstraints{
+            $0.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(navigationBarView.snp.bottom)
+        }
+        
+        stackView.snp.makeConstraints{
+            $0.top.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+        
+        }
+        
+        titleLabel.snp.makeConstraints{
+            $0.top.equalToSuperview().inset(32)
+            $0.left.right.equalToSuperview().inset(20)
+
+        }
+        
+        remindLabel.snp.makeConstraints{
+            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
+            $0.left.right.bottom.equalToSuperview().inset(20)
+            
+        }
+        
+        dummyView.snp.makeConstraints{
+            $0.height.equalTo(800)
+            $0.left.right.equalToSuperview()
+        }
+        
     }
     
     private func bind(){

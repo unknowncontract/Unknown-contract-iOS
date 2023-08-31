@@ -41,7 +41,7 @@ public final class ConfirmViewController: BaseViewController {
     }
     
     lazy var navigationTitleLabel = UILabel().then{
-        $0.attributedText = setBody1Style(viewModel.document.navigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
+        $0.attributedText = setBody1Style(viewModel.document.checkNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
     }
     
     lazy var baseLine = UILabel().then{

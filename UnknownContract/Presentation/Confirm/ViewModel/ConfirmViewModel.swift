@@ -9,10 +9,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-enum ImageSource {
-    case camera
-    case upload
-}
+
 
 final class ConfirmViewModel {
     

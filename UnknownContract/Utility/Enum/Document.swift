@@ -16,7 +16,7 @@ public enum Document{
     case buildingDoc
     
     
-    var navigationTitle:String  {
+    var checkNavigationTitle:String  {
         get {
             switch self {
                 
@@ -26,6 +26,20 @@ public enum Document{
                 return "등기부등본 확인하기"
             case .buildingDoc:
                 return "건축물대장 확인하기"
+            }
+        }
+    }
+    
+    var resultNavigationTitle:String {
+        get{
+            switch self {
+                
+            case .contractDoc:
+                return "임대차계약서 검토 결과"
+            case .ownerDoc:
+                return "등기부등본 검토 결과"
+            case .buildingDoc:
+                return "건축물대장 검토 결과"
             }
         }
     }

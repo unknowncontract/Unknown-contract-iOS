@@ -34,7 +34,7 @@ public class HomeViewController: BaseViewController {
     }
     
     lazy var commentLabel = UILabel().then{
-        $0.attributedText = setBody2Style("확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
+        $0.attributedText = setBody2Style("✓확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
     }
     
     lazy var documentButton1 = DocumentButtonView(document: .contractDoc).then{
@@ -92,7 +92,7 @@ public class HomeViewController: BaseViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
         addSubViews()
         configureUI()
         bind()
@@ -219,7 +219,9 @@ extension HomeViewController {
                 
                 self.navigationController?.popViewController(animated: false)
                 
-                let vc = self.resultComponent.makeView(message: result.message)
+                //TODO: 다큐먼트 종류 넘겨줘야함 
+                
+                let vc = self.resultComponent.makeView(message: result.message,document: .buildingDoc)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
                 
