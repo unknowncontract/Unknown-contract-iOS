@@ -27,12 +27,7 @@ final class ConfirmViewModel {
         self.fetchGptAnswerUseCase = fetchGptAnswerUseCase
         self.document = document
         
-        
-        self.fetchGptAnswerUseCase
-            .execute(question: "안녕")
-            .asObservable()
-            .subscribe()
-            .disposed(by: disposeBag)
+
     }
     
     struct Input{

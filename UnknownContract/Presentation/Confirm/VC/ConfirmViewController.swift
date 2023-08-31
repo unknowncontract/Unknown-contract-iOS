@@ -47,9 +47,14 @@ public final class ConfirmViewController: BaseViewController {
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue300
     }
     
+    lazy var titleLabel = UILabel().then{
+        $0.attributedText = setTitle2Style("검토사항", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000,alignment: .center)
+    }
     
-    
-    
+    lazy var descriptionLabel = UILabel().then{
+        $0.numberOfLines = 0
+        $0.attributedText = setBody2Style("계약서에 명시된 특약사항 중 임차인에게\n불리한 내용이 있는지 검토합니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
+    }
     
     init(viewModel:ConfirmViewModel){
         self.viewModel = viewModel
@@ -70,7 +75,7 @@ public final class ConfirmViewController: BaseViewController {
         bind()
     }
     
-    public override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) { // Swipe Navigation Back
            super.viewDidAppear(animated)
            navigationController?.interactivePopGestureRecognizer?.delegate = nil
        }
@@ -86,6 +91,8 @@ extension ConfirmViewController {
         self.navigationBarView.addSubview(navigationTitleLabel)
         self.navigationBarView.addSubview(baseLine)
     
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(descriptionLabel)
     }
     
     
@@ -111,6 +118,16 @@ extension ConfirmViewController {
             
             $0.left.right.bottom.equalToSuperview()
             $0.height.equalTo(1)
+        }
+        
+        titleLabel.snp.makeConstraints{
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(32)
+            $0.left.right.equalToSuperview()
+        }
+        
+        descriptionLabel.snp.makeConstraints{
+            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
+            $0.left.right.equalToSuperview().inset(20)
         }
 
         
