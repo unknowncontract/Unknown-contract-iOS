@@ -149,6 +149,32 @@ public func setTitle2Style(_ text:String,textColor color:UIColor,alignment:NSTex
     return attrText
 }
 
+public func setTitle3Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    
+    let lineHeight:CGFloat = 26
+    let font =  DesignSystemAsset.Pretendard.title3
+    
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
+    
+    // 행간  paragraphStyle.lineSpacing = 32
+    
+    let attrText =  NSMutableAttributedString(
+                string: text,
+                attributes: [.font: font,
+                             .foregroundColor: color,
+                             .kern: letterSpacing,
+                             .paragraphStyle: paragraphStyle,
+                             .baselineOffset: (lineHeight - font.lineHeight) / 4
+                
+                ]
+            )
+    
+    return attrText
+}
+
 public func setBody1Style(_ text:String,textColor color:UIColor,alignment:NSTextAlignment = .left) -> NSMutableAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
    

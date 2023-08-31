@@ -431,7 +431,7 @@ extension ConfirmViewController:FunctionViewViewDelegate {
             
         case .camera:
             
-            let vc = customCameraComponent.makeView()
+            let vc = customCameraComponent.makeView(doucment: viewModel.document)
             
             vc.modalPresentationStyle =  .fullScreen
             vc.delegate = self

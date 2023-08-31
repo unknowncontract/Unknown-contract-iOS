@@ -34,7 +34,7 @@ public class HomeViewController: BaseViewController {
     }
     
     lazy var commentLabel = UILabel().then{
-        $0.attributedText = setBody2Style("✓확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
+        $0.attributedText = setBody2Style("✓ 확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
     }
     
     lazy var documentButton1 = DocumentButtonView(document: .contractDoc).then{
@@ -49,6 +49,14 @@ public class HomeViewController: BaseViewController {
         $0.delegate = self
     }
     
+    lazy var rodView1 = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+    }
+    
+    lazy var rodView2 = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+    }
+    
     lazy var stackContainer = UIView().then{
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .white
@@ -61,10 +69,14 @@ public class HomeViewController: BaseViewController {
       
         
         //$0.layoutMargins = UIEdgeInsets(top: MARGIN(), left: MARGIN(), bottom: MARGIN(), right: MARGIN())
-        $0.distribution = .fillEqually
-        $0.spacing = 8
+        $0.distribution = .equalSpacing
+        $0.spacing = 7
         
         
+    }
+    
+    lazy var optionTitleLabel = UILabel().then{
+        $0.attributedText = setTitle3Style("발급 바로가기", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700)
     }
     
     lazy var courtView = GovernmentButtonView(gov: .court).then{
@@ -137,10 +149,13 @@ extension HomeViewController {
         self.view.addSubview(stackContainer)
         self.view.addSubview(courtView)
         self.view.addSubview(govView)
+        self.view.addSubview(optionTitleLabel)
         
         self.stackContainer.addSubview(documentStack)
         self.documentStack.addArrangedSubview(documentButton1)
+        self.documentStack.addArrangedSubview(rodView1)
         self.documentStack.addArrangedSubview(documentButton2)
+        self.documentStack.addArrangedSubview(rodView2)
         self.documentStack.addArrangedSubview(documentButton3)
         
     
@@ -158,7 +173,7 @@ extension HomeViewController {
         }
         
         remindLabel1.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(60)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(62)
             $0.left.right.equalToSuperview()
             
         }
@@ -191,9 +206,25 @@ extension HomeViewController {
             $0.bottom.top.equalToSuperview()    
         }
         
+        rodView1.snp.makeConstraints{
+            $0.width.equalTo(1)
+            $0.top.bottom.equalToSuperview().inset(40)
+        }
+
+        rodView2.snp.makeConstraints{
+            $0.width.equalTo(1)
+            $0.top.bottom.equalToSuperview().inset(40)
+        }
+        
+        
+        optionTitleLabel.snp.makeConstraints{
+            $0.top.equalTo(stackContainer.snp.bottom).offset(50)
+            
+            $0.left.right.equalToSuperview().inset(20)
+        }
         
         courtView.snp.makeConstraints{
-            $0.top.equalTo(documentStack.snp.bottom).offset(10)
+            $0.top.equalTo(optionTitleLabel.snp.bottom).offset(12)
             $0.left.right.equalToSuperview().inset(20)
         }
         

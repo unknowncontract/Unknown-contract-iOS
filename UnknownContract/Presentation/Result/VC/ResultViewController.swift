@@ -54,7 +54,7 @@ public class ResultViewController: BaseViewController {
     }
     
     lazy var dummyView = UIView().then{
-        
+        $0.backgroundColor = .blue
     }
     
     

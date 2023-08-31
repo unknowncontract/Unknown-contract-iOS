@@ -44,4 +44,18 @@ public enum Document{
         }
     }
     
+    var cameraNavigationTitle:String {
+        get{
+            switch self {
+                
+            case .contractDoc:
+                return "임대차계약서 촬영"
+            case .ownerDoc:
+                return "등기부등본 촬영"
+            case .buildingDoc:
+                return "건축물대장 촬영"
+            }
+        }
+    }
+    
 }

@@ -22,18 +22,18 @@ extension UIView{
     
     func setShadow1(){
         
-        self.layer.shadowColor = colorFromRGB("506179").cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowRadius = 20
+        self.layer.shadowColor = colorFromRGB("506179",alpha: 0.1).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowRadius = 10
         self.layer.shadowOffset = CGSize(width: 0, height: 4) // 그림자 위치 이동 : 밑으로 4 point 이동
 
         self.layer.masksToBounds = false
     }
     
     func setShadow2(){
-        self.layer.shadowColor = colorFromRGB("506179").cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowRadius = 5
+        self.layer.shadowColor = colorFromRGB("506179",alpha:0.1).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowRadius = 2
         self.layer.shadowOffset = CGSize(width: 0, height: 2) // 그림자 위치 이동 : 밑으로 2 point 이동
 
         self.layer.masksToBounds = false

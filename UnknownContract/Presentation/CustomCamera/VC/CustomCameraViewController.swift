@@ -20,15 +20,18 @@ public protocol CustomCameraDelegate : NSObject {
 
 public class CustomCameraViewController: BaseViewController {
     
-    let bgColor = UIColor.black.withAlphaComponent(0.6)
+    let bgColor = UIColor.black.withAlphaComponent(0.8)
     
     let disposeBag = DisposeBag()
     
+    var doucment:Document!
     var captureSession:AVCaptureSession!
     var photoOutput: AVCapturePhotoOutput!
     var previewLayer:AVCaptureVideoPreviewLayer!
     var captureDevice:AVCaptureDevice!
     var photoSettings: AVCapturePhotoSettings!
+    
+    
     
     weak var delegate : CustomCameraDelegate?
     
@@ -39,10 +42,8 @@ public class CustomCameraViewController: BaseViewController {
     lazy var titleView = UIView().then{
         $0.backgroundColor = bgColor
     }
-    
-    lazy var titleLabel = UILabel().then{
-        $0.attributedText = setBody1Style("임대차계약서 촬영", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100)
-    }
+   
+    lazy var titleLabel = UILabel()
     
     lazy var closeButton = UIButton().then{
         
@@ -55,15 +56,21 @@ public class CustomCameraViewController: BaseViewController {
         $0.backgroundColor = bgColor
     }
     
-    lazy var warningLabel = UILabel().then{
-        $0.attributedText = setBody2Style("어두운 배경에서 빛이 반사되지 않도록 촬영해주세요.\n훼손 시 확인이 어려울 수 있습니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100)
-        
-        $0.numberOfLines = 0 
-        $0.textAlignment = .center
-    }
+
     
     lazy var shutterButton = UIButton().then{
         $0.setImage(DesignSystemAsset.Icon.shutter, for: .normal)
+    }
+   
+    init(doucment:Document){
+        super.init(nibName: nil, bundle: nil)
+        self.doucment = doucment
+        
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     public override func viewDidLoad() {
@@ -176,7 +183,6 @@ extension CustomCameraViewController{
         self.titleView.addSubview(titleLabel)
         self.titleView.addSubview(closeButton)
         
-        self.bottomView.addSubview(warningLabel)
         self.bottomView.addSubview(shutterButton)
     }
     
@@ -191,12 +197,14 @@ extension CustomCameraViewController{
         titleView.snp.makeConstraints{
             $0.left.right.equalToSuperview()
             $0.top.equalTo(statusEmptyView.snp.bottom)
-            $0.height.equalTo(48)
+            $0.height.equalTo(50)
         }
         
         titleLabel.snp.makeConstraints{
             $0.center.equalToSuperview()
         }
+        
+        titleLabel.attributedText = setBody1Style(doucment.cameraNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100)
         
         closeButton.snp.makeConstraints{
             $0.centerY.equalToSuperview()
@@ -207,18 +215,15 @@ extension CustomCameraViewController{
         bottomView.snp.makeConstraints{
             $0.left.right.bottom.equalToSuperview()
             
-            $0.height.equalTo(200)
+            $0.height.equalTo(172)
         }
         
-        warningLabel.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(24)
-            $0.centerX.equalToSuperview()
-        }
+
         
         shutterButton.snp.makeConstraints{
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(64)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(32)
         }
     }
     

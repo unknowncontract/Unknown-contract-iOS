@@ -17,8 +17,8 @@ public final class CustomCameraComponent: Component<CustomCameraDependency> {
     
 
     
-    public func makeView() -> CustomCameraViewController {
-        return CustomCameraViewController()
+    public func makeView(doucment:Document) -> CustomCameraViewController {
+        return CustomCameraViewController(doucment: doucment)
         
     }
 }
