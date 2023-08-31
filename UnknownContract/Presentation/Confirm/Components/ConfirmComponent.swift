@@ -9,7 +9,7 @@ import Foundation
 import NeedleFoundation
 
 public protocol ConfirmDependency: Dependency {
-    
+    var customCameraComponent:CustomCameraComponent {get}
 }
 
 public final class ConfirmComponent: Component<ConfirmDependency> {
@@ -34,7 +34,7 @@ public final class ConfirmComponent: Component<ConfirmDependency> {
     
     
     public func makeView(document:Document) -> ConfirmViewController {
-        return ConfirmViewController(viewModel: ConfirmViewModel(
+        return ConfirmViewController(customCameraComponent:dependency.customCameraComponent,viewModel: ConfirmViewModel(
         fetchGptAnswerUseCase: fetchGptAnswerUseCase,document: document
         ))
         

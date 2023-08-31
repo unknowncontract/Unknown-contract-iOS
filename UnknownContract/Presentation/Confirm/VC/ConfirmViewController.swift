@@ -22,7 +22,7 @@ public final class ConfirmViewController: BaseViewController {
     
     
     private var viewModel:ConfirmViewModel!
-    
+    private var customCameraComponent:CustomCameraComponent!
     
     
     lazy var input = ConfirmViewModel.Input()
@@ -67,15 +67,17 @@ public final class ConfirmViewController: BaseViewController {
         $0.delegate = self
     }
     
-    init(viewModel:ConfirmViewModel){
-        self.viewModel = viewModel
-        
-        
+    init(customCameraComponent:CustomCameraComponent,viewModel:ConfirmViewModel){
         super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        self.customCameraComponent = customCameraComponent
+        
+        
+        
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     public override func viewDidLoad() {
@@ -333,7 +335,12 @@ extension ConfirmViewController:FunctionViewViewDelegate {
         switch function{
             
         case .camera:
-            DEBUG_LOG("CA")
+            
+            let vc = customCameraComponent.makeView()
+            
+            vc.modalPresentationStyle =  .fullScreen
+            self.present(vc, animated: true)
+            
         case .upload:
             openDoucument()
         }
