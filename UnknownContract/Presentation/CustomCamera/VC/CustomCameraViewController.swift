@@ -18,6 +18,11 @@ public class CustomCameraViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
+    var captureSession:AVCaptureSession!
+    var photoOutput: AVCapturePhotoOutput!
+    var previewLayer:AVCaptureVideoPreviewLayer!
+    var captureDevice:AVCaptureDevice!
+    
     lazy var statusEmptyView = UIView().then{
         $0.backgroundColor = bgColor
     }
@@ -54,12 +59,14 @@ public class CustomCameraViewController: BaseViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        view.backgroundColor = .clear
+        prepareaCamera()
         addSubViews()
         configureUI()
         
         bind()
+        
         
     }
     public override var preferredStatusBarStyle: UIStatusBarStyle { //DARK MODE
@@ -67,7 +74,70 @@ public class CustomCameraViewController: BaseViewController {
     }
 }
 
+
+extension CustomCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    
+}
+
 extension CustomCameraViewController{
+    
+    func prepareaCamera(){
+        
+        captureSession = AVCaptureSession()
+        captureSession.beginConfiguration()
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        
+        
+        guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+            
+            DEBUG_LOG("WOW")
+            
+            return
+        }
+        
+        captureDevice = backCamera
+        beginSession()
+      
+        
+    }
+    
+    func beginSession() {
+        
+        do{
+            
+            let captureDeviceInput = try AVCaptureDeviceInput(device: captureDevice)
+            
+            photoOutput = AVCapturePhotoOutput()
+            captureSession.addInput(captureDeviceInput)
+            captureSession.sessionPreset = .photo
+            captureSession.addOutput(photoOutput)
+            captureSession.commitConfiguration()
+        } catch {
+            DEBUG_LOG(error.localizedDescription)
+        }
+
+        
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        
+        DispatchQueue.main.async {
+            
+            self.previewLayer.frame = self.view.layer.frame
+            
+        }
+        
+        previewLayer?.videoGravity = .resizeAspectFill
+        self.view.layer.addSublayer(self.previewLayer)
+       
+        
+        
+        DispatchQueue.global(qos: .background).async {
+            self.captureSession.startRunning()
+        }
+        
+        
+
+    }
+    
     
     private func addSubViews(){
         

@@ -32,6 +32,7 @@
 ## 카메라
 1. info.plist
     1. Privacy - Camera Usage Description
+2. [구현 참고 링크](https://yagom.net/forums/topic/%EC%B9%B4%EB%A9%94%EB%9D%BC-%EC%96%B4%ED%94%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0-3%ED%8E%B8/)
     
 
 ## 파일 피커
