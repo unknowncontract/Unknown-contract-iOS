@@ -335,7 +335,7 @@ extension ConfirmViewController:FunctionViewViewDelegate {
         case .camera:
             DEBUG_LOG("CA")
         case .upload:
-            DEBUG_LOG("UP")
+            openDoucument()
         }
     }
     
