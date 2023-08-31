@@ -31,9 +31,7 @@ final class ConfirmViewModel {
     }
     
     struct Input{
-        
-        let cameraTap:PublishSubject<Void> = .init()
-        let uploadTap:PublishSubject<Void> = .init()
+
         let resultText:PublishRelay<String> = .init()
         
     }
@@ -42,8 +40,6 @@ final class ConfirmViewModel {
         
         
         let indicatorState:PublishRelay<Bool> = .init()
-        let imageSource:PublishSubject<ImageSource> = .init()
-        
         
     }
     
@@ -52,26 +48,11 @@ final class ConfirmViewModel {
         
         let output = Output()
         
-        input
-            .cameraTap
-            .flatMap{  
-                return Observable.just(ImageSource.camera)
-            }
-            .bind(to: output.imageSource)
-            .disposed(by: disposeBag)
-        
-        
-        input.uploadTap
-            .flatMap{
-                return Observable.just(ImageSource.upload)
-            }
-            .bind(to: output.imageSource)
-            .disposed(by: disposeBag)
+
         
         
         input.resultText
-            .withLatestFrom(output.imageSource){($0,$1)}
-            .subscribe(onNext: { [weak self] text,imageSource in
+            .subscribe(onNext: { [weak self] text in
                 
                 guard let self else {return}
                 //TODO: 서버 연결하기 

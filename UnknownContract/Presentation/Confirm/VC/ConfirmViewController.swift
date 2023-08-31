@@ -275,7 +275,6 @@ extension ConfirmViewController {
             fatalError("could not get image")
         }
         
-        
         let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         let request = VNRecognizeTextRequest{ [weak self]request, error in
             
@@ -283,14 +282,15 @@ extension ConfirmViewController {
             
             guard let observations = request.results as? [VNRecognizedTextObservation],
                   error == nil else{
+               
                 return
             }
             
             let text = observations.compactMap({
                 $0.topCandidates(1).first?.string
             }).joined(separator: "\n")
+            DEBUG_LOG(text)
             
-
             self.input.resultText.accept(text) // 최종 OCR 결과
         }
         
@@ -339,6 +339,8 @@ extension ConfirmViewController:FunctionViewViewDelegate {
             let vc = customCameraComponent.makeView()
             
             vc.modalPresentationStyle =  .fullScreen
+            vc.delegate = self
+            
             self.present(vc, animated: true)
             
         case .upload:
@@ -364,6 +366,13 @@ extension ConfirmViewController: UINavigationControllerDelegate, UIImagePickerCo
         
         picker.dismiss(animated: true,completion: nil)
     }
+}
+
+extension ConfirmViewController : CustomCameraDelegate {
+    public func action(image: UIImage?) {
+            reconizeText(image: image)
+    }
+    
 }
 
 

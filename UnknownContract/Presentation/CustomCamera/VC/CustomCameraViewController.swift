@@ -12,6 +12,12 @@ import AVFoundation
 import RxSwift
 import RxCocoa
 
+
+public protocol CustomCameraDelegate : NSObject {
+    func action(image:UIImage?)
+}
+
+
 public class CustomCameraViewController: BaseViewController {
     
     let bgColor = UIColor.black.withAlphaComponent(0.6)
@@ -22,6 +28,9 @@ public class CustomCameraViewController: BaseViewController {
     var photoOutput: AVCapturePhotoOutput!
     var previewLayer:AVCaptureVideoPreviewLayer!
     var captureDevice:AVCaptureDevice!
+    var photoSettings: AVCapturePhotoSettings!
+    
+    weak var delegate : CustomCameraDelegate?
     
     lazy var statusEmptyView = UIView().then{
         $0.backgroundColor = bgColor
@@ -75,8 +84,19 @@ public class CustomCameraViewController: BaseViewController {
 }
 
 
-extension CustomCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
     
+    public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        
+        guard let imageData = photo.fileDataRepresentation() else { return}
+        
+        let image = UIImage(data: imageData)
+        
+        
+        delegate?.action(image: image)
+        dismiss(animated: true)
+        
+    }
 }
 
 extension CustomCameraViewController{
@@ -90,7 +110,7 @@ extension CustomCameraViewController{
         
         guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
             
-            DEBUG_LOG("WOW")
+
             
             return
         }
@@ -111,6 +131,14 @@ extension CustomCameraViewController{
             captureSession.addInput(captureDeviceInput)
             captureSession.sessionPreset = .photo
             captureSession.addOutput(photoOutput)
+            
+            if photoOutput.availablePhotoCodecTypes.contains(.hevc) {
+                photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
+              } else{
+                photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+              }
+            
+            
             captureSession.commitConfiguration()
         } catch {
             DEBUG_LOG(error.localizedDescription)
@@ -202,6 +230,15 @@ extension CustomCameraViewController{
                 guard let self else {return}
                 
                 self.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        shutterButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self else {return}
+                
+                self.photoOutput.capturePhoto(with: self.photoSettings, delegate: self)
+                
             })
             .disposed(by: disposeBag)
         

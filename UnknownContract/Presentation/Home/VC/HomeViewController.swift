@@ -10,6 +10,7 @@ import SnapKit
 import Then
 import RxCocoa
 import RxSwift
+import SafariServices
 
 public class HomeViewController: BaseViewController {
     
@@ -202,7 +203,34 @@ extension HomeViewController {
         
     }
     
+    func openSafari(gov:Government){
+        
+        var appURL:URL?
+        
+        switch gov{
+            
+        case .court:
+            appURL = URL(string: "http://www.iros.go.kr")
+        case .gov:
+            appURL = URL(string: "https://www.gov.kr/mw/AA020InfoCappView.do?HighCtgCD=A09005&CappBizCD=15000000098&tp_seq=01")
+        }
+        
+        
+        guard let appURL = appURL else {return}
+        
+        let safariViewController = SFSafariViewController(url: appURL)
+            safariViewController.delegate = self
+            safariViewController.modalPresentationStyle = .automatic
+        self.present(safariViewController, animated: true, completion: nil)
+        
+    }
+    
 
+
+}
+
+extension HomeViewController: SFSafariViewControllerDelegate {
+    
 
 }
 
@@ -217,7 +245,7 @@ extension HomeViewController:DocumentButtonViewDelegate{
 
 extension HomeViewController:GovernmentButtonViewDelegate{
     public func action(gov: Government) {
-        DEBUG_LOG(gov)
+        openSafari(gov: gov)
     }
     
     
