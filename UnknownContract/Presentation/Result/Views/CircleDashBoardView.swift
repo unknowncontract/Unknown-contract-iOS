@@ -129,9 +129,10 @@ public extension CircleDashBoardView {
     func scoreAnimation(){
        
         
+        let fixedAngle:CGFloat = 12.78 * .pi / 180
         
         
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 111, y: 111), radius: 111, startAngle: .pi , endAngle: 2 * .pi  , clockwise: true)
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 111, y: 111), radius: 111, startAngle: .pi - fixedAngle  , endAngle: fixedAngle  , clockwise: true)
        
         
         var trackLayer = CAShapeLayer()
@@ -140,7 +141,7 @@ public extension CircleDashBoardView {
         trackLayer.strokeColor = dangerColor.cgColor
         trackLayer.lineWidth = 20
         trackLayer.fillColor = UIColor.clear.cgColor //
-        trackLayer.lineCap = .round // 선 모양
+        trackLayer.lineCap = .square // 선 모양
         
         trackLayer.strokeEnd = 0
         outerStorkeView.layer.addSublayer(trackLayer)
