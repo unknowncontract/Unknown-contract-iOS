@@ -14,7 +14,9 @@ import Then
 
 public class CircleDashBoardView: UIView {
 
-    
+    let dangerColor = colorFromRGB("F82C5F")
+    let warningColor = colorFromRGB("FF8B25")
+    let safeColor = colorFromRGB("25BDC5")
     let circlePath = UIBezierPath(arcCenter: .zero, radius: 50, startAngle: -.pi, endAngle: 2 * CGFloat.pi, clockwise: true)
     // startAngle: 라인 시작
 //    private lazy var trackLayer = CAShapeLayer()
@@ -46,8 +48,16 @@ public class CircleDashBoardView: UIView {
     private lazy var scoreContainberView = UIView().then{
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 82
+        $0.setShadow1()
     }
     
+    private lazy var scoreLabel = UILabel().then{
+        $0.attributedText = setTitle1Style("70점", textColor: safeColor,alignment: .center)
+    }
+    
+    private lazy var levelLabel = UILabel().then{
+        $0.attributedText = setBody1Style("안전", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
+    }
     
     
     private lazy var edgeLayer = CAShapeLayer().then{
@@ -84,6 +94,15 @@ public class CircleDashBoardView: UIView {
 
 public extension CircleDashBoardView {
     
+    private func addSubViews(){
+        addSubview(outerStorkeView)
+        addSubview(scoreContainberView)
+        scoreContainberView.addSubview(innerStrokeView)
+        scoreContainberView.addSubview(scoreLabel)
+        scoreContainberView.addSubview(levelLabel)
+    }
+    
+    
     private func setUp(){
         
 
@@ -106,15 +125,21 @@ public extension CircleDashBoardView {
             $0.width.height.equalTo(148)
         }
         
+        scoreLabel.snp.makeConstraints{
+            $0.centerY.equalToSuperview().offset(-10)
+            $0.centerX.equalToSuperview()
+        }
+        
+        levelLabel.snp.makeConstraints{
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(scoreLabel.snp.bottom)
+        }
+        
        
 
     }
     
-    private func addSubViews(){
-        addSubview(outerStorkeView)
-        addSubview(scoreContainberView)
-        scoreContainberView.addSubview(innerStrokeView)
-    }
+
     
     func update(){
        

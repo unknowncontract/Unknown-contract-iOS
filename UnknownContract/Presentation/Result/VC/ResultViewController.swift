@@ -54,7 +54,7 @@ public class ResultViewController: BaseViewController {
     }
     
     lazy var dashBoardContainerView = UIView().then{
-        $0.backgroundColor = .black
+        $0.backgroundColor = .clear
     }
     
     lazy var circleDashBoard = CircleDashBoardView()
