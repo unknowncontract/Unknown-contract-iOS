@@ -18,6 +18,9 @@ public class CircleDashBoardView: UIView {
     let warningColor = colorFromRGB("FF8B25")
     let safeColor = colorFromRGB("25BDC5")
 
+    private let trackLayer = CAShapeLayer()
+    
+    private let shapeLayer = CAShapeLayer()
 
     private lazy var outerStorkeView = UIView()
     
@@ -73,7 +76,7 @@ public class CircleDashBoardView: UIView {
         addBorderCircularGradient(to:outerStorkeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
         
         
-  
+       // loadProgress()
         
     }
     
@@ -134,12 +137,106 @@ public extension CircleDashBoardView {
             $0.centerY.equalToSuperview().offset(-17)
         }
         
-        scoreAnimation()
+        addProgressBar(70)
+        //scoreAnimation()
        
 
     }
     
+    func scoreToProgress(_ score:Int) -> CGFloat {
 
+        var offset:CGFloat = .zero
+        switch score {
+            
+        case 0..<31:
+            offset = -0.03
+        
+        case 31..<70:
+            offset = 0.08
+            
+        
+        case 70..<90:
+            offset = 0.05
+        
+        case 90..<101:
+            offset = 0.03
+            
+        
+        default:
+            offset = .zero
+            
+        }
+        
+        var cgScore = CGFloat(score) / 100
+
+        return cgScore + offset
+
+
+    }
+    
+    func addProgressBar(_ score:Int){
+        
+        let fixedAngle:CGFloat = 12.78 * .pi / 180
+        
+        
+        let circularPath = UIBezierPath(arcCenter: CGPoint(x: 111, y: 111), radius: 111, startAngle: .pi - fixedAngle  , endAngle: fixedAngle  , clockwise: true)
+        
+        trackLayer.path = circularPath.cgPath
+        trackLayer.strokeColor = UIColor.red.cgColor
+        trackLayer.lineWidth = 20
+        trackLayer.fillColor = UIColor.clear.cgColor //
+        trackLayer.lineCap = .square // 선 모양
+        trackLayer.strokeEnd = scoreToProgress(score)
+        
+        // 30 % -> 0.3 - 0.03 = 0.27
+        // 60 % -> 0.7 - 0.02 = 0.68
+        
+
+        //BarLayer
+       shapeLayer.path = circularPath.cgPath
+       shapeLayer.fillColor = UIColor.clear.cgColor
+       shapeLayer.strokeColor = UIColor.systemGreen.cgColor
+       shapeLayer.lineWidth = 20
+       shapeLayer.lineCap = .square
+        
+        
+        outerStorkeView.layer.addSublayer(shapeLayer)
+        
+        outerStorkeView.layer.addSublayer(trackLayer)
+        
+        //addGradient()
+        
+  
+        
+
+    }
+    
+    
+    private func addGradient() {
+        
+        let gradient = CAGradientLayer()
+            gradient.colors = [UIColor.red.cgColor,UIColor.cyan.cgColor,UIColor.brown.cgColor,UIColor.blue.cgColor]
+            gradient.frame = bounds
+            gradient.locations = [0.2,0.5,0.75,1]
+            gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
+            gradient.endPoint = CGPoint(x: 0.5, y: 0)
+            gradient.type = .conic
+            gradient.mask = shapeLayer
+            outerStorkeView.layer.addSublayer(gradient)
+    }
+
+    func loadProgress(){
+            let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+    
+            basicAnimation.toValue = 1
+            basicAnimation.duration = 2
+            basicAnimation.fillMode = .forwards
+            basicAnimation.isRemovedOnCompletion = false
+    
+    
+    
+            trackLayer.add(basicAnimation, forKey: "progress")
+    }
     
     func scoreAnimation(){
        
@@ -150,7 +247,7 @@ public extension CircleDashBoardView {
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: 111, y: 111), radius: 111, startAngle: .pi - fixedAngle  , endAngle: fixedAngle  , clockwise: true)
        
         
-        var trackLayer = CAShapeLayer()
+        
     
         trackLayer.path = circlePath.cgPath
         trackLayer.strokeColor = dangerColor.cgColor
