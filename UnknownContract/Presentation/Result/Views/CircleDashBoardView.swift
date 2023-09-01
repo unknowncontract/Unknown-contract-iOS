@@ -31,7 +31,23 @@ public class CircleDashBoardView: UIView {
 //
 //    }
     
-    private lazy var strokeView = UIView()
+    private lazy var outerStorkeView = UIView()
+    
+    private lazy var innerStrokeView = UIView().then{
+        
+        $0.layer.cornerRadius = 74
+        
+        $0.backgroundColor = .clear
+        
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200.cgColor
+    }
+    
+    private lazy var scoreContainberView = UIView().then{
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 82
+    }
+    
     
     
     private lazy var edgeLayer = CAShapeLayer().then{
@@ -46,7 +62,7 @@ public class CircleDashBoardView: UIView {
         super.init(frame: frame)
         addSubViews()
         setUp()
-
+        
     }
     
     required init?(coder: NSCoder) {
@@ -59,7 +75,7 @@ public class CircleDashBoardView: UIView {
 
     public override func layoutSubviews() { // Draw Cycle 관련
         super.layoutSubviews()
-        addBorderCircularGradient(to:strokeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
+        addBorderCircularGradient(to:outerStorkeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
         
     }
     
@@ -72,22 +88,32 @@ public extension CircleDashBoardView {
         
 
         
-        strokeView.snp.makeConstraints{
+        outerStorkeView.snp.makeConstraints{
             
-            $0.center.equalToSuperview()
-            $0.width.height.equalTo(200)
-            
+            $0.centerX.bottom.equalToSuperview()
+            $0.width.height.equalTo(222)
+            $0.bottom.equalToSuperview()
         }
         
+        scoreContainberView.snp.makeConstraints{
+            $0.centerX.bottom.equalToSuperview()
+            $0.width.height.equalTo(164)
+            $0.bottom.equalToSuperview().inset(30)
+        }
        
+        innerStrokeView.snp.makeConstraints{
+            $0.center.equalToSuperview()
+            $0.width.height.equalTo(148)
+        }
         
        
 
     }
     
     private func addSubViews(){
-        addSubview(strokeView)
-
+        addSubview(outerStorkeView)
+        addSubview(scoreContainberView)
+        scoreContainberView.addSubview(innerStrokeView)
     }
     
     func update(){

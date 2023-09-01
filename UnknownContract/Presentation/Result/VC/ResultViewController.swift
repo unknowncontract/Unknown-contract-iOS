@@ -54,7 +54,7 @@ public class ResultViewController: BaseViewController {
     }
     
     lazy var dashBoardContainerView = UIView().then{
-        $0.backgroundColor = .white
+        $0.backgroundColor = .black
     }
     
     lazy var circleDashBoard = CircleDashBoardView()
@@ -179,8 +179,9 @@ extension ResultViewController {
         }
         
         circleDashBoard.snp.makeConstraints{
-            $0.width.height.equalTo(200)
-            $0.center.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(244)
+            $0.centerX.equalToSuperview()
             
         }
         
