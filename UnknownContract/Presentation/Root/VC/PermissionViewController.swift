@@ -22,7 +22,6 @@ public class PermissionViewController: BaseViewController {
     
     public override func viewDidLoad() {
         
-        DEBUG_LOG("PERM")
         super.viewDidLoad()
         addSubViews()
         configureUI()
@@ -53,9 +52,9 @@ extension PermissionViewController {
                 
                 guard let self else {return}
                 
-                PreferenceManager.appPermission = true
+                PreferenceManager.appPermission = false //TODO: true 로 바꾸기 
                 
-                self.dismiss(animated: false)
+                self.dismiss(animated: true)
                 
             })
             .disposed(by:disposeBag )

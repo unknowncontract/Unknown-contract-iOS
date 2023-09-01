@@ -29,6 +29,10 @@ public class IntroViewController: BaseViewController {
         
     }
     
+    lazy var appNameLabel = UILabel().then{
+        $0.attributedText = setTitle2Style("모르는계약", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue900,alignment: .center)
+    }
+    
     
     init(permissionComponent: PermissionComponent,homeComponent:HomeComponent,viewModel:IntroViewModel) {
         self.permissionComponent = permissionComponent
@@ -58,11 +62,19 @@ extension IntroViewController {
 
     private func addSubViews(){
         self.view.addSubview(imageView)
+        self.view.addSubview(appNameLabel)
     }
     
     private func configureUI(){
         imageView.snp.makeConstraints{
-            $0.center.equalToSuperview()
+            $0.width.height.equalTo(105)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(195)
+            $0.centerX.equalToSuperview()
+        }
+        
+        appNameLabel.snp.makeConstraints{
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(imageView.snp.bottom)
         }
     }
     

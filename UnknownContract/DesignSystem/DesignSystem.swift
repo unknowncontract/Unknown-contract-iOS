@@ -46,6 +46,7 @@ public enum DesignSystemAsset {
         public static let title1 = UIFont(name: "Pretendard-Bold", size: 32)!
         public static let title2 = UIFont(name: "Pretendard-Medium", size: 24)!
         public static let title3 = UIFont(name: "Pretendard-Bold", size: 20)!
+        public static let title4 = UIFont(name: "Pretendard", size: 18)!
         public static let body1 = UIFont(name: "Pretendard-Medium", size: 16)!
         public static let body2 = UIFont(name: "Pretendard-Regular", size: 14)!
         public static let body3 = UIFont(name: "Pretendard-Regular", size: 12)!

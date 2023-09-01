@@ -1,16 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "AppIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "splashLogo.png",
+      "filename" : "AppIcon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "splashLogo 1.png",
+      "filename" : "AppIcon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
