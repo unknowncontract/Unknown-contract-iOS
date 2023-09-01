@@ -17,22 +17,8 @@ public class CircleDashBoardView: UIView {
     let dangerColor = colorFromRGB("F82C5F")
     let warningColor = colorFromRGB("FF8B25")
     let safeColor = colorFromRGB("25BDC5")
-    let circlePath = UIBezierPath(arcCenter: .zero, radius: 50, startAngle: -.pi, endAngle: 2 * CGFloat.pi, clockwise: true)
-    // startAngle: 라인 시작
-//    private lazy var trackLayer = CAShapeLayer()
 
-    
-//    private lazy var strokeView = UIView().then{
-//
-//
-//        $0.layer.borderWidth = 1
-//        $0.layer.borderColor = UIColor.blue.cgColor
-//     //   $0.backgroundColor = .red
-//        $0.layer.cornerRadius = 100
-//
-//
-//    }
-    
+
     private lazy var outerStorkeView = UIView()
     
     private lazy var innerStrokeView = UIView().then{
@@ -60,13 +46,6 @@ public class CircleDashBoardView: UIView {
     }
     
     
-    private lazy var edgeLayer = CAShapeLayer().then{
-        $0.path = circlePath.cgPath
-        $0.lineWidth = 10
-        $0.strokeColor = UIColor.red.cgColor
-        $0.fillColor = UIColor.black.cgColor
-    }
-    
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,6 +66,9 @@ public class CircleDashBoardView: UIView {
         super.layoutSubviews()
         addBorderCircularGradient(to:outerStorkeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
         
+        
+  
+        
     }
     
 
@@ -100,6 +82,8 @@ public extension CircleDashBoardView {
         scoreContainberView.addSubview(innerStrokeView)
         scoreContainberView.addSubview(scoreLabel)
         scoreContainberView.addSubview(levelLabel)
+        
+        
     }
     
     
@@ -135,57 +119,49 @@ public extension CircleDashBoardView {
             $0.top.equalTo(scoreLabel.snp.bottom)
         }
         
+        scoreAnimation()
        
 
     }
     
 
     
-    func update(){
+    func scoreAnimation(){
        
+        
+        
+        
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 111, y: 111), radius: 111, startAngle: .pi , endAngle: 2 * .pi  , clockwise: true)
+       
+        
+        var trackLayer = CAShapeLayer()
+    
+        trackLayer.path = circlePath.cgPath
+        trackLayer.strokeColor = dangerColor.cgColor
+        trackLayer.lineWidth = 20
+        trackLayer.fillColor = UIColor.clear.cgColor //
+        trackLayer.lineCap = .round // 선 모양
+        
+        trackLayer.strokeEnd = 0
+        outerStorkeView.layer.addSublayer(trackLayer)
+        
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        
+        basicAnimation.toValue = 1
+        basicAnimation.duration = 2
+        basicAnimation.fillMode = .forwards
+        basicAnimation.isRemovedOnCompletion = false
+
+        
+        
+        trackLayer.add(basicAnimation, forKey: "progress")
+       
+        
+
+        
+
     }
     
 }
 
-//let center = view.center
-//
-//let trackLayer = CAShapeLayer()
 
-//
-//trackLayer.path = circlePath.cgPath
-//
-//trackLayer.strokeColor = UIColor.lightGray.cgColor
-//trackLayer.lineWidth = 10
-//trackLayer.fillColor = UIColor.clear.cgColor //
-//trackLayer.lineCap = .round // 선 모양
-//view.layer.addSublayer(trackLayer)
-//
-//
-//
-//shapeLayer.path = circlePath.cgPath
-//
-//shapeLayer.strokeColor = UIColor.red.cgColor
-//shapeLayer.lineWidth = 10
-//shapeLayer.fillColor = UIColor.clear.cgColor //
-//shapeLayer.lineCap = .round // 선 모양
-//shapeLayer.strokeEnd = 0
-//
-//
-//view.layer.addSublayer(shapeLayer)
-//
-//
-//view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hanldeTap)))
-//
-//
-//@objc private func hanldeTap(){
-//    print("Hello")
-//    
-//    let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-//    
-//    basicAnimation.toValue = 1
-//    basicAnimation.duration = 2
-//    basicAnimation.fillMode = .forwards
-//    basicAnimation.isRemovedOnCompletion = false
-//    
-//    shapeLayer.add(basicAnimation, forKey: "urSoBasic")
-//}
