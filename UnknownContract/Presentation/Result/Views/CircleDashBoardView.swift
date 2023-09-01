@@ -45,6 +45,12 @@ public class CircleDashBoardView: UIView {
         $0.attributedText = setBody1Style("안전", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
     }
     
+    private lazy var fixedLayerImageView = UIImageView().then{
+        
+        $0.contentMode = .scaleToFill
+        $0.image = UIImage(named:"fixedLayer")
+    }
+    
     
 
     public override init(frame: CGRect) {
@@ -82,6 +88,7 @@ public extension CircleDashBoardView {
         scoreContainberView.addSubview(innerStrokeView)
         scoreContainberView.addSubview(scoreLabel)
         scoreContainberView.addSubview(levelLabel)
+        addSubview(fixedLayerImageView)
         
         
     }
@@ -117,6 +124,14 @@ public extension CircleDashBoardView {
         levelLabel.snp.makeConstraints{
             $0.centerX.equalToSuperview()
             $0.top.equalTo(scoreLabel.snp.bottom)
+        }
+        
+        fixedLayerImageView.snp.makeConstraints{
+            
+            $0.width.equalTo(283)
+            $0.height.equalTo(147.48)
+            $0.centerX.equalToSuperview().offset(5)
+            $0.centerY.equalToSuperview().offset(-17)
         }
         
         scoreAnimation()
