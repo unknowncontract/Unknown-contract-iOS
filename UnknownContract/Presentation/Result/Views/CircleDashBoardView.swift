@@ -10,9 +10,7 @@ import SnapKit
 import Then
 
 
-// EFEFEF
-// E0E0E0
-// DBDBDB
+
 
 public class CircleDashBoardView: UIView {
 
@@ -33,9 +31,7 @@ public class CircleDashBoardView: UIView {
 //
 //    }
     
-    private lazy var strokeView =   GradientThinStrokeCircleView().then{
-        $0.backgroundColor = .red
-    }
+    private lazy var strokeView = UIView()
     
     
     private lazy var edgeLayer = CAShapeLayer().then{
@@ -55,14 +51,16 @@ public class CircleDashBoardView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-//        addSubViews()
-//        setUp()
+
         
     }
     
+    
+
     public override func layoutSubviews() { // Draw Cycle 관련
         super.layoutSubviews()
-        self.strokeView.frame = bounds
+        addBorderCircularGradient(to:strokeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
+        
     }
     
 
@@ -71,14 +69,19 @@ public class CircleDashBoardView: UIView {
 public extension CircleDashBoardView {
     
     private func setUp(){
-        strokeView.setBorder()
+        
+
+        
         strokeView.snp.makeConstraints{
             
             $0.center.equalToSuperview()
-            $0.width.equalTo(200)
-            $0.height.equalTo(200)
+            $0.width.height.equalTo(200)
             
         }
+        
+       
+        
+       
 
     }
     

@@ -85,6 +85,14 @@ public class ResultViewController: BaseViewController {
 
     }
     
+    public override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            
+        
+    }
+    
+    
+    
     
     
     
@@ -171,7 +179,9 @@ extension ResultViewController {
         }
         
         circleDashBoard.snp.makeConstraints{
+            $0.width.height.equalTo(200)
             $0.center.equalToSuperview()
+            
         }
         
         dummyView.snp.makeConstraints{
