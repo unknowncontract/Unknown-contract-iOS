@@ -76,7 +76,16 @@ public class CircleDashBoardView: UIView {
         addBorderCircularGradient(to:outerStorkeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
         
         
-       // loadProgress()
+        let gradient = CAGradientLayer()
+        gradient.colors = [dangerColor.cgColor,warningColor.cgColor,safeColor.cgColor]
+            gradient.frame = outerStorkeView.bounds
+            gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+            gradient.endPoint = CGPoint(x: 1, y: 0.5)
+            gradient.type = .axial
+            gradient.mask = trackLayer
+            outerStorkeView.layer.addSublayer(gradient)
+        
+            loadProgress(30)
         
     }
     
@@ -137,8 +146,7 @@ public extension CircleDashBoardView {
             $0.centerY.equalToSuperview().offset(-17)
         }
         
-        addProgressBar(70)
-        //scoreAnimation()
+        addProgressBar()
        
 
     }
@@ -174,7 +182,7 @@ public extension CircleDashBoardView {
 
     }
     
-    func addProgressBar(_ score:Int){
+    func addProgressBar(){
         
         let fixedAngle:CGFloat = 12.78 * .pi / 180
         
@@ -186,7 +194,7 @@ public extension CircleDashBoardView {
         trackLayer.lineWidth = 20
         trackLayer.fillColor = UIColor.clear.cgColor //
         trackLayer.lineCap = .square // 선 모양
-        trackLayer.strokeEnd = scoreToProgress(score)
+        trackLayer.strokeEnd = 0
         
         // 30 % -> 0.3 - 0.03 = 0.27
         // 60 % -> 0.7 - 0.02 = 0.68
@@ -195,16 +203,13 @@ public extension CircleDashBoardView {
         //BarLayer
        shapeLayer.path = circularPath.cgPath
        shapeLayer.fillColor = UIColor.clear.cgColor
-       shapeLayer.strokeColor = UIColor.systemGreen.cgColor
+       shapeLayer.strokeColor = UIColor.clear.cgColor
        shapeLayer.lineWidth = 20
        shapeLayer.lineCap = .square
         
         
         outerStorkeView.layer.addSublayer(shapeLayer)
-        
-        outerStorkeView.layer.addSublayer(trackLayer)
-        
-        //addGradient()
+
         
   
         
@@ -212,23 +217,12 @@ public extension CircleDashBoardView {
     }
     
     
-    private func addGradient() {
-        
-        let gradient = CAGradientLayer()
-            gradient.colors = [UIColor.red.cgColor,UIColor.cyan.cgColor,UIColor.brown.cgColor,UIColor.blue.cgColor]
-            gradient.frame = bounds
-            gradient.locations = [0.2,0.5,0.75,1]
-            gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
-            gradient.endPoint = CGPoint(x: 0.5, y: 0)
-            gradient.type = .conic
-            gradient.mask = shapeLayer
-            outerStorkeView.layer.addSublayer(gradient)
-    }
 
-    func loadProgress(){
+
+    func loadProgress(_ score:Int){
             let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
     
-            basicAnimation.toValue = 1
+            basicAnimation.toValue = scoreToProgress(score)
             basicAnimation.duration = 2
             basicAnimation.fillMode = .forwards
             basicAnimation.isRemovedOnCompletion = false
@@ -238,42 +232,7 @@ public extension CircleDashBoardView {
             trackLayer.add(basicAnimation, forKey: "progress")
     }
     
-    func scoreAnimation(){
-       
-        
-        let fixedAngle:CGFloat = 12.78 * .pi / 180
-        
-        
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 111, y: 111), radius: 111, startAngle: .pi - fixedAngle  , endAngle: fixedAngle  , clockwise: true)
-       
-        
-        
-    
-        trackLayer.path = circlePath.cgPath
-        trackLayer.strokeColor = dangerColor.cgColor
-        trackLayer.lineWidth = 20
-        trackLayer.fillColor = UIColor.clear.cgColor //
-        trackLayer.lineCap = .square // 선 모양
-        
-        trackLayer.strokeEnd = 0
-        outerStorkeView.layer.addSublayer(trackLayer)
-        
-        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        
-        basicAnimation.toValue = 1
-        basicAnimation.duration = 2
-        basicAnimation.fillMode = .forwards
-        basicAnimation.isRemovedOnCompletion = false
 
-        
-        
-        trackLayer.add(basicAnimation, forKey: "progress")
-       
-        
-
-        
-
-    }
     
 }
 
