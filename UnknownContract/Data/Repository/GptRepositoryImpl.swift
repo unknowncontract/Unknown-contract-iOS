@@ -19,8 +19,8 @@ struct GptRepositoryImpl : GptRepository {
         self.gptDataSource = gptDataSource
     }
     
-    func fetchGptAnswer(message: String) -> Single<BaseMessage> {
-        gptDataSource.fetchGptAnswer(question: message)
+    func fetchGptAnswer(type:String,data: String) -> Single<BaseMessage> {
+        gptDataSource.fetchGptAnswer(type: type, data: data)
     }
 
     

@@ -7,15 +7,52 @@
 
 import Foundation
 
-struct BaseMessageDTO: Codable {
+public struct BaseMessageDTO: Codable {
     
-    let message:String
+    let type:String
+    let score:Int
+    
+    let warnings:[WarningDTO]
+}
+
+
+public struct WarningDTO:Codable {
+    let name:String
+    let description:String
 }
 
 extension BaseMessageDTO {
     
     func toDomain() -> BaseMessage {
-        return BaseMessage(message: self.message)
+        
+        
+        switch self.type {
+            
+            case "contractDoc":
+                return BaseMessage(type: .contractDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+            
+            case "ownerDoc":
+                return BaseMessage(type: .ownerDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+                
+            case "buildingDoc":
+            
+                return BaseMessage(type: .buildingDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+                
+            default:
+            
+                return BaseMessage(type: .buildingDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+            
+        }
+        
+        
+       
     }
     
+}
+
+extension WarningDTO {
+    
+    func toDomain() -> Warning {
+        return Warning(name: self.name, description: self.description)
+    }
 }

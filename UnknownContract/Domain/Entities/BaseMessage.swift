@@ -8,7 +8,18 @@
 import Foundation
 
 
-struct BaseMessage{
+public struct BaseMessage{
     
-    let message:String
+    let type:Document
+    
+    let score:Int
+    
+    
+    let warings:[Warning]
+}
+
+
+public struct Warning{
+    let name:String
+    let description:String
 }

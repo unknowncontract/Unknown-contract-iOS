@@ -252,7 +252,7 @@ extension HomeViewController {
                 
                 //TODO: 다큐먼트 종류 넘겨줘야함 
                 
-                let vc = self.resultComponent.makeView(message: result.message,document: .buildingDoc)
+                let vc = self.resultComponent.makeView(model: result)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
                 

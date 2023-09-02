@@ -10,9 +10,9 @@ import RxSwift
 
 class GptDataSourceImpl: BaseDataSource<GptAPI>,GptDataSource {
     
-    func fetchGptAnswer(question: String) -> Single<BaseMessage> {
+    func fetchGptAnswer(type:String,data: String) -> Single<BaseMessage> {
         
-        request(.baseQuestion(message:question))
+        request(.baseQuestion(type: type, data: data))
             .map(BaseMessageDTO.self)
             .map{$0.toDomain()}
         

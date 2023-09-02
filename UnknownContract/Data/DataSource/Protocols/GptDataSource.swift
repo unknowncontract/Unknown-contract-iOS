@@ -10,7 +10,7 @@ import RxSwift
 
 protocol GptDataSource {
     
-    func fetchGptAnswer(question:String) -> Single<BaseMessage>
+    func fetchGptAnswer(type:String,data: String) -> Single<BaseMessage>
 
     
 }

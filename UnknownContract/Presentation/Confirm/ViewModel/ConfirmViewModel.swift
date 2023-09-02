@@ -55,7 +55,7 @@ final class ConfirmViewModel {
                 guard let self else {return Observable.empty()}
                 
                 return self.fetchGptAnswerUseCase
-                    .execute(question: text)
+                    .execute(type: self.document.rawValue, data: text)
                     .asObservable()
             })
             .bind(to: output.answerText)

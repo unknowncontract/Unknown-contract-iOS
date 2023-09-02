@@ -301,39 +301,39 @@ extension ConfirmViewController {
     }
     
     private func pdfToImage(path:String){
-        
-        //TODO: 여러 장 추출 
-        
-        // Create a URL for the PDF file.
-        let url = URL(fileURLWithPath: path)
+            
+            //TODO: 여러 장 추출
+            
+            // Create a URL for the PDF file.
+            let url = URL(fileURLWithPath: path)
 
-        // Instantiate a `CGPDFDocument` from the PDF file's URL.
-        guard let document = PDFDocument(url: url) else { return }
+            // Instantiate a `CGPDFDocument` from the PDF file's URL.
+            guard let document = PDFDocument(url: url) else { return }
 
-        // Get the first page of the PDF document.
-        guard let page = document.page(at: 0) else { return }
+            // Get the first page of the PDF document.
+            guard let page = document.page(at: 0) else { return }
 
-        // Fetch the page rect for the page we want to render.
-        let pageRect = page.bounds(for: .mediaBox)
+            // Fetch the page rect for the page we want to render.
+            let pageRect = page.bounds(for: .mediaBox)
 
-        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-        let img = renderer.image { ctx in
-            // Set and fill the background color.
-            UIColor.white.set()
-            ctx.fill(CGRect(x: 0, y: 0, width: pageRect.width, height: pageRect.height))
+            let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+            let img = renderer.image { ctx in
+                // Set and fill the background color.
+                UIColor.white.set()
+                ctx.fill(CGRect(x: 0, y: 0, width: pageRect.width, height: pageRect.height))
 
-            // Translate the context so that we only draw the `cropRect`.
-            ctx.cgContext.translateBy(x: -pageRect.origin.x, y: pageRect.size.height - pageRect.origin.y)
+                // Translate the context so that we only draw the `cropRect`.
+                ctx.cgContext.translateBy(x: -pageRect.origin.x, y: pageRect.size.height - pageRect.origin.y)
 
-            // Flip the context vertically because the Core Graphics coordinate system starts from the bottom.
-            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+                // Flip the context vertically because the Core Graphics coordinate system starts from the bottom.
+                ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
 
-            // Draw the PDF page.
-            page.draw(with: .mediaBox, to: ctx.cgContext)
+                // Draw the PDF page.
+                page.draw(with: .mediaBox, to: ctx.cgContext)
+            }
+            
+            reconizeText(image: img)
         }
-        
-        reconizeText(image: img)
-    }
     
     func showAlertGoToSetting() {
       let alertController = UIAlertController(
@@ -367,6 +367,8 @@ extension ConfirmViewController {
     ///OCR
     func reconizeText(image:UIImage?) {
         self.output.startLottie.accept(())
+        
+        
         guard let cgImage = image?.cgImage else {
             fatalError("could not get image")
         }
@@ -386,6 +388,7 @@ extension ConfirmViewController {
                 $0.topCandidates(1).first?.string
             }).joined(separator: "\n")
             
+            DEBUG_LOG(text)
             self.input.resultText.accept(text) // 최종 OCR 결과
         }
         

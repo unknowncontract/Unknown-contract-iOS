@@ -133,7 +133,7 @@ extension ResultViewController {
         self.navigationBarView.addSubview(navigationTitleLabel)
         self.navigationBarView.addSubview(baseLine)
         
-        navigationTitleLabel.attributedText = setBody1Style(viewModel.model.document.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
+        navigationTitleLabel.attributedText = setBody1Style(viewModel.model.type.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
         
         
         
@@ -340,7 +340,6 @@ extension ResultViewController:UITableViewDelegate{
         tableView.reloadSections([indexPath.section], with: .none)
         
         let next = IndexPath(row: 1, section: indexPath.section ) //row 1이 답변 쪽
-        //ODO: SCROLL , 접기 펴기 애니메이션 및 답변 cell
         
         if data[indexPath.section].isOpen 
         {

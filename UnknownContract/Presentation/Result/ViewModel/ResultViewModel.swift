@@ -11,9 +11,9 @@ import RxSwift
 final class ResultViewModel {
     
     let disposeBag = DisposeBag()
-    var model:TestEntity
+    var model:BaseMessage
     
-    init(model: TestEntity) {
+    init(model: BaseMessage) {
         self.model = model
     }
     

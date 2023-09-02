@@ -10,11 +10,12 @@ import Moya
 
 
 public struct Question:Encodable {
-    let message:String
+    let type:String
+    let data:String
 }
 
 public enum GptAPI{
-    case baseQuestion(message:String)
+    case baseQuestion(type:String, data:String)
 }
 
 extension GptAPI :BaseAPI {
@@ -41,8 +42,8 @@ extension GptAPI :BaseAPI {
         
         switch self {
             
-        case .baseQuestion(message: let message):
-            return .requestJSONEncodable(Question(message: message))
+        case .baseQuestion(type: let type,  data: let data):
+            return .requestJSONEncodable(Question(type: type, data: data))
         }
         
     }

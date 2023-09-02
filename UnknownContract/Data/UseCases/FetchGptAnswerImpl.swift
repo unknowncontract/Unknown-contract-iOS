@@ -21,8 +21,8 @@ public struct FetchGptAnswerUseCaseImpl: FetchGptAnswerUseCase {
         self.repository = repository
     }
     
-    func execute(question: String) -> Single<BaseMessage> {
-        repository.fetchGptAnswer(message: question)
+    func execute(type:String,data:String) -> Single<BaseMessage> {
+        repository.fetchGptAnswer(type: type, data: data)
     }
 
 

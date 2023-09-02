@@ -10,6 +10,6 @@ import RxSwift
 
 protocol FetchGptAnswerUseCase {
     
-    func execute(question:String) -> Single<BaseMessage>
+    func execute(type:String,data:String) -> Single<BaseMessage>
     
 }

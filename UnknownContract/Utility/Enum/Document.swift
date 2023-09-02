@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum Document{
+public enum Document:String {
 
     
     case contractDoc
