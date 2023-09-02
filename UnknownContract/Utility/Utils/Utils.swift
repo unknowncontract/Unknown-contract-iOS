@@ -106,7 +106,7 @@ public func setTitle1Style(_ text:String,textColor color:UIColor,alignment:NSTex
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
-    
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
     // 행간  paragraphStyle.lineSpacing = 44
     
     let attrText =  NSMutableAttributedString(
@@ -132,6 +132,7 @@ public func setTitle2Style(_ text:String,textColor color:UIColor,alignment:NSTex
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
     
     // 행간  paragraphStyle.lineSpacing = 32
     
@@ -158,7 +159,7 @@ public func setTitle3Style(_ text:String,textColor color:UIColor,alignment:NSTex
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
-    
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
     // 행간  paragraphStyle.lineSpacing = 32
     
     let attrText =  NSMutableAttributedString(
@@ -184,7 +185,7 @@ public func setTitle4Style(_ text:String,textColor color:UIColor,alignment:NSTex
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
-    
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
     // 행간  paragraphStyle.lineSpacing = 32
     
     let attrText =  NSMutableAttributedString(
@@ -211,6 +212,7 @@ public func setBody1Style(_ text:String,textColor color:UIColor,alignment:NSText
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
     // 행간 paragraphStyle.lineSpacing = 22
     
     let attrText =  NSMutableAttributedString(
@@ -238,6 +240,8 @@ public func setBody2Style(_ text:String,textColor color:UIColor,alignment:NSText
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
+    
     
     // 행간 paragraphStyle.lineSpacing = 20
     
@@ -265,6 +269,7 @@ public func setBody3Style(_ text:String,textColor color:UIColor,alignment:NSText
     paragraphStyle.maximumLineHeight = lineHeight
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.alignment = alignment
+    paragraphStyle.lineBreakStrategy = .hangulWordPriority
     
     // 행간 paragraphStyle.lineSpacing = 17
     
