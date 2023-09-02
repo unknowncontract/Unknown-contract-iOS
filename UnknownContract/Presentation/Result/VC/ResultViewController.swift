@@ -248,7 +248,7 @@ extension ResultViewController:UITableViewDataSource{
 //    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 //        return  section == 0 ? -1 : 5
 //    }
-//       
+//
 //       // Make the background color show through
 //    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //           let headerView = UIView()
@@ -299,7 +299,7 @@ extension ResultViewController:UITableViewDelegate{
         let next = IndexPath(row: 1, section: indexPath.section  ) //row 1이 답변 쪽
         
         
-//        if data[indexPath.section].isOpen  TODO: SCROLL
+//        if data[indexPath.section].isOpen  TODO: SCROLL , 접기 펴기 애니메이션 및 답변 cell
 //        {
 //            self.scrollToBottom(indexPath: next)
 //        }

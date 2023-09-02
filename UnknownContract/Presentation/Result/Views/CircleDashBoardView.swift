@@ -17,7 +17,7 @@ public class CircleDashBoardView: UIView {
     let dangerColor = colorFromRGB("F82C5F")
     let warningColor = colorFromRGB("FF8B25")
     let safeColor = colorFromRGB("25BDC5")
-    
+    let gradient = CAGradientLayer()
 
     private let trackLayer = CAShapeLayer()
     
@@ -73,14 +73,14 @@ public class CircleDashBoardView: UIView {
         addBorderCircularGradient(to:outerStorkeView,colors: [colorFromRGB("EFEFEF").cgColor,colorFromRGB("E0E0E0",alpha: 0.3062).cgColor,colorFromRGB("DBDBDB",alpha: 0.0001).cgColor], lineWidth: 1.25, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
         
         
-            let gradient = CAGradientLayer()
+            
             gradient.colors = [dangerColor.cgColor,warningColor.cgColor,safeColor.cgColor]
             gradient.frame = outerStorkeView.bounds
             gradient.startPoint = CGPoint(x: 0.0, y: 0.5) // 좌 센터에서
             gradient.endPoint = CGPoint(x: 1, y: 0.5) // 우 센터로
             gradient.type = .axial
             gradient.mask = trackLayer // 마스킹
-            outerStorkeView.layer.addSublayer(gradient)
+            
         
    
         
@@ -249,6 +249,9 @@ public extension CircleDashBoardView {
             scoreLabel.attributedText = setTitle1Style("\(score)점", textColor: color,alignment: .center)
             levelLabel.attributedText = setBody1Style(message,textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
             trackLayer.add(basicAnimation, forKey: "progress")
+        
+        
+            outerStorkeView.layer.addSublayer(gradient)
     }
     
 }
