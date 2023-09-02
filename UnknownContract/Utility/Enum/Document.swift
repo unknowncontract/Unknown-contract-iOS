@@ -11,20 +11,20 @@ import Foundation
 public enum Document:String {
 
     
-    case contractDoc
-    case ownerDoc
-    case buildingDoc
+    case contract 
+    case owner
+    case building
     
     
     var checkNavigationTitle:String  {
         get {
             switch self {
                 
-            case .contractDoc:
+            case .contract:
                 return "임대차계약서 확인하기"
-            case .ownerDoc:
+            case .owner:
                 return "등기부등본 확인하기"
-            case .buildingDoc:
+            case .building:
                 return "건축물대장 확인하기"
             }
         }
@@ -34,11 +34,11 @@ public enum Document:String {
         get{
             switch self {
                 
-            case .contractDoc:
+            case .contract:
                 return "임대차계약서 검토 결과"
-            case .ownerDoc:
+            case .owner:
                 return "등기부등본 검토 결과"
-            case .buildingDoc:
+            case .building:
                 return "건축물대장 검토 결과"
             }
         }
@@ -48,11 +48,11 @@ public enum Document:String {
         get{
             switch self {
                 
-            case .contractDoc:
+            case .contract:
                 return "임대차계약서 촬영"
-            case .ownerDoc:
+            case .owner:
                 return "등기부등본 촬영"
-            case .buildingDoc:
+            case .building:
                 return "건축물대장 촬영"
             }
         }

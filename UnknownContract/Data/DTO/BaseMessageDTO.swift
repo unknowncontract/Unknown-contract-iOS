@@ -9,16 +9,14 @@ import Foundation
 
 public struct BaseMessageDTO: Codable {
     
-    let type:String
-    let score:Int
-    
-    let warnings:[WarningDTO]
+    let type: String
+    let score: Int
+    let warnings: [WarningDTO]
 }
 
 
 public struct WarningDTO:Codable {
-    let name:String
-    let description:String
+    let name, description: String
 }
 
 extension BaseMessageDTO {
@@ -28,19 +26,19 @@ extension BaseMessageDTO {
         
         switch self.type {
             
-            case "contractDoc":
-                return BaseMessage(type: .contractDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+            case "contract":
+                return BaseMessage(type: .contract, score: self.score, warings: self.warnings.map{$0.toDomain()})
             
-            case "ownerDoc":
-                return BaseMessage(type: .ownerDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+            case "owner":
+                return BaseMessage(type: .owner, score: self.score, warings: self.warnings.map{$0.toDomain()})
                 
-            case "buildingDoc":
+            case "building":
             
-                return BaseMessage(type: .buildingDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+                return BaseMessage(type: .building, score: self.score, warings: self.warnings.map{$0.toDomain()})
                 
             default:
             
-                return BaseMessage(type: .buildingDoc, score: self.score, warings: self.warnings.map{$0.toDomain()})
+                return BaseMessage(type: .building, score: self.score, warings: self.warnings.map{$0.toDomain()})
             
         }
         

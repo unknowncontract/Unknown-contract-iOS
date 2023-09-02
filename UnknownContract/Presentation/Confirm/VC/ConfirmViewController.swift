@@ -323,7 +323,7 @@ extension ConfirmViewController {
                 ctx.fill(CGRect(x: 0, y: 0, width: pageRect.width, height: pageRect.height))
 
                 // Translate the context so that we only draw the `cropRect`.
-                ctx.cgContext.translateBy(x: -pageRect.origin.x, y: pageRect.size.height - pageRect.origin.y)
+                ctx.cgContext.translateBy(x:0, y: pageRect.size.height)
 
                 // Flip the context vertically because the Core Graphics coordinate system starts from the bottom.
                 ctx.cgContext.scaleBy(x: 1.0, y: -1.0)

@@ -37,15 +37,15 @@ public class HomeViewController: BaseViewController {
         $0.attributedText = setBody2Style("✓ 확인하고 싶은 서류를 선택해 주세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue100,alignment: .center)
     }
     
-    lazy var documentButton1 = DocumentButtonView(document: .contractDoc).then{
+    lazy var documentButton1 = DocumentButtonView(document: .contract).then{
         $0.delegate = self
     }
     
-    lazy var documentButton2 = DocumentButtonView(document: .ownerDoc).then{
+    lazy var documentButton2 = DocumentButtonView(document: .owner).then{
         $0.delegate = self
     }
     
-    lazy var documentButton3 = DocumentButtonView(document: .buildingDoc).then{
+    lazy var documentButton3 = DocumentButtonView(document: .building).then{
         $0.delegate = self
     }
     
