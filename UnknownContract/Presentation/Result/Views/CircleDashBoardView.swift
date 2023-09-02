@@ -229,11 +229,11 @@ public extension CircleDashBoardView {
             var message:String = ""
             switch score {
                 
-                case 0..<30:
+                case 0...30:
                     color = dangerColor
                     message = "위험"
             
-                case 30..<60:
+                case 31...60:
                     color = warningColor
                     message = "주의"
                 
