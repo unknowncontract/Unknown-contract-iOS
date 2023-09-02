@@ -260,7 +260,7 @@ extension ConfirmViewController {
         lottieView.stop()
         loadingView.isHidden = true
         
-        //TODO: 순서가 좀 잘못 됨..
+    
         NotificationCenter.default.post(name: .gptAnswer, object: result) // 결과 보내기 -> 홈으로
         
             

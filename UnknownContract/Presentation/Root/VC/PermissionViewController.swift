@@ -137,7 +137,7 @@ extension PermissionViewController {
                 
                 guard let self else {return}
                 
-                PreferenceManager.appPermission = true //TODO: true 로 바꾸기
+                PreferenceManager.appPermission = true 
                 
                 self.dismiss(animated: true)
                 

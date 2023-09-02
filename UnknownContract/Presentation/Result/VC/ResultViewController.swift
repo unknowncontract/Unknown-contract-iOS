@@ -79,6 +79,7 @@ public class ResultViewController: BaseViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        $0.register(AnswerTableViewCell.self, forCellReuseIdentifier:AnswerTableViewCell.identifier)
         
         
     }
@@ -235,6 +236,7 @@ extension ResultViewController {
             })
             .disposed(by: disposeBag)
     }
+    
 }
 
 extension ResultViewController:UITableViewDataSource{
@@ -257,8 +259,17 @@ extension ResultViewController:UITableViewDataSource{
 //        return nil
 //    }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // row 개수가 굉장히 중요함
+        
+        let data = data[section]
+        var count:Int = 0
+            
+           if data.isOpen {
+               count = 2
+           }else{
+               count = 1
+           }
+           return count
     }
     
     
@@ -273,15 +284,47 @@ extension ResultViewController:UITableViewDelegate{
                    return UITableViewCell()
         }
         
+        guard let answerCell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier,for: indexPath) as? AnswerTableViewCell else {
+            return UITableViewCell()
+        }
+        
+
+        
+        let sectionData = data[indexPath.section]
+        
         categoryCell.layer.cornerRadius = 10
-        categoryCell.backgroundColor = .red
+        answerCell.layer.cornerRadius = 10
+        
+        if sectionData.isOpen{ // 부분 cornerRadius
+            categoryCell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+            answerCell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+        }
+        
+        
+        categoryCell.backgroundColor = .white
         categoryCell.clipsToBounds = true
         
+        
+        answerCell.backgroundColor = .white
+        categoryCell.clipsToBounds = true
+        
+        categoryCell.selectionStyle = .none
+        answerCell.selectionStyle = .none
+       
+        
+        
         categoryCell.update(model: data[indexPath.section])
+        answerCell.update(model:data[indexPath.section])
+        
+        if indexPath.row == 0 {
+            return categoryCell
+        }else {
+            return answerCell
+        }
         
         
-        
-        return categoryCell
+
+
    
     }
     
@@ -295,18 +338,22 @@ extension ResultViewController:UITableViewDelegate{
         
         tableView.reloadSections([indexPath.section], with: .none)
         
+        let next = IndexPath(row: 1, section: indexPath.section ) //row 1이 답변 쪽
+        //ODO: SCROLL , 접기 펴기 애니메이션 및 답변 cell
         
-        let next = IndexPath(row: 1, section: indexPath.section  ) //row 1이 답변 쪽
-        
-        
-//        if data[indexPath.section].isOpen  TODO: SCROLL , 접기 펴기 애니메이션 및 답변 cell
-//        {
-//            self.scrollToBottom(indexPath: next)
-//        }
+        if data[indexPath.section].isOpen 
+        {
+            self.scrollToBottom(indexPath: next)
+        }
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
+    private func scrollToBottom(indexPath:IndexPath){
+        DispatchQueue.main.async {
+            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+    }
 }
