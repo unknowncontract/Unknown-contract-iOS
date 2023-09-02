@@ -16,7 +16,10 @@ public class ResultViewController: BaseViewController {
     let disposeBag = DisposeBag()
     
     private var viewModel:ResultViewModel!
-
+    
+    
+    var data:[TestCellModel] = [TestCellModel(category: "진단기준", answer: "아무개 아무개 아무개"),TestCellModel(category: "보증금 및 차임", answer: "보증금 및 차임(월세)이 임대인과 합의한대로 적혀있는지 다시 한 번 확인하세요.")]
+    
     lazy var navigationBarView = UIView().then{
         $0.backgroundColor = .clear
     }
@@ -59,9 +62,28 @@ public class ResultViewController: BaseViewController {
     
     lazy var circleDashBoard = CircleDashBoardView()
     
-    lazy var dummyView = UIView().then{
-        $0.backgroundColor = .blue
+    lazy var emptyView = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
     }
+    
+    lazy var tableContainerView = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+    }
+    
+    lazy var tableHeaderView = PrepareTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 30))
+    
+    lazy var tableView = UITableView().then{
+        $0.backgroundColor = .clear
+        $0.separatorStyle = .none
+        $0.tableHeaderView = tableHeaderView
+        $0.dataSource = self
+        $0.delegate = self
+        $0.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        
+        
+    }
+    
+
     
     
     init(viewModel:ResultViewModel){
@@ -117,13 +139,15 @@ extension ResultViewController {
         self.scrollView.addSubview(stackView)
         self.stackView.addArrangedSubview(topLabelContainerView)
         self.stackView.addArrangedSubview(dashBoardContainerView)
-        self.stackView.addArrangedSubview(dummyView)
+        self.stackView.addArrangedSubview(emptyView)
+        self.stackView.addArrangedSubview(tableContainerView)
         
         self.topLabelContainerView.addSubview(titleLabel)
         self.topLabelContainerView.addSubview(remindLabel)
         
         
         self.dashBoardContainerView.addSubview(circleDashBoard)
+        tableContainerView.addSubview(tableView)
         
         
     }
@@ -178,6 +202,10 @@ extension ResultViewController {
             $0.height.equalTo(244)
         }
         
+        emptyView.snp.makeConstraints{
+            $0.height.equalTo(32)
+        }
+        
         circleDashBoard.snp.makeConstraints{
             $0.bottom.equalToSuperview()
             $0.height.equalTo(244)
@@ -185,10 +213,13 @@ extension ResultViewController {
             
         }
         
-        dummyView.snp.makeConstraints{
+        tableView.snp.makeConstraints{
+            $0.top.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(20)
             $0.height.equalTo(800)
-            $0.left.right.equalToSuperview()
         }
+        
+        
         
         
         
@@ -204,4 +235,78 @@ extension ResultViewController {
             })
             .disposed(by: disposeBag)
     }
+}
+
+extension ResultViewController:UITableViewDataSource{
+    
+    
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return data.count
+    }
+    
+//    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return  section == 0 ? -1 : 5
+//    }
+//       
+//       // Make the background color show through
+//    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//           let headerView = UIView()
+//           headerView.backgroundColor = UIColor.clear
+//           return headerView
+//        return nil
+//    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    
+}
+
+extension ResultViewController:UITableViewDelegate{
+    
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            
+        guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else{
+                   return UITableViewCell()
+        }
+        
+        categoryCell.layer.cornerRadius = 10
+        categoryCell.backgroundColor = .red
+        categoryCell.clipsToBounds = true
+        
+        categoryCell.update(model: data[indexPath.section])
+        
+        
+        
+        return categoryCell
+   
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        data[indexPath.section].isOpen = !data[indexPath.section].isOpen
+        
+        
+        tableView.reloadSections([indexPath.section], with: .none)
+        
+        
+        let next = IndexPath(row: 1, section: indexPath.section  ) //row 1이 답변 쪽
+        
+        
+//        if data[indexPath.section].isOpen  TODO: SCROLL
+//        {
+//            self.scrollToBottom(indexPath: next)
+//        }
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
 }
