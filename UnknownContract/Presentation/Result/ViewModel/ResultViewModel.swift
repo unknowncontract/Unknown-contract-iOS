@@ -11,10 +11,10 @@ import RxSwift
 final class ResultViewModel {
     
     let disposeBag = DisposeBag()
-    var document:Document!
+    var model:TestEntity
     
-    init(document: Document) {
-        self.document = document
+    init(model: TestEntity) {
+        self.model = model
     }
     
     

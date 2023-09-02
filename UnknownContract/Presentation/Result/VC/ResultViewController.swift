@@ -15,8 +15,8 @@ public class ResultViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    var viewModel:ResultViewModel!
-    
+    private var viewModel:ResultViewModel!
+
     lazy var navigationBarView = UIView().then{
         $0.backgroundColor = .clear
     }
@@ -64,9 +64,8 @@ public class ResultViewController: BaseViewController {
     }
     
     
-    init(message:String,viewModel:ResultViewModel){
+    init(viewModel:ResultViewModel){
         super.init(nibName: nil, bundle: nil)
-        DEBUG_LOG(message)
         
         self.viewModel = viewModel
     }
@@ -81,6 +80,7 @@ public class ResultViewController: BaseViewController {
         configureUI()
         bind()
         
+        circleDashBoard.loadProgress(self.viewModel.model.score)
 
 
     }
@@ -110,7 +110,7 @@ extension ResultViewController {
         self.navigationBarView.addSubview(navigationTitleLabel)
         self.navigationBarView.addSubview(baseLine)
         
-        navigationTitleLabel.attributedText = setBody1Style(viewModel.document.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
+        navigationTitleLabel.attributedText = setBody1Style(viewModel.model.document.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
         
         
         

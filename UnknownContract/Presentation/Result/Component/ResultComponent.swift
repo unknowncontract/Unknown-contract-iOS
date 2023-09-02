@@ -18,7 +18,7 @@ public final class ResultComponent: Component<ResultDependenvy> {
 
     
     public func makeView(message:String,document:Document) -> ResultViewController {
-        return ResultViewController(message: message,viewModel: ResultViewModel(document: document))
+        return ResultViewController(viewModel: ResultViewModel(model: TestEntity(score: 50, document: .buildingDoc)))
         
     }
 }

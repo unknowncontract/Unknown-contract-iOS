@@ -17,6 +17,7 @@ public class CircleDashBoardView: UIView {
     let dangerColor = colorFromRGB("F82C5F")
     let warningColor = colorFromRGB("FF8B25")
     let safeColor = colorFromRGB("25BDC5")
+    
 
     private let trackLayer = CAShapeLayer()
     
@@ -40,13 +41,9 @@ public class CircleDashBoardView: UIView {
         $0.setShadow1()
     }
     
-    private lazy var scoreLabel = UILabel().then{
-        $0.attributedText = setTitle1Style("70점", textColor: safeColor,alignment: .center)
-    }
+    private lazy var scoreLabel = UILabel()
     
-    private lazy var levelLabel = UILabel().then{
-        $0.attributedText = setBody1Style("안전", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
-    }
+    private lazy var levelLabel = UILabel()
     
     private lazy var fixedLayerImageView = UIImageView().then{
         
@@ -85,14 +82,14 @@ public class CircleDashBoardView: UIView {
             gradient.mask = trackLayer // 마스킹
             outerStorkeView.layer.addSublayer(gradient)
         
-            loadProgress(100)
+   
         
     }
     
 
 }
 
-public extension CircleDashBoardView {
+private extension CircleDashBoardView {
     
     private func addSubViews(){
         addSubview(outerStorkeView)
@@ -159,7 +156,10 @@ public extension CircleDashBoardView {
         case 0..<31:
             offset = -0.03
         
-        case 31..<70:
+        case 31...50:
+            offset = -0.01
+            
+        case 51..<70:
             offset = 0.08
             
         
@@ -210,25 +210,46 @@ public extension CircleDashBoardView {
         
       outerStorkeView.layer.addSublayer(shapeLayer)
 
-        
-  
-        
 
     }
     
+}
+
+public extension CircleDashBoardView {
     
     func loadProgress(_ score:Int){
             let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
     
             basicAnimation.toValue = scoreToProgress(score)
-            basicAnimation.duration = 2
+            basicAnimation.duration = 1
             basicAnimation.fillMode = .forwards
             basicAnimation.isRemovedOnCompletion = false
 
+            var color:UIColor = .clear
+            var message:String = ""
+            switch score {
+                
+                case 0..<30:
+                    color = dangerColor
+                    message = "위험"
+            
+                case 30..<60:
+                    color = warningColor
+                    message = "주의"
+                
+                default:
+            
+                    message = "안전"
+                    color = safeColor
+                
+                
+            }
+            
+        
+            scoreLabel.attributedText = setTitle1Style("\(score)점", textColor: color,alignment: .center)
+            levelLabel.attributedText = setBody1Style(message,textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
             trackLayer.add(basicAnimation, forKey: "progress")
     }
-    
-
     
 }
 
