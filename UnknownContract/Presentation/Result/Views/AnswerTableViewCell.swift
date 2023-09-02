@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 
 public class AnswerTableViewCell: UITableViewCell {
     
     static let identifier:String = "AnswerTableViewCell"
     
+    lazy var topLine = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+    }
     
     lazy var dotContainerView = UIView()
     
@@ -27,6 +32,7 @@ public class AnswerTableViewCell: UITableViewCell {
             
         addSubViews()
         setUp()
+        setShadow2()
             
     }
 
@@ -44,6 +50,7 @@ public extension AnswerTableViewCell{
     
     private func addSubViews(){
 
+        self.addSubview(topLine)
         self.addSubview(dotContainerView)
         self.dotContainerView.addSubview(dotView)
         self.addSubview(label)
@@ -52,8 +59,13 @@ public extension AnswerTableViewCell{
     
     private func setUp(){
         
+        topLine.snp.makeConstraints{
+            $0.left.top.right.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+        
         dotContainerView.snp.makeConstraints{
-            $0.left.equalToSuperview()
+            $0.left.equalToSuperview().inset(20)
             $0.width.height.equalTo(16)
             $0.top.equalTo(label.snp.top).inset(2)
         }

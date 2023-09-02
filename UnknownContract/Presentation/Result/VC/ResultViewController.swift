@@ -247,17 +247,17 @@ extension ResultViewController:UITableViewDataSource{
         return data.count
     }
     
-//    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return  section == 0 ? -1 : 5
-//    }
-//
-//       // Make the background color show through
-//    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//           let headerView = UIView()
-//           headerView.backgroundColor = UIColor.clear
-//           return headerView
-//        return nil
-//    }
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return  section == 0 ? -1 : 5
+    }
+
+       // Make the background color show through
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+           let headerView = UIView()
+           headerView.backgroundColor = UIColor.clear
+           return headerView
+        return nil
+    }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // row 개수가 굉장히 중요함
         
@@ -294,6 +294,7 @@ extension ResultViewController:UITableViewDelegate{
         
         categoryCell.layer.cornerRadius = 10
         answerCell.layer.cornerRadius = 10
+        
         
         if sectionData.isOpen{ // 부분 cornerRadius
             categoryCell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]

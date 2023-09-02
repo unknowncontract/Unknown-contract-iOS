@@ -22,6 +22,7 @@ public class CategoryTableViewCell: UITableViewCell {
             
         addSubViews()
         setUp()
+        setShadow2()
             
     }
 
