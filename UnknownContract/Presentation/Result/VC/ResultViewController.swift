@@ -35,6 +35,7 @@ public class ResultViewController: BaseViewController {
     }
 
     lazy var scrollView = UIScrollView().then{
+        $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue200
@@ -345,6 +346,14 @@ extension ResultViewController:UITableViewDelegate{
     private func scrollToBottom(indexPath:IndexPath){
         DispatchQueue.main.async {
             self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+    }
+}
+
+extension ResultViewController:UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            scrollView.contentOffset.y  = 0
         }
     }
 }
