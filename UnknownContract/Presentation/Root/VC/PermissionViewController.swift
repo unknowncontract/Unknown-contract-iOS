@@ -139,7 +139,7 @@ extension PermissionViewController {
                 
                 PreferenceManager.appPermission = true 
                 
-                self.dismiss(animated: true)
+                self.dismiss(animated: false)
                 
             })
             .disposed(by:disposeBag )

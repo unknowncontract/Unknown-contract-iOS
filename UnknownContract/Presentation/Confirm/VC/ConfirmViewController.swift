@@ -244,6 +244,17 @@ extension ConfirmViewController {
                 
             })
             .disposed(by: disposeBag)
+        
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,_) in
+                
+                owner.lottieView.stop()
+                owner.loadingView.isHidden = true
+                owner.showToast(text: "다시시도", font: DesignSystemAsset.Pretendard.body3)
+                
+        })
+        .disposed(by: disposeBag)
     }
     
     private func playLottie(){

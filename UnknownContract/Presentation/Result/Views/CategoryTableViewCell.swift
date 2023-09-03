@@ -33,9 +33,9 @@ public class CategoryTableViewCell: UITableViewCell {
 
 public extension CategoryTableViewCell{
     
-    func update (model:TestCellModel) {
+    func update (model:Warning) {
         
-        label.attributedText = setBody1Style(model.category, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue900)
+        label.attributedText = setBody1Style(model.name, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue900)
         
         arrowImageView.image = model.isOpen ? DesignSystemAsset.Icon.arrowUp : DesignSystemAsset.Icon.arrowDown
         

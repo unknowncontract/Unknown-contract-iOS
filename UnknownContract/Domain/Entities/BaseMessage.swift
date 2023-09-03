@@ -15,11 +15,12 @@ public struct BaseMessage{
     let score:Int
     
     
-    let warings:[Warning]
+    var warings:[Warning]
 }
 
 
 public struct Warning{
+    var isOpen:Bool = false
     let name:String
     let description:String
 }

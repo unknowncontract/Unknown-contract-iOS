@@ -250,7 +250,6 @@ extension HomeViewController {
                 
                 self.navigationController?.popViewController(animated: false)
                 
-                //TODO: 다큐먼트 종류 넘겨줘야함 
                 
                 let vc = self.resultComponent.makeView(model: result)
                 

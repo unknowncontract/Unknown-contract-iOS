@@ -43,9 +43,9 @@ public class AnswerTableViewCell: UITableViewCell {
 
 public extension AnswerTableViewCell{
     
-    func update (model:TestCellModel) {
+    func update (model:Warning) {
         
-        label.attributedText = setBody2Style(model.answer, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue800)
+        label.attributedText = setBody2Style(model.description, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue800)
     }
     
     private func addSubViews(){

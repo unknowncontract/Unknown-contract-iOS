@@ -83,15 +83,15 @@ extension IntroViewController {
        }
     
     private func outputBind(){
-
+        //TODO:  Fade InOUT
         output.permissionResult
             .do(onNext: { [weak self] (permission) in
                     guard let self = self else { return }
                     let show: Bool = !(permission ?? false)
                     guard show else { return }
                     let permission = self.permissionComponent.makeView()
-                permission.modalPresentationStyle =  .fullScreen
-                    self.present(permission, animated: true)
+                    permission.modalPresentationStyle =  .fullScreen
+                    self.present(permission, animated: false)
             })
             .filter { return ($0 ?? false) == true }
             .map{ _ in ()}

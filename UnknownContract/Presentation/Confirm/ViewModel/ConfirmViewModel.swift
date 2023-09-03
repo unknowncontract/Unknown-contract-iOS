@@ -31,6 +31,7 @@ final class ConfirmViewModel {
 
         let resultText:PublishRelay<String> = .init()
         
+        
     }
     
     struct Output{
@@ -38,6 +39,7 @@ final class ConfirmViewModel {
         
         let startLottie:PublishRelay<Void> = .init()
         let answerText:PublishRelay<BaseMessage> = .init()
+        let showToast:PublishRelay<Void> = .init()
         
     }
     
@@ -57,7 +59,14 @@ final class ConfirmViewModel {
                 return self.fetchGptAnswerUseCase
                     .execute(type: self.document.rawValue, data: text)
                     .asObservable()
+                    .catchAndReturn(BaseMessage(type: .owner, score: -1, warings: []))
             })
+            .do(onNext: {
+                if $0.score == -1{
+                    output.showToast.accept(())
+                }
+            })
+            .filter({$0.score != -1})
             .bind(to: output.answerText)
             .disposed(by: disposeBag)
         

@@ -17,8 +17,7 @@ public class ResultViewController: BaseViewController {
     
     private var viewModel:ResultViewModel!
     
-    
-    var data:[TestCellModel] = [TestCellModel(category: "진단기준", answer: "아무개 아무개 아무개"),TestCellModel(category: "보증금 및 차임", answer: "보증금 및 차임(월세)이 임대인과 합의한대로 적혀있는지 다시 한 번 확인하세요.")]
+
     
     lazy var navigationBarView = UIView().then{
         $0.backgroundColor = .clear
@@ -244,7 +243,7 @@ extension ResultViewController:UITableViewDataSource{
     
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return data.count
+        return viewModel.model.warings.count
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -261,7 +260,7 @@ extension ResultViewController:UITableViewDataSource{
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // row 개수가 굉장히 중요함
         
-        let data = data[section]
+        let data = viewModel.model.warings[section]
         var count:Int = 0
             
            if data.isOpen {
@@ -290,7 +289,7 @@ extension ResultViewController:UITableViewDelegate{
         
 
         
-        let sectionData = data[indexPath.section]
+        let sectionData = viewModel.model.warings[indexPath.section]
         
         categoryCell.layer.cornerRadius = 10
         answerCell.layer.cornerRadius = 10
@@ -314,8 +313,8 @@ extension ResultViewController:UITableViewDelegate{
        
         
         
-        categoryCell.update(model: data[indexPath.section])
-        answerCell.update(model:data[indexPath.section])
+        categoryCell.update(model: sectionData)
+        answerCell.update(model:sectionData)
         
         if indexPath.row == 0 {
             return categoryCell
@@ -334,14 +333,14 @@ extension ResultViewController:UITableViewDelegate{
         tableView.deselectRow(at: indexPath, animated: true)
         
         
-        data[indexPath.section].isOpen = !data[indexPath.section].isOpen
+        viewModel.model.warings[indexPath.section].isOpen = !viewModel.model.warings[indexPath.section].isOpen
         
         
         tableView.reloadSections([indexPath.section], with: .none)
         
         let next = IndexPath(row: 1, section: indexPath.section ) //row 1이 답변 쪽
         
-        if data[indexPath.section].isOpen 
+        if viewModel.model.warings[indexPath.section].isOpen 
         {
             self.scrollToBottom(indexPath: next)
         }
