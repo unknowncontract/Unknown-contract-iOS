@@ -33,7 +33,7 @@ class PrepareTableHeaderView: UIView {
         self.addSubview(label)
         imageView.snp.makeConstraints{
             $0.width.height.equalTo(24)
-            $0.left.equalToSuperview()
+            $0.left.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
         

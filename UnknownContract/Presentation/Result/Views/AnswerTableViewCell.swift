@@ -12,6 +12,9 @@ import SnapKit
 public class AnswerTableViewCell: UITableViewCell {
     
     static let identifier:String = "AnswerTableViewCell"
+
+    
+    lazy var contanierView = UIView()
     
     lazy var topLine = UIView().then{
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
@@ -24,7 +27,9 @@ public class AnswerTableViewCell: UITableViewCell {
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue500
     }
     
-    lazy var label = UILabel()
+    lazy var label = UILabel().then{
+        $0.numberOfLines = 0
+    }
 
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,18 +51,28 @@ public extension AnswerTableViewCell{
     func update (model:Warning) {
         
         label.attributedText = setBody2Style(model.description, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue800)
+        
+        contanierView.layer.cornerRadius = 10
+        contanierView.backgroundColor = model.isOpen ? .white : .clear
+        contanierView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+        contanierView.clipsToBounds = true
     }
     
     private func addSubViews(){
-
-        self.addSubview(topLine)
-        self.addSubview(dotContainerView)
+        self.contentView.addSubview(contanierView)
+        self.contanierView.addSubview(topLine)
+        self.contanierView.addSubview(dotContainerView)
         self.dotContainerView.addSubview(dotView)
-        self.addSubview(label)
+        self.contanierView.addSubview(label)
     
     }
     
     private func setUp(){
+        
+        contanierView.snp.makeConstraints{
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.bottom.equalToSuperview()
+        }
         
         topLine.snp.makeConstraints{
             $0.left.top.right.equalToSuperview()

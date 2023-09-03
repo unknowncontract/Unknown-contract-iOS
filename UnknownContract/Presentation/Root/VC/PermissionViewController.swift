@@ -39,15 +39,9 @@ public class PermissionViewController: BaseViewController {
         $0.attributedText = setBody3Style("아는게 힘㈜(이하 “회사“)는 모르는계약(이하 “서비스”)의 이용을 위해 “서비스”를 이용하는 사용자의 개인정보를 아래와 같이 수집·이용합니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700)
     }
     
-    lazy var ruleView1 = RuleView(rule: .collect).then{
-        $0.backgroundColor = .red
-    }
-    lazy var ruleView2 = RuleView(rule: .purpose).then{
-        $0.backgroundColor = .green
-    }
-    lazy var ruleView3 = RuleView(rule: .period).then{
-        $0.backgroundColor = .orange
-    }
+    lazy var ruleView1 = RuleView(rule: .collect)
+    lazy var ruleView2 = RuleView(rule: .purpose)
+    lazy var ruleView3 = RuleView(rule: .period)
     
     lazy var waringComentLabel = UILabel().then{
         
@@ -138,7 +132,7 @@ extension PermissionViewController {
                 
                 guard let self else {return}
                 
-                PreferenceManager.appPermission = false
+                PreferenceManager.appPermission = true
                 
                 self.dismiss(animated: false)
                 

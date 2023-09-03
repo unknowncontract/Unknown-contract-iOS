@@ -113,7 +113,7 @@ extension IntroViewController {
         
         output.endIntro
             .withUnretained(self)
-            .delay(.seconds(1), scheduler: MainScheduler.instance)
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
             .do(onNext: { (owner,_) in
                 owner.containerView.fadeIn()
             })

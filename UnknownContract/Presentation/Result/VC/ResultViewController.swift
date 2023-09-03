@@ -20,7 +20,7 @@ public class ResultViewController: BaseViewController {
 
     
     lazy var navigationBarView = UIView().then{
-        $0.backgroundColor = .clear
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue100
     }
     
     lazy var backButton = UIButton().then{
@@ -37,14 +37,16 @@ public class ResultViewController: BaseViewController {
     lazy var scrollView = UIScrollView().then{
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
+       $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue200
     }
     
     lazy var stackView = UIStackView().then{
         $0.axis = .vertical
+        $0.backgroundColor = .clear
     }
     
     lazy var topLabelContainerView = UIView().then{
-        $0.backgroundColor = .clear
+        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
     }
     
     lazy var titleLabel = UILabel().then{
@@ -56,7 +58,7 @@ public class ResultViewController: BaseViewController {
     }
     
     lazy var dashBoardContainerView = UIView().then{
-        $0.backgroundColor = .clear
+        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
     }
     
     lazy var circleDashBoard = CircleDashBoardView()
@@ -66,7 +68,7 @@ public class ResultViewController: BaseViewController {
     }
     
     lazy var tableContainerView = UIView().then{
-        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+        $0.backgroundColor = .clear
     }
     
     lazy var tableHeaderView = PrepareTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 30))
@@ -215,8 +217,8 @@ extension ResultViewController {
         
         tableView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(20)
-            $0.height.equalTo(800) //TODO: 후..
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(740) //TODO: 후..
         }
         
         
@@ -246,17 +248,6 @@ extension ResultViewController:UITableViewDataSource{
         return viewModel.model.warings.count
     }
     
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return  section == 0 ? -1 : 5
-    }
-
-       // Make the background color show through
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-           let headerView = UIView()
-           headerView.backgroundColor = UIColor.clear
-           return headerView
-        return nil
-    }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // row 개수가 굉장히 중요함
         
@@ -290,23 +281,24 @@ extension ResultViewController:UITableViewDelegate{
 
         
         let sectionData = viewModel.model.warings[indexPath.section]
-        
-        categoryCell.layer.cornerRadius = 10
-        answerCell.layer.cornerRadius = 10
-        
-        
-        if sectionData.isOpen{ // 부분 cornerRadius
-            categoryCell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-            answerCell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-        }
-        
-        
-        categoryCell.backgroundColor = .white
-        categoryCell.clipsToBounds = true
-        
-        
-        answerCell.backgroundColor = .white
-        categoryCell.clipsToBounds = true
+        categoryCell.backgroundColor = .clear
+        answerCell.backgroundColor = .clear
+//        //categoryCell.layer.cornerRadius = 10
+//        answerCell.layer.cornerRadius = 10
+//        
+//        
+//        if sectionData.isOpen{ // 부분 cornerRadius
+//            categoryCell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+//            answerCell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+//        }
+//        
+//        
+//        //categoryCell.backgroundColor = .white
+//        //categoryCell.clipsToBounds = true
+//        
+//        
+//        answerCell.backgroundColor = .white
+//        answerCell.clipsToBounds = true
         
         categoryCell.selectionStyle = .none
         answerCell.selectionStyle = .none
