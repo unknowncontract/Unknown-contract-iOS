@@ -113,7 +113,7 @@ public final class ConfirmViewController: BaseViewController {
     public override func viewDidAppear(_ animated: Bool) { // Swipe Navigation Back
            super.viewDidAppear(animated)
            navigationController?.interactivePopGestureRecognizer?.delegate = nil
-       }
+    }
     
 
 }

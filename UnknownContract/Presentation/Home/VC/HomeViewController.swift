@@ -133,6 +133,11 @@ public class HomeViewController: BaseViewController {
         return  .lightContent
     }
     
+    public override func viewDidAppear(_ animated: Bool) { // Swipe Navigation Back
+           super.viewDidAppear(animated)
+           navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
 
 
 }
@@ -308,4 +313,11 @@ extension HomeViewController:GovernmentButtonViewDelegate{
     }
     
     
+}
+
+
+extension HomeViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false // 뒤로가기 Siwpe 막기
+    }
 }
