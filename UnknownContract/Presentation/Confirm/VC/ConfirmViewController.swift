@@ -54,7 +54,6 @@ public final class ConfirmViewController: BaseViewController {
     
     lazy var descriptionLabel = UILabel().then{
         $0.numberOfLines = 0
-        $0.attributedText = setBody2Style("계약서에 명시된 특약사항 중 임차인에게\n불리한 내용이 있는지 검토합니다.", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
     }
     
     lazy var cameraFunctionButtonView = FunctionView(function: .camera).then{
@@ -177,6 +176,9 @@ extension ConfirmViewController {
             $0.left.right.equalToSuperview().inset(20)
         }
         
+        
+        
+        descriptionLabel.attributedText = setBody2Style(viewModel.document.checkListContent , textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
         cameraFunctionButtonView.snp.makeConstraints{
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(60)
             $0.centerX.equalToSuperview()

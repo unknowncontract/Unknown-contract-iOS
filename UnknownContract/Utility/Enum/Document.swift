@@ -58,4 +58,25 @@ public enum Document:String {
         }
     }
     
+    var checkListContent:String {
+        
+        get {
+            
+            switch self {
+                
+            case .contract:
+                return "계약서에 명시된 특약사항 중 임차인에게\n불리한 내용이 있는지 검토합니다."
+                
+            case .owner:
+                return "등기부등본 발급 시, ‘매매목록'을 꼭 선택하세요.\n건물의 소유권 정보를 확인합니다.건물을 담보로 한\n채무관계와 근저당권 설정을 확인합니다."
+            case .building:
+                return "건축물 위반사항과 건물의 용도를 확인합니다."
+            }
+            
+        }
+        
+        
+        
+    }
+    
 }
