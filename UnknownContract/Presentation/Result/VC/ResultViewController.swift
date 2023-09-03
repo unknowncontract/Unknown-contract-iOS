@@ -64,6 +64,10 @@ public class ResultViewController: BaseViewController {
     
     lazy var circleDashBoard = CircleDashBoardView()
     
+    lazy var dashBoardEmptyView = UIView().then{
+        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
+    }
+    
     lazy var emptyView = UIView().then{
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
     }
@@ -142,6 +146,7 @@ extension ResultViewController {
         self.scrollView.addSubview(stackView)
         self.stackView.addArrangedSubview(topLabelContainerView)
         self.stackView.addArrangedSubview(dashBoardContainerView)
+        self.stackView.addArrangedSubview(dashBoardEmptyView)
         self.stackView.addArrangedSubview(emptyView)
         self.stackView.addArrangedSubview(tableContainerView)
         
@@ -202,7 +207,11 @@ extension ResultViewController {
         }
         
         dashBoardContainerView.snp.makeConstraints{
-            $0.height.equalTo(244)
+            $0.height.equalTo(255)
+        }
+        
+        dashBoardEmptyView.snp.makeConstraints{
+            $0.height.equalTo(32)
         }
         
         emptyView.snp.makeConstraints{
