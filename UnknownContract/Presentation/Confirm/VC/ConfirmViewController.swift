@@ -326,7 +326,6 @@ extension ConfirmViewController {
     
 //    private func pdfToImage(path:String){
 //
-//            //TODO: 여러 장 추출
 //
 //            // Create a URL for the PDF file.
 //            let url = URL(fileURLWithPath: path)
@@ -399,7 +398,6 @@ extension ConfirmViewController {
         }
         
         // 다중 PDF
-
         for i in 0..<document.pageCount{
 
             if let page = document.page(at: i) {

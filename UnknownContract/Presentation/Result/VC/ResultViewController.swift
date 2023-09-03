@@ -181,7 +181,7 @@ extension ResultViewController {
         }
         
         stackView.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview()
+            $0.left.right.top.bottom.equalToSuperview()
             $0.width.equalToSuperview()
         
         }
@@ -216,7 +216,7 @@ extension ResultViewController {
         tableView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.left.right.equalToSuperview().inset(20)
-            $0.height.equalTo(800)
+            $0.height.equalTo(800) //TODO: 후..
         }
         
         

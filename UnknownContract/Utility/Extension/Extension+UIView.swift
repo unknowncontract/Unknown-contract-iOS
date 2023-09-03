@@ -78,5 +78,17 @@ extension UIView{
 
         self.layer.masksToBounds = false
     }
+    
+    func fadeIn(duration: TimeInterval = 1.0){
+        UIView.animate(withDuration: duration) {
+            self.alpha = 1.0
+        }
+    }
+    
+    func fadeOut(duration: TimeInterval = 1.0){
+        UIView.animate(withDuration: duration) {
+            self.alpha = .zero
+        }
+    }
   
 }

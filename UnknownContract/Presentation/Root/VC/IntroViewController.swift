@@ -23,6 +23,8 @@ public class IntroViewController: BaseViewController {
     lazy var input = IntroViewModel.Input()
     lazy var output = viewModel.transform(input: input)
     
+    lazy var containerView = UIView()
+    
     lazy var imageView = UIImageView().then{
         $0.contentMode = .scaleToFill
         $0.image = UIImage(named: "SplashLogo")
@@ -61,14 +63,24 @@ public class IntroViewController: BaseViewController {
 extension IntroViewController {
 
     private func addSubViews(){
-        self.view.addSubview(imageView)
-        self.view.addSubview(appNameLabel)
+
+        self.view.addSubview(containerView)
+        
+        containerView.addSubview(imageView)
+        containerView.addSubview(appNameLabel)
     }
     
     private func configureUI(){
+        
+        containerView.alpha = .zero
+        
+        containerView.snp.makeConstraints{
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(195)
+            $0.leading.right.equalToSuperview()
+        }
+        
         imageView.snp.makeConstraints{
             $0.width.height.equalTo(105)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(195)
             $0.centerX.equalToSuperview()
         }
         
@@ -100,14 +112,21 @@ extension IntroViewController {
         
         
         output.endIntro
+            .withUnretained(self)
             .delay(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self]  in
-                guard let self else {return}
-
+            .do(onNext: { (owner,_) in
+                owner.containerView.fadeIn()
+            })
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
+            .do(onNext: { (owner,_) in
+                owner.containerView.fadeOut()
+            })
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (owner,_) in
+           
+                let home = owner.homeComponent.makeView()
                 
-                let home = self.homeComponent.makeView()
-                
-                self.navigationController?.pushViewController(home, animated: false)
+                owner.navigationController?.pushViewController(home, animated: false)
                 
             })
             .disposed(by: disposeBag)
