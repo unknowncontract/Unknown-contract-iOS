@@ -361,9 +361,7 @@ extension ConfirmViewController {
     
     private func pdfToImage(path:String){
 
-        //TODO: 여러 장 추출
 
-        // Create a URL for the PDF file.
         let url = URL(fileURLWithPath: path)
 
         // Instantiate a `CGPDFDocument` from the PDF file's URL.
@@ -371,6 +369,36 @@ extension ConfirmViewController {
 
         var width:CGFloat = .zero
         var height:CGFloat = .zero
+        
+        if document.pageCount == 1 || viewModel.document == .building { // 단일 PDF 또는 건축물 대장
+            
+            guard let page = document.page(at: 0) else { return }
+            // Fetch the page rect for the page we want to render.
+            let pageRect = page.bounds(for: .mediaBox)
+
+            let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+            let img = renderer.image { ctx in
+                // Set and fill the background color.
+                UIColor.white.set()
+                ctx.fill(CGRect(x: 0, y: 0, width: pageRect.width, height: pageRect.height))
+
+                // Translate the context so that we only draw the `cropRect`.
+                ctx.cgContext.translateBy(x: -pageRect.origin.x, y: pageRect.size.height - pageRect.origin.y)
+
+                // Flip the context vertically because the Core Graphics coordinate system starts from the bottom.
+                ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+                // Draw the PDF page.
+                page.draw(with: .mediaBox, to: ctx.cgContext)
+            }
+
+            reconizeText(image: img)
+            
+            return
+            
+        }
+        
+        // 다중 PDF
 
         for i in 0..<document.pageCount{
 
@@ -382,11 +410,7 @@ extension ConfirmViewController {
 
         }
 
-//        // Get the first page of the PDF document.
-//        guard let page = document.page(at: 0) else { return }
-//
-//        // Fetch the page rect for the page we want to render.
-//        let pageRect = page.bounds(for: .mediaBox)
+
 
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: width, height: height))
         let img = renderer.image { ctx in
@@ -402,7 +426,8 @@ extension ConfirmViewController {
 
                 if let page = document.page(at: index) {
                     let pageRect = page.bounds(for: .mediaBox)
-                    ctx.cgContext.translateBy(x: 0.0, y: -pageRect.height)
+            
+                    ctx.cgContext.translateBy(x: -pageRect.origin.x, y: -pageRect.height)
 
                     page.draw(with: .mediaBox, to: ctx.cgContext)
                 }
@@ -411,7 +436,7 @@ extension ConfirmViewController {
 
         }
 
-     
+
         reconizeText(image: img)
     }
     
