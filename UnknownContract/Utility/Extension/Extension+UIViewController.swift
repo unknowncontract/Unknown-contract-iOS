@@ -18,10 +18,10 @@ extension UIViewController {
     }
     
     
-    func showToast(text: String, font: UIFont, verticalOffset: CGFloat? = nil) {
+    func showToast(text: String =  "문제가 발생했습니다. 다시 시도해 주세요.",  verticalOffset: CGFloat? = nil) {
            var attributes = EKAttributes.bottomFloat
            attributes.displayDuration = 2
-           attributes.entryBackground = .color(color: EKColor(rgb: 0x101828).with(alpha: 0.8))
+           attributes.entryBackground = .color(color: EKColor(rgb: 0x1B2739).with(alpha: 1.0))
            attributes.roundCorners = .all(radius: 20)
            
            if let verticalOffset = verticalOffset {
@@ -29,8 +29,8 @@ extension UIViewController {
            }
 
            let style = EKProperty.LabelStyle(
-               font: font,
-               color: EKColor(rgb: 0xFCFCFD),
+               font: DesignSystemAsset.Pretendard.body2,
+               color: EKColor(rgb: 0xFAFAFB),
                alignment: .center
            )
            let labelContent = EKProperty.LabelContent(

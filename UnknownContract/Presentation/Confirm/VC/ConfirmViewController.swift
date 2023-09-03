@@ -105,7 +105,7 @@ public final class ConfirmViewController: BaseViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
         addSubViews()
         configureUI()
         bind()
@@ -264,7 +264,7 @@ extension ConfirmViewController {
                 
                 owner.lottieView.stop()
                 owner.loadingView.isHidden = true
-                owner.showToast(text: "다시시도", font: DesignSystemAsset.Pretendard.body3)
+                owner.showToast()
                 
         })
         .disposed(by: disposeBag)
