@@ -41,6 +41,8 @@ public class ResultViewController: BaseViewController {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout:flowLayout).then{
         
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+        $0.register(ResultCollectionHeaderView.self,forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: ResultCollectionHeaderView.identifier)
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
 
         $0.register(AnswerCollectionViewCell.self,forCellWithReuseIdentifier: AnswerCollectionViewCell.identifier)
@@ -49,6 +51,8 @@ public class ResultViewController: BaseViewController {
         $0.dataSource = self
 
     }
+    
+    lazy var headerView = ResultCollectionHeaderView(score: viewModel.model.score)
     
     
 
@@ -73,7 +77,7 @@ public class ResultViewController: BaseViewController {
         addSubViews()
         configureUI()
         bind()
-        
+        self.view.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
 //        circleDashBoard.loadProgress(self.viewModel.model.score)
 
 
@@ -154,7 +158,7 @@ extension ResultViewController {
     }
     
 }
-
+//UICollectionViewDelegateFlowLayout: 이 프로토콜의 메서드는 셀의 크기와 셀 간의 사이 간격을 정의합니다. 이 프로토콜의 메서드는 전부 선택사항입니다.
 extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
     // 섹션안에 Item 끼리 간격
@@ -179,12 +183,23 @@ extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegate
         }
     }
     
-    //섹션간에 간격 
+    //섹션간에 간격
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: .zero, bottom: 10, right: .zero)
     }
     
     
+    
+    //  UICollectionViewDelegateFlowLayout의 메서드 헤더 사이즈 설정
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+        if section == 0 {
+            return CGSize(width: APP_WIDTH(), height: 468)
+        }
+        else {
+            return .zero
+        }
+    }
     
     
 
@@ -197,6 +212,30 @@ extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegate
 
 extension ResultViewController:UICollectionViewDataSource {
     
+    
+    // 헤더를 사용하는 dataSource 메서드
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+      
+        if indexPath.section == 0 {
+            guard kind == UICollectionView.elementKindSectionHeader, // 헤더일때
+                  let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: ResultCollectionHeaderView.identifier,
+                    for: indexPath
+                  ) as? ResultCollectionHeaderView else {return UICollectionReusableView()}
+            
+            
+            header.update(score: viewModel.model.score) //TODO: 구구님께 로딩 조언 듣기 
+            
+            
+            return header
+        }
+         
+        return UICollectionReusableView()
+        
+        
+        
+    }
     
     
     
@@ -236,8 +275,8 @@ extension ResultViewController:UICollectionViewDataSource {
 
 
         let sectionData = viewModel.model.warings[indexPath.section]
-        categoryCell.backgroundColor = .clear
-        answerCell.backgroundColor = .clear
+        categoryCell.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+        answerCell.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
 
 
         categoryCell.update(model: sectionData)

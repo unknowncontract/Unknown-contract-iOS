@@ -9,8 +9,9 @@ import UIKit
 import SnapKit
 import Then
 
-class ResultCollectionHeaderView: UIView {
+class ResultCollectionHeaderView: UICollectionReusableView {
     
+    static let identifier:String = "ResultCollectionHeaderView"
     
     lazy var titleLabel = UILabel().then{
         $0.attributedText = setTitle2Style("나에게 부족한 보장", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000,alignment: .center)
@@ -38,20 +39,29 @@ class ResultCollectionHeaderView: UIView {
     lazy var tableHeaderView = PrepareTableHeaderView().then{
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
     }
+    
+    lazy var emptyView2 = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+    }
+    
 
-
+    
     public init(score:Int){
         super.init(frame: .zero)
-        addSubViews()
-        setUp()
-        circleDashBoard.loadProgress(score)
-        self.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
+      
+        
+        
+        DEBUG_LOG("HELLO")
         
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
+        addSubViews()
+        setUp()
+        DEBUG_LOG("OH?")
+        self.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
         
     }
     
@@ -73,6 +83,7 @@ extension ResultCollectionHeaderView {
         self.dashBoardContainerView.addSubview(circleDashBoard)
         self.addSubview(emptyView)
         self.addSubview(tableHeaderView)
+        self.addSubview(emptyView2)
     }
     
     private func setUp(){
@@ -113,9 +124,20 @@ extension ResultCollectionHeaderView {
         
         }
         
+        emptyView2.snp.makeConstraints{
+            $0.top.equalTo(tableHeaderView.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
+            $0.height.equalTo(16)
+        }
+        
         
         
         
         
     }
+    
+    public func update(score:Int){
+        circleDashBoard.loadProgress(score)
+    }
 }
+
