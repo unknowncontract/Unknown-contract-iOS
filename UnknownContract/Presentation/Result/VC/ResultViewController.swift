@@ -17,6 +17,9 @@ public class ResultViewController: BaseViewController {
     
     private var viewModel:ResultViewModel!
     
+    lazy var emptyView = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue100
+    }
 
     
     lazy var navigationBarView = UIView().then{
@@ -95,9 +98,8 @@ public class ResultViewController: BaseViewController {
 
 extension ResultViewController {
     private func addSubViews(){
+        self.view.addSubview(emptyView)
         self.view.addSubview(navigationBarView)
-        
-        
         self.navigationBarView.addSubview(backButton)
         self.navigationBarView.addSubview(navigationTitleLabel)
         self.navigationBarView.addSubview(baseLine)
@@ -111,8 +113,14 @@ extension ResultViewController {
     }
     
     private func configureUI(){
+        
+        emptyView.snp.makeConstraints{
+            $0.top.left.right.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
+        }
+        
         navigationBarView.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(emptyView.snp.bottom)
             $0.height.equalTo(48)
             $0.left.right.equalToSuperview()
         }
@@ -225,7 +233,7 @@ extension ResultViewController:UICollectionViewDataSource {
                   ) as? ResultCollectionHeaderView else {return UICollectionReusableView()}
             
             
-            header.update(score: viewModel.model.score) //TODO: 구구님께 로딩 조언 듣기 
+            header.update(score: viewModel.model.score) //TODO: 구구님께 로딩 조언 듣기  , 오버 스크롤링 막기
             
             
             return header
@@ -293,109 +301,6 @@ extension ResultViewController:UICollectionViewDataSource {
 
 }
 
-//extension ResultViewController:UITableViewDataSource{
-//
-//
-//
-//    public func numberOfSections(in tableView: UITableView) -> Int {
-//        return viewModel.model.warings.count
-//    }
-//
-//
-//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // row 개수가 굉장히 중요함
-//
-//        let data = viewModel.model.warings[section]
-//        var count:Int = 0
-//
-//           if data.isOpen {
-//               count = 2
-//           }else{
-//               count = 1
-//           }
-//           return count
-//    }
-//
-//
-//}
 
-//extension ResultViewController:UITableViewDelegate{
-//
-//
-//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else{
-//                   return UITableViewCell()
-//        }
-//
-//        guard let answerCell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier,for: indexPath) as? AnswerTableViewCell else {
-//            return UITableViewCell()
-//        }
-//
-//
-//
-//        let sectionData = viewModel.model.warings[indexPath.section]
-//        categoryCell.backgroundColor = .clear
-//        answerCell.backgroundColor = .clear
-////        //categoryCell.layer.cornerRadius = 10
-////        answerCell.layer.cornerRadius = 10
-////
-////
-////        if sectionData.isOpen{ // 부분 cornerRadius
-////            categoryCell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-////            answerCell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-////        }
-////
-////
-////        //categoryCell.backgroundColor = .white
-////        //categoryCell.clipsToBounds = true
-////
-////
-////        answerCell.backgroundColor = .white
-////        answerCell.clipsToBounds = true
-//
-//        categoryCell.selectionStyle = .none
-//        answerCell.selectionStyle = .none
-//
-//
-//
-//        categoryCell.update(model: sectionData)
-//        answerCell.update(model:sectionData)
-//
-//        if indexPath.row == 0 {
-//            return categoryCell
-//        }else {
-//            return answerCell
-//        }
-//
-//
-//
-//
-//
-//    }
-//
-//    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        tableView.deselectRow(at: indexPath, animated: true)
-//
-//
-//        viewModel.model.warings[indexPath.section].isOpen = !viewModel.model.warings[indexPath.section].isOpen
-//
-//
-//        tableView.reloadSections([indexPath.section], with: .none)
-//
-//        let next = IndexPath(row: 1, section: indexPath.section ) //row 1이 답변 쪽
-//
-//        if viewModel.model.warings[indexPath.section].isOpen
-//        {
-//            self.scrollToBottom(indexPath: next)
-//        }
-//    }
-//
-//    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//
-
-//}
 
 
