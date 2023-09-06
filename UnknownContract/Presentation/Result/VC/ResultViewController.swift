@@ -161,7 +161,7 @@ extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegate
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return .zero
     }
-
+    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
@@ -175,13 +175,19 @@ extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegate
                 collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
             }
             
-           
+            
         }
-
-        
-        
-
     }
+    
+    //섹션간에 간격 
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: .zero, bottom: 10, right: .zero)
+    }
+    
+    
+    
+    
+
     
 
     

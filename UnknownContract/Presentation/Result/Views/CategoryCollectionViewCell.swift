@@ -14,9 +14,7 @@ public class CategoryCollectionViewCell: UICollectionViewCell {
     
     lazy var containerView = UIView()
     
-    lazy var fakeView = UIView().then{
-        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
-    }
+
     lazy var label = UILabel().then{
         $0.numberOfLines = 0
     }
@@ -59,7 +57,6 @@ extension CategoryCollectionViewCell {
     
     private func addSubViews(){
         self.contentView.addSubview(containerView)
-        self.contentView.addSubview(fakeView)
         self.containerView.addSubview(label)
         self.containerView.addSubview(arrowImageView)
     
@@ -67,16 +64,12 @@ extension CategoryCollectionViewCell {
     
     private func setUp(){
         
-        fakeView.snp.makeConstraints{
-            $0.top.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(20)
-            $0.height.equalTo(10)
-        }
+
     
         containerView.snp.makeConstraints{
-            $0.top.equalTo(fakeView.snp.bottom)
             $0.left.right.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.height.equalTo(64)
         }
         
         label.snp.makeConstraints{
