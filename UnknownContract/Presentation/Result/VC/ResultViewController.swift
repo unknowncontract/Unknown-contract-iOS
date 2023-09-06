@@ -43,6 +43,8 @@ public class ResultViewController: BaseViewController {
 
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout:flowLayout).then{
         
+        $0.bounces = false // 오버스크롤 막기
+    
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
         $0.register(ResultCollectionHeaderView.self,forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                     withReuseIdentifier: ResultCollectionHeaderView.identifier)
