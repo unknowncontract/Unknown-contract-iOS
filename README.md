@@ -39,3 +39,6 @@
 1. info.plist
     1. Supports opening documents in place 추가
     Application supports iTunes file sharing 추가
+
+
+## [UICollectionView](https://k-elon.tistory.com/25)

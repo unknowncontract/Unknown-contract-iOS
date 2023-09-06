@@ -34,22 +34,23 @@ public class ResultViewController: BaseViewController {
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue300
     }
     
-//    lazy var flowLayout = UICollectionViewFlowLayout().then{
-//        $0.scrollDirection = .vertical
-//    }
-//
-//    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout:flowLayout).then{
-//
-//        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-//
-//        $0.register(AnswerCollectionViewCell.self,forCellWithReuseIdentifier: AnswerCollectionViewCell.identifier)
-//
-//        $0.delegate = self
-//        $0.dataSource = self
-//
-//    }
+    lazy var flowLayout = UICollectionViewFlowLayout().then{
+        $0.scrollDirection = .vertical
+    }
+
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout:flowLayout).then{
+        
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+
+        $0.register(AnswerCollectionViewCell.self,forCellWithReuseIdentifier: AnswerCollectionViewCell.identifier)
+
+        $0.delegate = self
+        $0.dataSource = self
+
+    }
     
-    lazy var collectionViewHeaderView = ResultCollectionHeaderView(score: 80)
+    
 
     
 
@@ -85,11 +86,6 @@ public class ResultViewController: BaseViewController {
     }
     
     
-    
-    
-    
-    
-
 
 }
 
@@ -105,9 +101,7 @@ extension ResultViewController {
         navigationTitleLabel.attributedText = setBody1Style(viewModel.model.type.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
         
         
-        self.view.addSubview(collectionViewHeaderView)
-        
-        //self.view.addSubview(collectionView)
+        self.view.addSubview(collectionView)
         
 
     }
@@ -135,19 +129,12 @@ extension ResultViewController {
             $0.height.equalTo(1)
         }
         
-        collectionViewHeaderView.snp.makeConstraints{
+
+        
+        collectionView.snp.makeConstraints{
+            $0.left.bottom.right.equalToSuperview()
             $0.top.equalTo(navigationBarView.snp.bottom)
-            
-            $0.left.right.bottom.equalToSuperview()
         }
-        
-
-
-        
-//        collectionView.snp.makeConstraints{
-//            $0.left.bottom.right.equalToSuperview()
-//            $0.top.equalTo(navigationBarView.snp.bottom)
-//        }
         
 
         
@@ -168,49 +155,98 @@ extension ResultViewController {
     
 }
 
-//extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
-//
-//
-//}
-//
-//extension ResultViewController:UICollectionViewDataSource {
-//
-//
-//    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//
-//        return viewModel.model.warings.count
-//
-//    }
-//
-//    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//
-//        guard let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as? CategoryCollectionViewCell else {
-//            return UICollectionViewCell()
-//        }
-//
-//        guard let answerCell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerCollectionViewCell.identifier, for: indexPath) as? AnswerCollectionViewCell else {
-//            return UICollectionViewCell()
-//        }
-//
-//
-//        let sectionData = viewModel.model.warings[indexPath.section]
-//        categoryCell.backgroundColor = .clear
-//        answerCell.backgroundColor = .clear
-//
-//
-//        categoryCell.update(model: sectionData)
-//        answerCell.update(model:sectionData)
-//
-//        if indexPath.row == 0 {
-//            return categoryCell
-//        }else {
-//            return answerCell
-//        }
-//
-//
-//    }
-//
-//}
+extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+    
+    // 섹션안에 Item 끼리 간격
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        
+        viewModel.model.warings[indexPath.section].isOpen = !viewModel.model.warings[indexPath.section].isOpen
+        
+        UIView.performWithoutAnimation { // 깜빡 거림 없앰
+            collectionView.reloadSections([indexPath.section])
+            
+            if viewModel.model.warings[indexPath.section].isOpen{
+                collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+            }
+            
+           
+        }
+
+        
+        
+
+    }
+    
+
+    
+}
+
+
+
+extension ResultViewController:UICollectionViewDataSource {
+    
+    
+    
+    
+    //컬렉션뷰의 섹션의 개수를 묻는 메서드. 이 메서드를 구현하지 않으면 섹션 개수 기본 값은 1.
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.model.warings.count
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: APP_WIDTH(), height: 60)
+    }
+
+    
+    //지정된 섹션에 표시할 항목의 개수를 묻는 메서드.
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let data = viewModel.model.warings[section]
+        var count:Int = 0
+
+           if data.isOpen {
+               count = 2
+           }else{
+               count = 1
+           }
+           return count
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as? CategoryCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+        guard let answerCell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerCollectionViewCell.identifier, for: indexPath) as? AnswerCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+
+        let sectionData = viewModel.model.warings[indexPath.section]
+        categoryCell.backgroundColor = .clear
+        answerCell.backgroundColor = .clear
+
+
+        categoryCell.update(model: sectionData)
+        answerCell.update(model:sectionData)
+
+        if indexPath.row == 0 {
+            return categoryCell
+        }else {
+            return answerCell
+        }
+
+
+    }
+
+}
 
 //extension ResultViewController:UITableViewDataSource{
 //
@@ -314,11 +350,7 @@ extension ResultViewController {
 //        return UITableView.automaticDimension
 //    }
 //
-//    private func scrollToBottom(indexPath:IndexPath){
-//        DispatchQueue.main.async {
-//            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-//        }
-//    }
+
 //}
 
 
