@@ -235,8 +235,9 @@ extension ResultViewController:UICollectionViewDataSource {
                   ) as? ResultCollectionHeaderView else {return UICollectionReusableView()}
             
             
-            header.update(score: viewModel.model.score) //TODO: 구구님께 로딩 조언 듣기  , 오버 스크롤링 막기
+            header.update(score: viewModel.model.score,isLoading: viewModel.isLoading) //TODO: 구구님께 로딩 조언 듣기 , 조건변 에니메잉션으로 눈속임 노려보자
             
+            viewModel.isLoading = true
             
             return header
         }

@@ -13,6 +13,7 @@ final class ResultViewModel {
     let disposeBag = DisposeBag()
     
     var model:BaseMessage
+    var isLoading:Bool = false
     
     
     init(model: BaseMessage) {

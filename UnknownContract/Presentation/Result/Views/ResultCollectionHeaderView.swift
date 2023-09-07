@@ -136,8 +136,8 @@ extension ResultCollectionHeaderView {
         
     }
     
-    public func update(score:Int){
-        circleDashBoard.loadProgress(score)
+    public func update(score:Int,isLoading:Bool){
+        circleDashBoard.loadProgress(score, isLoading)
     }
 }
 

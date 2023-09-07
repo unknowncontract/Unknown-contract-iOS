@@ -143,7 +143,7 @@ private extension CircleDashBoardView {
             $0.centerY.equalToSuperview().offset(-17)
         }
         
-        addProgressBar()
+        
        
 
     }
@@ -182,7 +182,7 @@ private extension CircleDashBoardView {
 
     }
     
-    func addProgressBar(){
+    func addProgressBar(score:Int,isLoading:Bool){
         
         let fixedAngle:CGFloat = 12.78 * .pi / 180
         
@@ -194,7 +194,7 @@ private extension CircleDashBoardView {
         trackLayer.lineWidth = 20
         trackLayer.fillColor = UIColor.clear.cgColor //
         trackLayer.lineCap = .square // 선 모양
-        trackLayer.strokeEnd = 0
+        trackLayer.strokeEnd = !isLoading ? 0 : scoreToProgress(score)
         
         // 30 % -> 0.3 - 0.03 = 0.27
         // 60 % -> 0.7 - 0.02 = 0.68
@@ -217,7 +217,10 @@ private extension CircleDashBoardView {
 
 public extension CircleDashBoardView {
     
-    func loadProgress(_ score:Int){
+    func loadProgress(_ score:Int,_ isLoading:Bool){
+        
+            addProgressBar(score: score, isLoading: isLoading)
+            
             let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
     
             basicAnimation.toValue = scoreToProgress(score)
@@ -248,10 +251,13 @@ public extension CircleDashBoardView {
         
             scoreLabel.attributedText = setTitle1Style("\(score)점", textColor: color,alignment: .center)
             levelLabel.attributedText = setBody1Style(message,textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
-            trackLayer.add(basicAnimation, forKey: "progress")
         
+         if !isLoading{
+            trackLayer.add(basicAnimation, forKey: "progress") // 로딩 안되었으면 애니메이션
+  
+         }
         
-            outerStorkeView.layer.addSublayer(gradient)
+        outerStorkeView.layer.addSublayer(gradient) //그라데이션 벗기기 
     }
     
 }
