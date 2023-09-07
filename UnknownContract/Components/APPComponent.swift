@@ -11,16 +11,16 @@ import NeedleFoundation
 
 public final class APPComponent: BootstrapComponent {
     
-    var rootComponent: ResultComponent {
+    var rootComponent: RootComponent {
            shared {
-               ResultComponent(parent: self)
+               RootComponent(parent: self)
            }
     }
     
   
     
-    public func makeRootView() -> ResultViewController  {
-        rootComponent.makeView(model: BaseMessage(type: .owner, score: 35, warings: [Warning(name: "HEllo", description: "EEEEE"),Warning(name: "HEllo", description: "EEEEE"),Warning(name: "HEllo", description: "EEEEE")]))
+    public func makeRootView() -> IntroViewController {
+        rootComponent.makeView()
       }
     
 }
