@@ -35,11 +35,11 @@ if #available(iOS 15.0, *) {
                 .first?.windows
                 .filter({$0.isKeyWindow}).first?.safeAreaInsets.top ?? 0
 
-            return max(20,top)
+            return max(0,top)
 
         } else {
             let top = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.top ?? 0
-            return max(20,top)
+            return max(0,top)
         }
 
     
@@ -53,11 +53,11 @@ public func SAFEAREA_BOTTOM_HEIGHT() -> CGFloat {
                     .first?.windows
                     .filter({$0.isKeyWindow}).first?.safeAreaInsets.bottom ?? 0
 
-                return max(20,bottom)
+                return max(0,bottom)
 
             } else {
                 let bottom = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.bottom ?? 0
-                return max(20,bottom)
+                return max(0,bottom)
             }
 }
 

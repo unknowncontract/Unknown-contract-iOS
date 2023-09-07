@@ -17,6 +17,9 @@ public class ResultViewController: BaseViewController {
     
     private var viewModel:ResultViewModel!
     
+    lazy var emptyView = UIView().then{
+        $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue100
+    }
 
     
     lazy var navigationBarView = UIView().then{
@@ -33,62 +36,33 @@ public class ResultViewController: BaseViewController {
     lazy var baseLine = UILabel().then{
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue300
     }
+    
+    lazy var flowLayout = UICollectionViewFlowLayout().then{
+        $0.scrollDirection = .vertical
+    }
 
-    lazy var scrollView = UIScrollView().then{
-        $0.delegate = self
-        $0.showsHorizontalScrollIndicator = false
-        $0.showsVerticalScrollIndicator = false
-       $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue200
-    }
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout:flowLayout).then{
+        
+        $0.bounces = false // 오버스크롤 막기
     
-    lazy var stackView = UIStackView().then{
-        $0.axis = .vertical
-        $0.backgroundColor = .clear
-    }
-    
-    lazy var topLabelContainerView = UIView().then{
-        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
-    }
-    
-    lazy var titleLabel = UILabel().then{
-        $0.attributedText = setTitle2Style("나에게 부족한 보장", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000,alignment: .center)
-    }
-    
-    lazy var remindLabel = UILabel().then{
-        $0.attributedText = setBody2Style("꼼꼼하게 점검해보세요", textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue700,alignment: .center)
-    }
-    
-    lazy var dashBoardContainerView = UIView().then{
-        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
-    }
-    
-    lazy var circleDashBoard = CircleDashBoardView()
-    
-    lazy var dashBoardEmptyView = UIView().then{
-        $0.backgroundColor =  DesignSystemAsset.AntarcticBlue.antarcticBlue100
-    }
-    
-    lazy var emptyView = UIView().then{
         $0.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
-    }
-    
-    lazy var tableContainerView = UIView().then{
-        $0.backgroundColor = .clear
-    }
-    
-    lazy var tableHeaderView = PrepareTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 30))
-    
-    lazy var tableView = UITableView().then{
-        $0.backgroundColor = .clear
-        $0.separatorStyle = .none
-        $0.tableHeaderView = tableHeaderView
-        $0.dataSource = self
+        $0.register(ResultCollectionHeaderView.self,forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: ResultCollectionHeaderView.identifier)
+        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+
+        $0.register(AnswerCollectionViewCell.self,forCellWithReuseIdentifier: AnswerCollectionViewCell.identifier)
+
         $0.delegate = self
-        $0.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
-        $0.register(AnswerTableViewCell.self, forCellReuseIdentifier:AnswerTableViewCell.identifier)
-        
-        
+        $0.dataSource = self
+
     }
+    
+    lazy var headerView = ResultCollectionHeaderView(score: viewModel.model.score)
+    
+    
+
+    
+
     
 
     
@@ -108,8 +82,8 @@ public class ResultViewController: BaseViewController {
         addSubViews()
         configureUI()
         bind()
-        
-        circleDashBoard.loadProgress(self.viewModel.model.score)
+        self.view.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+//        circleDashBoard.loadProgress(self.viewModel.model.score)
 
 
     }
@@ -121,20 +95,13 @@ public class ResultViewController: BaseViewController {
     }
     
     
-    
-    
-    
-    
-
 
 }
 
 extension ResultViewController {
     private func addSubViews(){
+        self.view.addSubview(emptyView)
         self.view.addSubview(navigationBarView)
-        self.view.addSubview(scrollView)
-        
-        
         self.navigationBarView.addSubview(backButton)
         self.navigationBarView.addSubview(navigationTitleLabel)
         self.navigationBarView.addSubview(baseLine)
@@ -142,27 +109,20 @@ extension ResultViewController {
         navigationTitleLabel.attributedText = setBody1Style(viewModel.model.type.resultNavigationTitle, textColor: DesignSystemAsset.AntarcticBlue.antarcticBlue1000)
         
         
+        self.view.addSubview(collectionView)
         
-        self.scrollView.addSubview(stackView)
-        self.stackView.addArrangedSubview(topLabelContainerView)
-        self.stackView.addArrangedSubview(dashBoardContainerView)
-        self.stackView.addArrangedSubview(dashBoardEmptyView)
-        self.stackView.addArrangedSubview(emptyView)
-        self.stackView.addArrangedSubview(tableContainerView)
-        
-        self.topLabelContainerView.addSubview(titleLabel)
-        self.topLabelContainerView.addSubview(remindLabel)
-        
-        
-        self.dashBoardContainerView.addSubview(circleDashBoard)
-        tableContainerView.addSubview(tableView)
-        
-        
+
     }
     
     private func configureUI(){
+        
+        emptyView.snp.makeConstraints{
+            $0.top.left.right.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
+        }
+        
         navigationBarView.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(emptyView.snp.bottom)
             $0.height.equalTo(48)
             $0.left.right.equalToSuperview()
         }
@@ -183,57 +143,16 @@ extension ResultViewController {
             $0.height.equalTo(1)
         }
         
-        scrollView.snp.makeConstraints{
-            $0.left.right.bottom.equalToSuperview()
+
+        
+        collectionView.snp.makeConstraints{
+            $0.left.bottom.right.equalToSuperview()
             $0.top.equalTo(navigationBarView.snp.bottom)
         }
         
-        stackView.snp.makeConstraints{
-            $0.left.right.top.bottom.equalToSuperview()
-            $0.width.equalToSuperview()
-        
-        }
-        
-        titleLabel.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(32)
-            $0.left.right.equalToSuperview().inset(20)
 
-        }
         
-        remindLabel.snp.makeConstraints{
-            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
-            $0.left.right.bottom.equalToSuperview().inset(20)
-            
-        }
-        
-        dashBoardContainerView.snp.makeConstraints{
-            $0.height.equalTo(255)
-        }
-        
-        dashBoardEmptyView.snp.makeConstraints{
-            $0.height.equalTo(32)
-        }
-        
-        emptyView.snp.makeConstraints{
-            $0.height.equalTo(32)
-        }
-        
-        circleDashBoard.snp.makeConstraints{
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(244)
-            $0.centerX.equalToSuperview()
-            
-        }
-        
-        tableView.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview()
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(740) //TODO: 후..
-        }
-        
-        
-        
-        
+
         
     }
     
@@ -249,21 +168,104 @@ extension ResultViewController {
     }
     
 }
-
-extension ResultViewController:UITableViewDataSource{
+//UICollectionViewDelegateFlowLayout: 이 프로토콜의 메서드는 셀의 크기와 셀 간의 사이 간격을 정의합니다. 이 프로토콜의 메서드는 전부 선택사항입니다.
+extension ResultViewController:UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
+    // 섹션안에 Item 끼리 간격
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
     
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        
+        viewModel.model.warings[indexPath.section].isOpen = !viewModel.model.warings[indexPath.section].isOpen
+        
+        UIView.performWithoutAnimation { // 깜빡 거림 없앰
+            collectionView.reloadSections([indexPath.section])
+            
+            if viewModel.model.warings[indexPath.section].isOpen{
+                collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+            }
+            
+            
+        }
+    }
     
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.model.warings.count
+    //섹션간에 간격
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: .zero, bottom: 10, right: .zero)
     }
     
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // row 개수가 굉장히 중요함
+    
+    //  UICollectionViewDelegateFlowLayout의 메서드 헤더 사이즈 설정
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+        if section == 0 {
+            return CGSize(width: APP_WIDTH(), height: 468)
+        }
+        else {
+            return .zero
+        }
+    }
+    
+    
+
+    
+
+    
+}
+
+
+
+extension ResultViewController:UICollectionViewDataSource {
+    
+    
+    // 헤더를 사용하는 dataSource 메서드
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+      
+        if indexPath.section == 0 {
+            guard kind == UICollectionView.elementKindSectionHeader, // 헤더일때
+                  let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: ResultCollectionHeaderView.identifier,
+                    for: indexPath
+                  ) as? ResultCollectionHeaderView else {return UICollectionReusableView()}
+            
+            
+            header.update(score: viewModel.model.score,isLoading: viewModel.isLoading) //TODO: 구구님께 로딩 조언 듣기 , 조건변 에니메잉션으로 눈속임 노려보자
+            
+            viewModel.isLoading = true
+            
+            return header
+        }
+         
+        return UICollectionReusableView()
         
+        
+        
+    }
+    
+    
+    
+    //컬렉션뷰의 섹션의 개수를 묻는 메서드. 이 메서드를 구현하지 않으면 섹션 개수 기본 값은 1.
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.model.warings.count
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: APP_WIDTH(), height: 60)
+    }
+
+    
+    //지정된 섹션에 표시할 항목의 개수를 묻는 메서드.
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let data = viewModel.model.warings[section]
         var count:Int = 0
-            
+
            if data.isOpen {
                count = 2
            }else{
@@ -271,98 +273,37 @@ extension ResultViewController:UITableViewDataSource{
            }
            return count
     }
-    
-    
-}
 
-extension ResultViewController:UITableViewDelegate{
-    
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            
-        guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else{
-                   return UITableViewCell()
-        }
-        
-        guard let answerCell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier,for: indexPath) as? AnswerTableViewCell else {
-            return UITableViewCell()
-        }
-        
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        
+        guard let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as? CategoryCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+        guard let answerCell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerCollectionViewCell.identifier, for: indexPath) as? AnswerCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+
         let sectionData = viewModel.model.warings[indexPath.section]
-        categoryCell.backgroundColor = .clear
-        answerCell.backgroundColor = .clear
-//        //categoryCell.layer.cornerRadius = 10
-//        answerCell.layer.cornerRadius = 10
-//        
-//        
-//        if sectionData.isOpen{ // 부분 cornerRadius
-//            categoryCell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-//            answerCell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-//        }
-//        
-//        
-//        //categoryCell.backgroundColor = .white
-//        //categoryCell.clipsToBounds = true
-//        
-//        
-//        answerCell.backgroundColor = .white
-//        answerCell.clipsToBounds = true
-        
-        categoryCell.selectionStyle = .none
-        answerCell.selectionStyle = .none
-       
-        
-        
+        categoryCell.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+        answerCell.backgroundColor = DesignSystemAsset.AntarcticBlue.antarcticBlue200
+
+
         categoryCell.update(model: sectionData)
         answerCell.update(model:sectionData)
-        
+
         if indexPath.row == 0 {
             return categoryCell
         }else {
             return answerCell
         }
-        
-        
 
 
-   
     }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        
-        viewModel.model.warings[indexPath.section].isOpen = !viewModel.model.warings[indexPath.section].isOpen
-        
-        
-        tableView.reloadSections([indexPath.section], with: .none)
-        
-        let next = IndexPath(row: 1, section: indexPath.section ) //row 1이 답변 쪽
-        
-        if viewModel.model.warings[indexPath.section].isOpen 
-        {
-            self.scrollToBottom(indexPath: next)
-        }
-    }
-    
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    private func scrollToBottom(indexPath:IndexPath){
-        DispatchQueue.main.async {
-            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-        }
-    }
+
 }
 
-extension ResultViewController:UIScrollViewDelegate {
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
-            scrollView.contentOffset.y  = 0
-        }
-    }
-}
+
+
+
