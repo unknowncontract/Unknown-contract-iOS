@@ -5,8 +5,7 @@
 1. 스토리보드 지우기
 
 2. Info.plist 
-    1. Application Scene Manifest 
-    2. Scene Configuration 
+    1. Application Scene Manifest  > Scene Configuration > Application Session Role > Item 0
     3. storyboard Name  지우기
 
 3. Target 
